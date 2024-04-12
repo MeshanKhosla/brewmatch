@@ -2,6 +2,9 @@ import "~/styles/globals.css";
 import { ThemeProvider } from "~/components/theme-provider";
 import { Inter } from "next/font/google";
 import { cn } from "~/lib/utils"
+import { Nav } from "~/components/Nav";
+import { getServerSession } from "next-auth";
+import { authOptions } from "~/server/auth";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -14,11 +17,12 @@ export const metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerSession(authOptions);
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -32,6 +36,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Nav session={session} />
           {children}
         </ThemeProvider>
       </body>
