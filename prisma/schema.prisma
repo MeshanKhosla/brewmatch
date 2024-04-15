@@ -96,8 +96,9 @@ model Drink {
     id          String   @id @default(cuid())
     name        String
     description String
-    price       Float
+    price       Float?
     cafe        Cafe     @relation(fields: [cafeId], references: [id])
+    sweetness   Int // 1-10
     cafeId      String
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
@@ -107,4 +108,34 @@ model Drink {
     @@index([name])
     @@index([cafeId])
     @@index([description])
+}
+
+model DrinkProfile {
+    id                   String   @id @default(cuid())
+    name                 String
+    naturalLanguageInput String
+    sweetness            Int // 1-10
+    ice                  IceLevel
+    milk                 MilkType
+
+    @@index([id])
+    @@index([name])
+    @@index([naturalLanguageInput])
+}
+
+enum IceLevel {
+    NO_ICE
+    LESS_ICE
+    REGULAR_ICE
+    MORE_ICE
+}
+
+enum MilkType {
+    WHOLE
+    TWO_PERCENT
+    ALMOND
+    OAT
+    SOY
+    NONFAT
+    COCONUT
 }

@@ -3,7 +3,7 @@ import {
   Home,
   Menu,
   Coffee,
-  ShoppingCart,
+  UserRound,
   CirclePlus
 } from "lucide-react"
 import { Button } from "~/components/ui/button"
@@ -41,11 +41,11 @@ export function Main(props: Props) {
                 Discover
               </Link>
               <Link
-                href="/orders"
+                href="/profile"
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
               >
-                <ShoppingCart className="h-4 w-4" />
-                Orders
+                <UserRound className="h-4 w-4" />
+                Profile
               </Link>
               <Link
                 href="add-cafe"
@@ -88,11 +88,11 @@ export function Main(props: Props) {
                   Discover
                 </Link>
                 <Link
-                  href="/orders"
+                  href="/profile"
                   className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
                 >
-                  <ShoppingCart className="h-5 w-5" />
-                  Orders
+                  <UserRound className="h-5 w-5" />
+                  Profile
                 </Link>
                 <Link
                   href="add-cafe"
