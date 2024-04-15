@@ -49,6 +49,11 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+    cafesCreated  Cafe[]
+    orders        Order[]
+
+    @@index([id])
+    @@index([name])
 }
 
 model VerificationToken {
@@ -57,4 +62,49 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model Order {
+    id        String   @id @default(cuid())
+    drink     Drink    @relation(fields: [drinkId], references: [id])
+    user      User     @relation(fields: [userId], references: [id])
+    createdAt DateTime @default(now())
+    drinkId   String
+    userId    String
+
+    @@index([id])
+    @@index([drinkId])
+    @@index([userId])
+}
+
+model Cafe {
+    id          String   @id @default(cuid())
+    name        String   @unique
+    description String?
+    drinks      Drink[]
+    createdBy   User     @relation(fields: [userId], references: [id])
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    userId      String
+
+    @@index([id])
+    @@index([name])
+    @@index([userId])
+}
+
+model Drink {
+    id          String   @id @default(cuid())
+    name        String
+    description String
+    price       Float
+    cafe        Cafe     @relation(fields: [cafeId], references: [id])
+    cafeId      String
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    Order       Order[]
+
+    @@index([id])
+    @@index([name])
+    @@index([cafeId])
+    @@index([description])
 }

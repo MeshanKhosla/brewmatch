@@ -8,7 +8,7 @@ import {
 } from "lucide-react"
 import { Button } from "~/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "~/components/ui/sheet"
-import { Session } from "next-auth"
+import { type Session } from "next-auth"
 import Login from "~/components/login"
 import { ModeToggle } from "~/components/mode-toggle"
 

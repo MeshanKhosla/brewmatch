@@ -1,9 +1,9 @@
 "use client"
 
-import { Session } from "next-auth";
+import { type Session } from "next-auth";
 import { signIn, signOut } from "next-auth/react";
 import { Button } from "~/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "~/components/ui/dropdown-menu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "~/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar"
 
 interface LoginProps {

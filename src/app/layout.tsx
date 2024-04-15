@@ -37,7 +37,9 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Main session={session} children={children} />
+          <Main session={session}>
+            {children}
+          </Main>
         </ThemeProvider>
       </body>
     </html >
