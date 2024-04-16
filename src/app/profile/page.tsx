@@ -1,4 +1,3 @@
-import React from 'react'
 import CreateDrinkProfile from '~/components/CreateDrinkProfile'
 
 const Page = () => {
