@@ -27,6 +27,7 @@ const MILK_TO_NAME = {
   [MilkType.SOY]: "Soy",
   [MilkType.NONFAT]: "Nonfat",
   [MilkType.COCONUT]: "Coconut",
+  [MilkType.NONE]: "None",
 }
 
 const formSchema = z.object({
@@ -95,17 +96,15 @@ const CreateDrinkProfile = () => {
               <FormItem>
                 <FormLabel>Milk</FormLabel>
                 <FormControl>
-                  <RadioGroup onValueChange={field.onChange}>
-                    <div className="flex gap-3">
-                      {Object.keys(MilkType).map((milkType) => (
-                        <div key={milkType} className="flex items-center space-x-2">
-                          <RadioGroupItem value={milkType} id={milkType} />
-                          <Label htmlFor={milkType}>
-                            {MILK_TO_NAME[milkType as MilkType]}
-                          </Label>
-                        </div>
-                      ))}
-                    </div>
+                  <RadioGroup onValueChange={field.onChange} className='grid grid-cols-2'>
+                    {Object.keys(MilkType).map((milkType) => (
+                      <div key={milkType} className="flex items-center space-x-2">
+                        <RadioGroupItem value={milkType} id={milkType} />
+                        <Label htmlFor={milkType}>
+                          {MILK_TO_NAME[milkType as MilkType]}
+                        </Label>
+                      </div>
+                    ))}
                   </RadioGroup>
                 </FormControl>
                 <FormMessage />

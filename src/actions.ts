@@ -2,6 +2,8 @@
 
 import { IceLevel, MilkType } from '@prisma/client'
 import { db } from '~/server/db'
+import { authOptions } from '~/server/auth';
+import { getServerSession } from 'next-auth';
 
 const MAX_LENGTH = 191;
 
@@ -24,6 +26,12 @@ export async function createDrinkProfile(name: string, naturalLanguageInput: str
   ensureStringLengthOrThrow(name)
   ensureStringLengthOrThrow(naturalLanguageInput)
 
+  const session = await getServerSession(authOptions);
+
+  if (!session?.user) {
+    throw new Error('You are not logged in')
+  }
+
   // Create drink profile
   const drinkProfile = await db.drinkProfile.create({
     data: {
@@ -32,6 +40,11 @@ export async function createDrinkProfile(name: string, naturalLanguageInput: str
       sweetness,
       ice,
       milk,
+      creator: {
+        connect: {
+          id: session.user.id
+        }
+      }
     }
   })
 

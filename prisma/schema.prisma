@@ -42,15 +42,16 @@ model Session {
 }
 
 model User {
-    id            String    @id @default(cuid())
+    id            String         @id @default(cuid())
     name          String?
-    email         String?   @unique
+    email         String?        @unique
     emailVerified DateTime?
     image         String?
     accounts      Account[]
     sessions      Session[]
     cafesCreated  Cafe[]
     orders        Order[]
+    DrinkProfile  DrinkProfile[]
 
     @@index([id])
     @@index([name])
@@ -114,9 +115,11 @@ model DrinkProfile {
     id                   String   @id @default(cuid())
     name                 String
     naturalLanguageInput String
+    creator              User     @relation(fields: [userId], references: [id])
     sweetness            Int // 1-10
     ice                  IceLevel
     milk                 MilkType
+    userId               String
 
     @@index([id])
     @@index([name])
@@ -138,4 +141,5 @@ enum MilkType {
     SOY
     NONFAT
     COCONUT
+    NONE
 }
