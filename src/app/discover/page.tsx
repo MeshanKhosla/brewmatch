@@ -20,15 +20,12 @@ import {
 
 const Page = () => {
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-5">
       <div className="flex items-center justify-center bg-[#F7F0DD] p-4 py-12 text-center text-black">
         <h2 className="text-center text-4xl">DISCOVER</h2>
       </div>
-      <h2 className="items-center pb-12 pt-8 text-center text-3xl">
-        Decision Making Made Easy with BrewMatch!
-      </h2>
-      <h3 className="text-itim items-center text-2xl">Locate your cafe!</h3>
-      <Command>
+      <h3 className="text-itim items-center text-2xl">Locate your cafe:</h3>
+      <Command className="">
         <CommandInput placeholder="Search a Cafe..." />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
@@ -42,17 +39,15 @@ const Page = () => {
           </CommandGroup>
         </CommandList>
       </Command>
-      <div className="flex flex-col gap-2 md:flex-row">
-        <h3 className="text-xl md:text-2xl">
-          Feeling inspired? Add a new drink profile!
-        </h3>
+      {/* <div className='flex flex-col md:flex-row gap-2 pt-4'>
+        <h3 className='text-xl md:text-2xl'>Feeling inspired? Add a new drink profile!</h3>
         <Link href="/profile">
           <Button className="w-full justify-center rounded bg-[#8fbc5c] text-3xl font-bold text-white hover:bg-[#719646] md:h-8 md:items-center md:p-2 md:pb-3">
             +
           </Button>
         </Link>
-      </div>
-      <h3 className="py-5 text-center text-2xl">Recent Drink Choices</h3>
+      </div> */}
+      <h3 className="pb-1 pt-5 text-2xl">Recent Drink Choices</h3>
       <Link href="/cafe/Blue%20Bottle">
         <Card>
           <CardHeader>
