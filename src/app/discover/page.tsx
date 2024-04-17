@@ -1,6 +1,5 @@
 import Link from "next/link";
 import React from "react";
-import { Button } from "~/components/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -39,14 +38,6 @@ const Page = () => {
           </CommandGroup>
         </CommandList>
       </Command>
-      {/* <div className='flex flex-col md:flex-row gap-2 pt-4'>
-        <h3 className='text-xl md:text-2xl'>Feeling inspired? Add a new drink profile!</h3>
-        <Link href="/profile">
-          <Button className="w-full justify-center rounded bg-[#8fbc5c] text-3xl font-bold text-white hover:bg-[#719646] md:h-8 md:items-center md:p-2 md:pb-3">
-            +
-          </Button>
-        </Link>
-      </div> */}
       <h3 className="pb-1 pt-5 text-2xl">Recent Drink Choices</h3>
       <Link href="/cafe/Blue%20Bottle">
         <Card>
