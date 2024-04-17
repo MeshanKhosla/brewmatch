@@ -14,6 +14,7 @@ const Page = async () => {
       <div className="flex items-center justify-center bg-[#F7F0DD] text-black p-4 text-center py-12">
         <h2 className="text-4xl text-center">PROFILE</h2>
       </div>
+      <h1 className="text-2xl font-semibold py-3">Create a new Drink Profile</h1>
       <CreateDrinkProfile />
     </div>
   )
