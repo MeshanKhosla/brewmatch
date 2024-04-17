@@ -1,5 +1,4 @@
 import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
 import CreateCafe from "~/components/CreateCafe";
 import { getCafesByOwner } from "~/queries";
 import { authOptions } from "~/server/auth";

@@ -21,7 +21,6 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
 } from "~/components/ui/dialog";
 import { createCafe } from "~/actions";
 import { Asterisk } from "lucide-react";
