@@ -115,20 +115,19 @@ const CreateDrinkProfile = () => {
                       {Array.from({ length: 10 }, (_, index) => index + 1).map((sweetness) => (
                         <div key={sweetness.toString()} className="grid grid-rows-2 items-center space-y-3">
                           <div className="flex items-center">
-                            <Circle color={sweetness <= sweetChoice ? "#8fbc5c" : "#D9D9D9"} fill={sweetness <= sweetChoice ? "#8fbc5c" : "#D9D9D9"} style={{ marginRight: '-22px' }} />
-                            <RadioGroupItem value={sweetness.toString()} id={sweetness.toString()} style={{ color: "#D9D9D9" }} />
+                          <RadioGroupItem value={sweetness.toString()} id={sweetness.toString()} style={{ color: "#D9D9D9" }} className={sweetness <= sweetChoice ? "bg-[#8fbc5c]" : "bg-[#D9D9D9]"} />
+                            <div style={{
+                              marginLeft: '5px', top: '10px', width: sweetness <= 9 ? '100%' : '', height: '8px',
+                              background: sweetness < sweetChoice ? "#8fbc5c" : "#D9D9D9",
+                              zIndex: -1
+                            }}>
+                            </div>
                           </div>
                           <Label htmlFor={sweetness.toString()} className={sweetness === sweetChoice ? 'font-extrabold' : ''} >
                             {sweetness === 1 ? sweetness + '\nespresso' : sweetness === 10 ? sweetness + '\nfrap' : sweetness}
                           </Label>
                         </div>
                       ))}
-                      <div className="col-span-10" style={{
-                        marginLeft: '5px', marginTop: '-63px', width: 'calc(90% + 20px)', height: '8px',
-                        background: `linear-gradient(to right, #8fbc5c 0%, #8fbc5c ${(sweetChoice - 1) * 11}%, #D9D9D9 ${(sweetChoice - 1) * 11}%)`,
-                        zIndex: -1
-                      }}>
-                      </div>
                     </RadioGroup>
                   </div>
                 </FormControl>
@@ -148,8 +147,7 @@ const CreateDrinkProfile = () => {
                       {Object.keys(IceLevel).map((iceLevel, index) => (
                         <div key={iceLevel} className="grid grid-rows-2 items-center space-y-3">
                           <div className="flex items-center">
-                            <Circle color={index <= iceChoice ? "#8fbc5c" : "#D9D9D9"} fill={index <= iceChoice ? "#8fbc5c" : "#D9D9D9"} style={{ marginRight: '-20px' }} />
-                            <RadioGroupItem value={iceLevel} id={iceLevel} style={{ color: "#D9D9D9" }} />
+                            <RadioGroupItem value={iceLevel} id={iceLevel} style={{ color: "#D9D9D9" }} className={index <= iceChoice ? "bg-[#8fbc5c]" : "bg-[#D9D9D9]"} />
                             <div style={{
                               marginLeft: '5px', top: '10px', width: index <= 2 ? '100%' : '', height: '8px',
                               background: index < iceChoice ? "#8fbc5c" : "#D9D9D9",
