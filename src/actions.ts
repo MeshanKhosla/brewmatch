@@ -5,6 +5,7 @@ import { db } from '~/server/db'
 import { authOptions } from '~/server/auth';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
 
 const MAX_LENGTH = 191;
 
@@ -33,6 +34,7 @@ export async function createCafe(name: string, description: string) {
     redirect('/discover')
   }
 
+  name = name.trim()
   // Check if cafe name already exists
   const existingCafe = await db.cafe.findFirst({ where: { name } })
 
@@ -62,18 +64,21 @@ export async function createCafe(name: string, description: string) {
 export async function createDrinkProfile(name: string, naturalLanguageInput: string, sweetness: number, ice: IceLevel, milk: MilkType) {
   if (sweetness < 1 || sweetness > 10) {
     return {
+      ok: false,
       error: 'Sweetness must be between 1 and 10'
     }
   }
 
   if (!isStringValid(name)) {
     return {
+      ok: false,
       error: `Name length must be less than ${MAX_LENGTH}`
     }
   }
 
   if (!isStringValid(naturalLanguageInput)) {
     return {
+      ok: false,
       error: `Natural language input length must be less than ${MAX_LENGTH}`
     }
   }
@@ -101,5 +106,10 @@ export async function createDrinkProfile(name: string, naturalLanguageInput: str
     }
   })
 
-  return drinkProfile
+  // TODO: revalidlate path
+
+  return {
+    ok: true,
+    drinkProfile
+  }
 }
