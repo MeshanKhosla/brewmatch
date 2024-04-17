@@ -1,17 +1,22 @@
 import "~/styles/globals.css";
 import { ThemeProvider } from "~/components/theme-provider";
 import { Inter } from "next/font/google";
+import { Itim } from "next/font/google";
 import { cn } from "~/lib/utils"
 import { Main } from "~/components/Main";
 import { getServerSession } from "next-auth";
 import { authOptions } from "~/server/auth";
 import { Toaster } from "~/components/ui/sonner";
 
-const inter = Inter({
+// const inter = Inter({
+//   subsets: ["latin"],
+//   variable: "--font-sans",
+// });
+const itim = Itim(
+  {weight: ["400"],
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--font-serif",
 });
-
 export const metadata = {
   title: "BrewMatch",
   description: "Find your perfect drink",
@@ -30,7 +35,7 @@ export default async function RootLayout({
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
-          inter.variable
+          itim.variable
         )}>
         <ThemeProvider
           attribute="class"
