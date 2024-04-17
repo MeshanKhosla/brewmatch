@@ -14,7 +14,7 @@ import Link from 'next/link';
 const Page = async () => {
   const session = await getServerSession(authOptions);
   if (!session) {
-    redirect('/discover')
+    return <h1 className='text-2xl font-semibold'>Sign in to create a cafe!</h1>
   }
 
   const myCafes = await getCafesByOwner(session.user.id)
