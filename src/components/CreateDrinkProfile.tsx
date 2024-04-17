@@ -115,7 +115,7 @@ const CreateDrinkProfile = () => {
                       {Array.from({ length: 10 }, (_, index) => index + 1).map((sweetness) => (
                         <div key={sweetness.toString()} className="grid grid-rows-2 items-center space-y-3">
                           <div className="flex items-center">
-                          <RadioGroupItem value={sweetness.toString()} id={sweetness.toString()} style={{ color: "#D9D9D9" }} className={sweetness <= sweetChoice ? "bg-[#8fbc5c]" : "bg-[#D9D9D9]"} />
+                          <RadioGroupItem value={sweetness.toString()} id={sweetness.toString()} style={{ color: "#8fbc5c" }} className={sweetness <= sweetChoice ? "bg-[#8fbc5c]" : "bg-[#D9D9D9]"} />
                             <div style={{
                               marginLeft: '5px', top: '10px', width: sweetness <= 9 ? '100%' : '', height: '8px',
                               background: sweetness < sweetChoice ? "#8fbc5c" : "#D9D9D9",
@@ -147,7 +147,7 @@ const CreateDrinkProfile = () => {
                       {Object.keys(IceLevel).map((iceLevel, index) => (
                         <div key={iceLevel} className="grid grid-rows-2 items-center space-y-3">
                           <div className="flex items-center">
-                            <RadioGroupItem value={iceLevel} id={iceLevel} style={{ color: "#D9D9D9" }} className={index <= iceChoice ? "bg-[#8fbc5c]" : "bg-[#D9D9D9]"} />
+                            <RadioGroupItem value={iceLevel} id={iceLevel} style={{ color: "#8fbc5c" }} className={index <= iceChoice ? "bg-[#8fbc5c]" : "bg-[#D9D9D9]"} />
                             <div style={{
                               marginLeft: '5px', top: '10px', width: index <= 2 ? '100%' : '', height: '8px',
                               background: index < iceChoice ? "#8fbc5c" : "#D9D9D9",
@@ -177,7 +177,7 @@ const CreateDrinkProfile = () => {
                   <RadioGroup onValueChange={field.onChange} className='grid grid-cols-2'>
                     {Object.keys(MilkType).map((milkType) => (
                       <div key={milkType} className="flex items-center space-x-2">
-                        <RadioGroupItem value={milkType} id={milkType} />
+                        <RadioGroupItem value={milkType} id={milkType} style={{ color: "#8fbc5c" }} />
                         <Label htmlFor={milkType}>
                           {MILK_TO_NAME[milkType as MilkType]}
                         </Label>
