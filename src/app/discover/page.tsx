@@ -46,7 +46,7 @@ const Page = () => {
       <div className='flex flex-col md:flex-row gap-2'>
         <h3 className='text-xl md:text-2xl'>Feeling inspired? Add a new drink profile!</h3>
         <Link href="/profile">
-          <Button className="bg-[#8fbc5c] hover:bg-[#719646] text-white font-bold rounded text-3xl w-full md:h-8 md:p-2 justify-center">+</Button>
+          <Button className="bg-[#8fbc5c] hover:bg-[#719646] text-white font-bold rounded text-3xl w-full md:h-8 md:p-2 md:pb-3 md:items-center justify-center">+</Button>
         </Link>
       </div>
       <h3 className='text-2xl text-center py-5'>Recent Drink Choices</h3>
