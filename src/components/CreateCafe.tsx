@@ -16,11 +16,20 @@ import {
 import { Input } from "~/components/ui/input"
 import { Textarea } from "~/components/ui/textarea"
 import { createCafe } from "~/actions"
+import { Asterisk } from "lucide-react"
+import { toast } from "sonner"
 
 
 const formSchema = z.object({
-  name: z.string().min(2).max(30),
-  description: z.string().min(10).max(190),
+  // name: z.string().min(2).max(30),
+  // description: z.string().min(10).max(190),
+  // neither should have trailing or leading whitespace
+  name: z.string().refine((v) => v.trim().length >= 2 && v.trim().length <= 30, {
+    message: "Name must be between 2 and 30 characters",
+  }),
+  description: z.string().refine((v) => v.trim().length >= 10 && v.trim().length <= 190, {
+    message: "Description must be between 10 and 190 characters",
+  }),
 })
 
 
@@ -36,12 +45,15 @@ const CreateDrinkProfile = () => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const res = await createCafe(values.name, values.description) // redirect /cafe/:name
     if (res && !res.ok) {
-      alert(res.error)
+      // alert(res.error)
+      toast.error(res.error)
+    } else {
+      toast.success("Cafe created!")
     }
   }
 
-  const nameLength = form.getValues("name").length
-  const descriptionLength = form.getValues("description").length
+  const nameLength = form.getValues("name").trim().length
+  const descriptionLength = form.getValues("description").trim().length
 
   return (
     <div>
@@ -52,7 +64,7 @@ const CreateDrinkProfile = () => {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Name</FormLabel>
+                <FormLabel className="flex">Name <Asterisk className="text-red-500 size-3" /> </FormLabel>
                 <FormControl>
                   <Input minLength={2} maxLength={30} placeholder="Sodoi Coffee" {...field} />
                 </FormControl>
@@ -68,7 +80,7 @@ const CreateDrinkProfile = () => {
             name="description"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Description</FormLabel>
+                <FormLabel className="flex">Description <Asterisk className="text-red-500 size-3" /></FormLabel>
                 <FormControl>
                   <Textarea minLength={10} maxLength={190} placeholder="A Tasting House For Your Tastebuds" {...field} />
                 </FormControl>
@@ -79,7 +91,7 @@ const CreateDrinkProfile = () => {
               </FormItem>
             )}
           />
-          <Button disabled={!form.formState.isValid || form.formState.isSubmitting} className="bg-[#8fbc5c] hover:bg-[#719646]" type="submit">Submit</Button>
+          <Button disabled={!form.formState.isValid || form.formState.isSubmitting} className="bg-[#8fbc5c] hover:bg-[#719646] w-full" type="submit">Create</Button>
         </form>
       </Form>
     </div>

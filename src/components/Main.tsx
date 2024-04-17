@@ -48,11 +48,11 @@ export function Main(props: Props) {
                 Profile
               </Link>
               <Link
-                href="/add-cafe"
+                href="/create-cafe"
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
               >
                 <CirclePlus className="h-4 w-4" />
-                Add Cafe{" "}
+                Create Cafe{" "}
               </Link>
             </nav>
           </div>
@@ -95,11 +95,11 @@ export function Main(props: Props) {
                   Profile
                 </Link>
                 <Link
-                  href="/add-cafe"
+                  href="/create-cafe"
                   className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
                 >
                   <CirclePlus className="h-5 w-5" />
-                  Add Cafe
+                  Create Cafe
                 </Link>
               </nav>
             </SheetContent>

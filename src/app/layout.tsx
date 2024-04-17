@@ -5,6 +5,7 @@ import { cn } from "~/lib/utils"
 import { Main } from "~/components/Main";
 import { getServerSession } from "next-auth";
 import { authOptions } from "~/server/auth";
+import { Toaster } from "~/components/ui/sonner";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -40,6 +41,7 @@ export default async function RootLayout({
           <Main session={session}>
             {children}
           </Main>
+          <Toaster position="top-right" richColors />
         </ThemeProvider>
       </body>
     </html >
