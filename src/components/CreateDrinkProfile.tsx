@@ -17,7 +17,9 @@ import { Input } from "~/components/ui/input"
 import { Textarea } from "~/components/ui/textarea"
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group"
 import { Label } from "~/components/ui/label"
-import { MilkType } from "@prisma/client"
+import { IceLevel, MilkType } from "@prisma/client"
+import { Circle } from "lucide-react"
+
 
 const MILK_TO_NAME = {
   [MilkType.WHOLE]: "Whole",
@@ -30,9 +32,18 @@ const MILK_TO_NAME = {
   [MilkType.NONE]: "None",
 }
 
+const ICE_TO_NAME = {
+  [IceLevel.NO_ICE]: "No ice",
+  [IceLevel.LESS_ICE]: "Less ice",
+  [IceLevel.REGULAR_ICE]: "Regular ice",
+  [IceLevel.MORE_ICE]: "More ice",
+}
+
 const formSchema = z.object({
   name: z.string().min(2).max(30),
   naturalLanguageInput: z.string().min(10).max(190),
+  sweetness: z.string(),
+  ice: z.nativeEnum(IceLevel),
   milk: z.nativeEnum(MilkType)
 })
 
@@ -43,6 +54,7 @@ const CreateDrinkProfile = () => {
     defaultValues: {
       name: "",
       naturalLanguageInput: "",
+      sweetness: "-1",
     },
   })
 
@@ -52,7 +64,9 @@ const CreateDrinkProfile = () => {
 
   const nameLength = form.getValues("name").length
   const descriptionLength = form.getValues("naturalLanguageInput").length
-
+  const sweetChoice = parseInt(form.getValues("sweetness"))
+  const iceChoice = Object.keys(IceLevel).indexOf(form.getValues("ice"))
+  
   return (
     <div>
       <Form {...form}>
@@ -85,6 +99,72 @@ const CreateDrinkProfile = () => {
                 <FormDescription>
                   {descriptionLength} / 190 {descriptionLength < 10 && "(Minimum 10 characters)"}
                 </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="sweetness"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Sweetness</FormLabel>
+                <FormControl>
+                  <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <RadioGroup onValueChange={field.onChange} className='grid grid-cols-10'>
+                      {Array.from({ length: 10 }, (_, index) => index + 1).map((sweetness) => (
+                        <div key={sweetness.toString()} className="grid grid-rows-2 items-center space-y-3">
+                          <div className="flex items-center">
+                            <Circle color={sweetness <= sweetChoice ? "#8fbc5c" : "#D9D9D9"} fill={sweetness <= sweetChoice ? "#8fbc5c" : "#D9D9D9"} style={{ marginRight: '-22px' }} />
+                            <RadioGroupItem value={sweetness.toString()} id={sweetness.toString()} style={{ color: "#D9D9D9" }} />
+                          </div>
+                          <Label htmlFor={sweetness.toString()} className={sweetness === sweetChoice ? 'font-extrabold' : ''} >
+                            {sweetness === 1 ? sweetness + '\nespresso' : sweetness === 10 ? sweetness + '\nfrap' : sweetness}
+                          </Label>
+                        </div>
+                      ))}
+                      <div className="col-span-10" style={{
+                        marginLeft: '5px', marginTop: '-63px', width: 'calc(90% + 20px)', height: '8px',
+                        background: `linear-gradient(to right, #8fbc5c 0%, #8fbc5c ${(sweetChoice - 1) * 11}%, #D9D9D9 ${(sweetChoice - 1) * 11}%)`,
+                        zIndex: -1
+                      }}>
+                      </div>
+                    </RadioGroup>
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="ice"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Ice</FormLabel>
+                <FormControl>
+                  <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <RadioGroup onValueChange={field.onChange} className='grid grid-cols-4'>
+                      {Object.keys(IceLevel).map((iceLevel, index) => (
+                        <div key={iceLevel} className="grid grid-rows-2 items-center space-y-3">
+                          <div className="flex items-center">
+                            <Circle color={index <= iceChoice ? "#8fbc5c" : "#D9D9D9"} fill={index <= iceChoice ? "#8fbc5c" : "#D9D9D9"} style={{ marginRight: '-20px' }} />
+                            <RadioGroupItem value={iceLevel} id={iceLevel} style={{ color: "#D9D9D9" }} />
+                            <div style={{
+                              marginLeft: '5px', top: '10px', width: index <= 2 ? '100%' : '', height: '8px',
+                              background: index < iceChoice ? "#8fbc5c" : "#D9D9D9",
+                              zIndex: -1
+                            }}>
+                            </div>
+                          </div>
+                          <Label htmlFor={iceLevel} className={index === iceChoice ? 'font-extrabold' : ''} >
+                            {ICE_TO_NAME[iceLevel as IceLevel]}
+                          </Label>
+                        </div>
+                      ))}
+                    </RadioGroup>
+                  </div>
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
