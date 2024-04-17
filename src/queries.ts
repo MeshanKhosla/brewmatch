@@ -11,3 +11,9 @@ export async function getCafeByName(name: string) {
     where: { name }
   });
 }
+
+export async function getDrinkProfilesByCreator(userId: string) {
+	return db.drinkProfile.findMany({
+		where: { userId }
+	});
+}

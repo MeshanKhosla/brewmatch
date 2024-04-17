@@ -1,6 +1,6 @@
 'use server'
 
-import { IceLevel, MilkType } from '@prisma/client'
+import { type IceLevel, type MilkType } from '@prisma/client'
 import { db } from '~/server/db'
 import { authOptions } from '~/server/auth';
 import { getServerSession } from 'next-auth';
@@ -60,7 +60,6 @@ export async function createCafe(name: string, description: string) {
   redirect(`/cafe/${cafe.name}`)
 }
 
-// TODO: Do error handling like above
 export async function createDrinkProfile(name: string, naturalLanguageInput: string, sweetness: number, ice: IceLevel, milk: MilkType) {
   if (sweetness < 1 || sweetness > 10) {
     return {
@@ -106,7 +105,7 @@ export async function createDrinkProfile(name: string, naturalLanguageInput: str
     }
   })
 
-  // TODO: revalidlate path
+	revalidatePath('/profile')
 
   return {
     ok: true,

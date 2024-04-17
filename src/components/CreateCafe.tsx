@@ -49,9 +49,8 @@ const CreateDrinkProfile = () => {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const res = await createCafe(values.name, values.description); // redirect /cafe/:name
+    const res = await createCafe(values.name, values.description); // redirects /cafe/:name
     if (res && !res.ok) {
-      // alert(res.error)
       toast.error(res.error);
     } else {
       toast.success("Cafe created!");
