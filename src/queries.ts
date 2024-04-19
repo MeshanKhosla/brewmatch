@@ -13,7 +13,13 @@ export async function getCafeByName(name: string) {
 }
 
 export async function getDrinkProfilesByCreator(userId: string) {
-	return db.drinkProfile.findMany({
-		where: { userId }
-	});
+  return db.drinkProfile.findMany({
+    where: { userId }
+  });
+}
+
+export async function getDrinksByCafe(id: string) {
+  return db.drink.findMany({
+    where: { cafeId : id }
+  });
 }

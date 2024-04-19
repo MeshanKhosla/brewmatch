@@ -105,10 +105,77 @@ export async function createDrinkProfile(name: string, naturalLanguageInput: str
     }
   })
 
-	revalidatePath('/profile')
+  revalidatePath('/profile')
 
   return {
     ok: true,
     drinkProfile
+  }
+}
+
+export async function createDrink(cafeId: string, name: string, description: string, price: number, sweetness: number) {
+  if (sweetness < 1 || sweetness > 10) {
+    return {
+      ok: false,
+      error: 'Sweetness must be between 1 and 10'
+    }
+  }
+
+  if (!isStringValid(name)) {
+    return {
+      ok: false,
+      error: `Name length must be less than ${MAX_LENGTH}`
+    }
+  }
+
+  if (!isStringValid(description)) {
+    return {
+      ok: false,
+      error: `Description length must be less than ${MAX_LENGTH}`
+    }
+  }
+
+  const session = await getServerSession(authOptions);
+
+  if (!session?.user) {
+    redirect('/discover')
+  }
+
+  name = name.trim()
+  // Check if drink name already exists
+  const existingDrink = await db.drink.findFirst({ where: { name } })
+
+  if (existingDrink) {
+    return {
+      ok: false,
+      error: 'Drink with that name already exists'
+    }
+  }
+
+  // get the cafe the drink is being added to
+  const currentCafe = await db.cafe.findFirst({ where: { id: cafeId } })
+
+  if (!currentCafe) {
+    return {
+      ok: false,
+      error: 'Cafe not found'
+    }
+  }
+
+  const drink = await db.drink.create({
+    data: {
+      name,
+      description,
+      price,
+      cafeId,
+      sweetness,
+    }
+  })
+
+  revalidatePath(`/cafe/${currentCafe.name}`)
+  
+  return {
+    ok: true,
+    drink
   }
 }
