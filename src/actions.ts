@@ -147,7 +147,7 @@ export async function createDrinkProfile(name: string, naturalLanguageInput: str
   }
 }
 
-export async function createDrink(cafeId: string, name: string, description: string, price: number, sweetness: number) {
+export async function createDrink(cafeId: string, name: string, description: string, price: number, sweetness: number, existingId?: string) {
   if (sweetness < 1 || sweetness > 10) {
     return {
       ok: false,
@@ -175,17 +175,6 @@ export async function createDrink(cafeId: string, name: string, description: str
     redirect('/discover')
   }
 
-  name = name.trim()
-  // Check if drink name already exists
-  const existingDrink = await db.drink.findFirst({ where: { name } })
-
-  if (existingDrink) {
-    return {
-      ok: false,
-      error: 'Drink with that name already exists'
-    }
-  }
-
   // get the cafe the drink is being added to
   const currentCafe = await db.cafe.findFirst({ where: { id: cafeId } })
 
@@ -195,16 +184,42 @@ export async function createDrink(cafeId: string, name: string, description: str
       error: 'Cafe not found'
     }
   }
+  let drink
+  if (existingId) {
+    drink = await db.drink.update({
+      where: {
+        id: existingId
+      },
+      data: {
+        name,
+        description,
+        price,
+        cafeId,
+        sweetness,
+      }
+    })
+  } else {
+    name = name.trim()
+    // Check if drink name already exists
+    const existingDrink = await db.drink.findFirst({ where: { name } })
 
-  const drink = await db.drink.create({
-    data: {
-      name,
-      description,
-      price,
-      cafeId,
-      sweetness,
+    if (existingDrink) {
+      return {
+        ok: false,
+        error: 'Drink with that name already exists'
+      }
     }
-  })
+
+    drink = await db.drink.create({
+      data: {
+        name,
+        description,
+        price,
+        cafeId,
+        sweetness,
+      }
+    })
+  }
 
   const metadata = {
     drinkId: drink.id,
@@ -233,6 +248,31 @@ export async function createDrink(cafeId: string, name: string, description: str
     drink
   }
 }
+
+export async function deleteDrink(drinkId: string, cafeName: string) {
+  const drink = await db.drink.findFirst({ where: { id: drinkId } })
+
+  if (!drink) {
+    return {
+      ok: false,
+      error: 'Drink not found'
+    }
+  }
+  // get the cafe the drink is being added to
+  const deletedDrink = await db.drink.delete({
+    where: {
+      id: drinkId
+    }
+  })
+
+  revalidatePath(`/cafe/${cafeName}`)
+
+  return {
+    ok: true,
+    deletedDrink
+  }
+}
+
 
 /**
  * Get drink recommendations for a given profile in a given cafe
