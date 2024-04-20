@@ -1,6 +1,6 @@
 'use server'
 
-import { Drink, DrinkProfile, type IceLevel, type MilkType } from '@prisma/client'
+import type { Drink, DrinkProfile, IceLevel, MilkType } from '@prisma/client'
 import { db } from '~/server/db'
 import { authOptions } from '~/server/auth';
 import { getServerSession } from 'next-auth';
