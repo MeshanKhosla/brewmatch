@@ -95,7 +95,7 @@ const CreateDrinkProfileForm = (props: CreateDrinkProfileFormProps) => {
   const descriptionLength = form.getValues("naturalLanguageInput").length;
   const sweetChoice = parseInt(form.getValues("sweetness"));
   const iceChoice = Object.keys(IceLevel).indexOf(form.getValues("ice"));
-
+  const milkChoice = Object.keys(MilkType).indexOf(form.getValues("milk"));
 
   return (
     <Form {...form}>
@@ -296,7 +296,7 @@ const CreateDrinkProfileForm = (props: CreateDrinkProfileFormProps) => {
                   onValueChange={field.onChange}
                   className="grid grid-cols-2"
                 >
-                  {Object.keys(MilkType).map((milkType) => (
+                  {Object.keys(MilkType).map((milkType, index) => (
                     <div
                       key={milkType}
                       className="flex items-center space-x-2"
@@ -305,6 +305,11 @@ const CreateDrinkProfileForm = (props: CreateDrinkProfileFormProps) => {
                         value={milkType}
                         id={milkType}
                         style={{ color: "#8fbc5c" }}
+                        className={
+                          index == milkChoice
+                            ? "bg-[#8fbc5c]"
+                            : "bg-[#D9D9D9]"
+                        }
                       />
                       <Label htmlFor={milkType}>
                         {MILK_TO_NAME[milkType as MilkType]}
