@@ -60,7 +60,7 @@ export async function createCafe(name: string, description: string) {
   redirect(`/cafe/${cafe.name}`)
 }
 
-export async function createDrinkProfile(name: string, naturalLanguageInput: string, sweetness: number, ice: IceLevel, milk: MilkType) {
+export async function createDrinkProfile(name: string, naturalLanguageInput: string, sweetness: number, ice: IceLevel, milk: MilkType, existingId?: string,) {
   if (sweetness < 1 || sweetness > 10) {
     return {
       ok: false,
@@ -89,21 +89,37 @@ export async function createDrinkProfile(name: string, naturalLanguageInput: str
     redirect('/discover')
   }
 
-  // Create drink profile
-  const drinkProfile = await db.drinkProfile.create({
-    data: {
-      name,
-      naturalLanguageInput,
-      sweetness,
-      ice,
-      milk,
-      creator: {
-        connect: {
-          id: session.user.id
+  // Create or update drink profile
+  let drinkProfile
+  if (existingId) {
+    drinkProfile = await db.drinkProfile.update({
+      where: {
+        id: existingId
+      },
+      data: {
+        name,
+        naturalLanguageInput,
+        sweetness,
+        ice,
+        milk,
+      }
+    })
+  } else {
+    drinkProfile = await db.drinkProfile.create({
+      data: {
+        name,
+        naturalLanguageInput,
+        sweetness,
+        ice,
+        milk,
+        creator: {
+          connect: {
+            id: session.user.id
+          }
         }
       }
-    }
-  })
+    })
+  }
 
   revalidatePath('/profile')
 
@@ -173,7 +189,7 @@ export async function createDrink(cafeId: string, name: string, description: str
   })
 
   revalidatePath(`/cafe/${currentCafe.name}`)
-  
+
   return {
     ok: true,
     drink

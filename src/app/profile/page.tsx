@@ -1,11 +1,13 @@
 import { getServerSession } from "next-auth";
 import CreateDrinkProfile from "~/components/CreateDrinkProfile";
+import CreateDrinkProfileForm from "~/components/CreateDrinkProfileForm";
 import {
   Card,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "~/components/ui/dialog";
 import { getDrinkProfilesByCreator } from "~/queries";
 import { authOptions } from "~/server/auth";
 
@@ -28,14 +30,24 @@ const Page = async () => {
       ) : (
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
           {myDrinkProfiles.map((profile) => (
-            <Card key={profile.id}>
-              <CardHeader>
-                <CardTitle>{profile.name}</CardTitle>
-                <CardDescription>
-                  {profile.naturalLanguageInput}
-                </CardDescription>
-              </CardHeader>
-            </Card>
+            <Dialog>
+              <DialogTrigger className="h-full w-full rounded py-1 text-white">
+                <Card key={profile.id}>
+                  <CardHeader>
+                    <CardTitle>{profile.name}</CardTitle>
+                    <CardDescription>
+                      {profile.naturalLanguageInput}
+                    </CardDescription>
+                  </CardHeader>
+                </Card>
+              </DialogTrigger>
+              <DialogContent className="my-3 max-h-screen overflow-y-scroll">
+                <DialogHeader>
+                  <DialogTitle>Edit</DialogTitle>
+                </DialogHeader>
+                <CreateDrinkProfileForm profile={profile} />
+              </DialogContent>
+            </Dialog>
           ))}
         </div>
       )}
