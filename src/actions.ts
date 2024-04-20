@@ -6,8 +6,15 @@ import { authOptions } from '~/server/auth';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
+import { Index } from "@upstash/vector"
+import { env } from '~/env';
 
 const MAX_LENGTH = 191;
+
+const vectorIndex = new Index({
+  url: env.UPSTASH_VECTOR_REST_URL,
+  token: env.UPSTASH_VECTOR_REST_TOKEN,
+})
 
 function isStringValid(str: string) {
   return str.length <= MAX_LENGTH
@@ -187,6 +194,24 @@ export async function createDrink(cafeId: string, name: string, description: str
       sweetness,
     }
   })
+
+  // Add to vector database
+  const res = await vectorIndex.upsert({
+    id: drink.id,
+    data: drink.description,
+    metadata: {
+      drinkName: drink.name,
+      drinkDescription: drink.description,
+      cafeId: drink.cafeId,
+    }
+  })
+
+  if (res !== "Success") {
+    return {
+      ok: false,
+      error: 'Error adding to search index'
+    }
+  }
 
   revalidatePath(`/cafe/${currentCafe.name}`)
 
