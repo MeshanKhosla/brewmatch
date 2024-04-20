@@ -17,6 +17,9 @@ import {
   CardTitle,
 } from "~/components/ui/card";
 
+import { SearchBar } from "~/components/ui/searchBar";
+
+
 const Page = () => {
   return (
     <div className="flex flex-col gap-5">
@@ -24,20 +27,9 @@ const Page = () => {
         <h2 className="text-center text-4xl">DISCOVER</h2>
       </div>
       <h3 className="text-itim items-center text-2xl">Locate your cafe:</h3>
-      <Command className="">
-        <CommandInput placeholder="Search a Cafe..." />
-        <CommandList>
-          <CommandEmpty>No results found.</CommandEmpty>
-          <CommandGroup heading="Suggestions">
-            <CommandItem>Philz</CommandItem>
-          </CommandGroup>
-          <CommandSeparator />
-          <CommandGroup heading="Cafes">
-            <CommandItem>SoDoI</CommandItem>
-            <CommandItem>Mind Cafe</CommandItem>
-          </CommandGroup>
-        </CommandList>
-      </Command>
+      <div className="grid grid-cols-1">
+      <SearchBar/>
+      </div>
       <h3 className="pb-1 pt-5 text-2xl">Recent Drink Choices</h3>
       <Link href="/cafe/Blue%20Bottle">
         <Card>
