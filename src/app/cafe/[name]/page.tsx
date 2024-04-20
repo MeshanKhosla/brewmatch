@@ -50,7 +50,7 @@ const Page = async ({ params }: { params: { name: string } }) => {
               <Card key={drink.id}>
                 <CardHeader>
                   <div className="flex justify-between items-center w-full size-1 space-x-2">
-                    <DeleteAlert drink={drink} cafeName={cafe.name} />
+                    <DeleteAlert drink={drink} />
                     <Dialog>
                       <DialogTrigger>
                         <Pencil />

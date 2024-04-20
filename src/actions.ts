@@ -249,27 +249,56 @@ export async function createDrink(cafeId: string, name: string, description: str
   }
 }
 
-export async function deleteDrink(drinkId: string, cafeName: string) {
-  const drink = await db.drink.findFirst({ where: { id: drinkId } })
-
-  if (!drink) {
-    return {
-      ok: false,
-      error: 'Drink not found'
-    }
-  }
-  // get the cafe the drink is being added to
+export async function deleteDrink(drink: Drink) {
   const deletedDrink = await db.drink.delete({
     where: {
-      id: drinkId
+      id: drink.id
     }
   })
 
-  revalidatePath(`/cafe/${cafeName}`)
+  if (!deletedDrink) {
+    return {
+      ok: false,
+      error: 'Error deleting drink'
+    }
+  }
+
+  const vectorRes = await vectorIndex.delete(deletedDrink.id)
+
+  if (vectorRes.deleted !== 1) {
+    return {
+      ok: false,
+      error: 'Error deleting from search index'
+    }
+  }
+
+  revalidatePath('/cafe/[name]')
 
   return {
     ok: true,
     deletedDrink
+  }
+}
+
+export async function deleteDrinkProfile(drinkProfile: DrinkProfile) {
+  const deletedDrinkProfile = await db.drinkProfile.delete({
+    where: {
+      id: drinkProfile.id
+    }
+  })
+
+  if (!deletedDrinkProfile) {
+    return {
+      ok: false,
+      error: 'Error deleting drink profile'
+    }
+  }
+
+  revalidatePath('/profile')
+
+  return {
+    ok: true,
+    deletedDrinkProfile
   }
 }
 

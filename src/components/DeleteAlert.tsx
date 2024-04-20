@@ -12,7 +12,7 @@ import {
    AlertDialogTitle,
    AlertDialogTrigger,
 } from "~/components/ui/alert-dialog"
-import { deleteDrink } from "~/actions";
+import { deleteDrink, deleteDrinkProfile } from "~/actions";
 import { toast } from "sonner";
 import { DrinkProfile, Cafe, Drink } from "@prisma/client";
 
@@ -20,38 +20,69 @@ type DeleteAlertProps = {
    profile?: DrinkProfile;
    cafe?: Cafe;
    drink?: Drink;
-   cafeName?: string;
 }
 
 const DeleteAlert = (props: DeleteAlertProps) => {
-   const { profile, cafe, drink, cafeName } = props;
+   const { profile, cafe, drink } = props;
 
-   async function handleDelete(deleteItem: string) {
-      let res
-      if (drink && cafeName) {
-         res = await deleteDrink(
-            deleteItem,
-            cafeName,
-         ); // revalidate /cafe/:name
-      } else if (profile) {
-         // profile delete action
-      } else {
-         // cafe delete action
+   async function handleDelete() {
+      // let res
+      // if (drink && cafeName) {
+      //    res = await deleteDrink(
+      //       deleteItem,
+      //       cafeName,
+      //    ); // revalidate /cafe/:name
+      // } else if (profile) {
+      //    // profile delete action
+      // } else {
+      //    // cafe delete action
+      // }
+
+      const results = []
+      if (drink) {
+         const res = await deleteDrink(drink);
+         results.push(res);
       }
-      if (res && !res.ok) {
-         // alert(res.error)
-         toast.error(res.error);
-      } else {
-         // Close the dialog by getting the first button in the dialog and clicking it
-         const b = document.querySelector<HTMLButtonElement>(
-            'div[role="dialog"] > button',
-         );
-         if (b) {
-            b.click();
+
+      if (profile) {
+         const res = await deleteDrinkProfile(profile);
+         results.push(res);
+      }
+
+      for (const res of results) {
+         if (res && !res.ok) {
+            toast.error(res.error);
          }
-         toast.success(`Drink deleted!`);
       }
+
+      const b = document.querySelector<HTMLButtonElement>(
+         'div[role="dialog"] > button',
+      );
+      if (b) {
+         b.click();
+      }
+
+      const allOk = results.every((res) => res.ok);
+      if (allOk) {
+         toast.success('Successfully deleted!');
+      }
+
+
+
+      // if (res && !res.ok) {
+      //    toast.error(res.error);
+      // } else {
+      //    // Close the dialog by getting the first button in the dialog and clicking it
+      //    const b = document.querySelector<HTMLButtonElement>(
+      //       'div[role="dialog"] > button',
+      //    );
+      //    if (b) {
+      //       b.click();
+      //    }
+      //    toast.success('Successfully deleted!');
+      // }
    }
+
    return (
       <AlertDialog>
          <AlertDialogTrigger><Trash2 /></AlertDialogTrigger>
@@ -69,7 +100,7 @@ const DeleteAlert = (props: DeleteAlertProps) => {
                   Cancel
                </AlertDialogCancel>
                <AlertDialogAction className="bg-[#F9F7F2] border border-[#8fbc5c] hover:bg-[#8fbc5c] text-black"
-                  onClick={() => handleDelete(drink?.id || profile?.id || cafe?.id)}>
+                  onClick={handleDelete}>
                   Delete
                </AlertDialogAction>
             </AlertDialogFooter>

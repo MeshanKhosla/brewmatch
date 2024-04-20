@@ -1,6 +1,8 @@
+import { Pencil } from "lucide-react";
 import { getServerSession } from "next-auth";
 import CreateDrinkProfile from "~/components/CreateDrinkProfile";
 import CreateDrinkProfileForm from "~/components/CreateDrinkProfileForm";
+import DeleteAlert from "~/components/DeleteAlert";
 import {
   Card,
   CardDescription,
@@ -30,24 +32,30 @@ const Page = async () => {
       ) : (
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
           {myDrinkProfiles.map((profile) => (
-            <Dialog>
-              <DialogTrigger className="h-full w-full rounded py-1 text-white">
-                <Card key={profile.id}>
-                  <CardHeader>
-                    <CardTitle>{profile.name}</CardTitle>
-                    <CardDescription>
-                      {profile.naturalLanguageInput}
-                    </CardDescription>
-                  </CardHeader>
-                </Card>
-              </DialogTrigger>
-              <DialogContent className="my-3 max-h-screen overflow-y-scroll">
-                <DialogHeader>
-                  <DialogTitle>Edit</DialogTitle>
-                </DialogHeader>
-                <CreateDrinkProfileForm profile={profile} />
-              </DialogContent>
-            </Dialog>
+            <Card key={profile.id}>
+              <CardHeader>
+                <div className="flex justify-between items-center w-full size-1 space-x-2">
+                  <DeleteAlert profile={profile} />
+                  <Dialog>
+                    <DialogTrigger>
+                      <Pencil />
+                    </DialogTrigger>
+                    <DialogContent className="my-3 max-h-screen overflow-y-scroll">
+                      <DialogHeader>
+                        <DialogTitle>Edit</DialogTitle>
+                      </DialogHeader>
+                      <CreateDrinkProfileForm profile={profile} />
+                    </DialogContent>
+                  </Dialog>
+                </div>
+                <div className="grid grid-rows-3 justify-items-center w-full space-y-2">
+                  <CardTitle>{profile.name}</CardTitle>
+                  <CardDescription>
+                    {profile.naturalLanguageInput}
+                  </CardDescription>
+                </div>
+              </CardHeader>
+            </Card>
           ))}
         </div>
       )}
