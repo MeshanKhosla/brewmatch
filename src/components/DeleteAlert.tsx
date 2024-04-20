@@ -26,18 +26,6 @@ const DeleteAlert = (props: DeleteAlertProps) => {
    const { profile, cafe, drink } = props;
 
    async function handleDelete() {
-      // let res
-      // if (drink && cafeName) {
-      //    res = await deleteDrink(
-      //       deleteItem,
-      //       cafeName,
-      //    ); // revalidate /cafe/:name
-      // } else if (profile) {
-      //    // profile delete action
-      // } else {
-      //    // cafe delete action
-      // }
-
       const results = []
       if (drink) {
          const res = await deleteDrink(drink);
@@ -66,21 +54,6 @@ const DeleteAlert = (props: DeleteAlertProps) => {
       if (allOk) {
          toast.success('Successfully deleted!');
       }
-
-
-
-      // if (res && !res.ok) {
-      //    toast.error(res.error);
-      // } else {
-      //    // Close the dialog by getting the first button in the dialog and clicking it
-      //    const b = document.querySelector<HTMLButtonElement>(
-      //       'div[role="dialog"] > button',
-      //    );
-      //    if (b) {
-      //       b.click();
-      //    }
-      //    toast.success('Successfully deleted!');
-      // }
    }
 
    return (
