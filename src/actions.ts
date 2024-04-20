@@ -1,6 +1,6 @@
 'use server'
 
-import { type IceLevel, type MilkType } from '@prisma/client'
+import { Drink, DrinkProfile, type IceLevel, type MilkType } from '@prisma/client'
 import { db } from '~/server/db'
 import { authOptions } from '~/server/auth';
 import { getServerSession } from 'next-auth';
@@ -8,6 +8,13 @@ import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { Index } from "@upstash/vector"
 import { env } from '~/env';
+
+type VectorMetadata = {
+  drinkId: string,
+  drinkName: string,
+  drinkDescription: string,
+  cafeId: string,
+}
 
 const MAX_LENGTH = 191;
 
@@ -18,6 +25,10 @@ const vectorIndex = new Index({
 
 function isStringValid(str: string) {
   return str.length <= MAX_LENGTH
+}
+
+function addSweetnessToDescription(description: string, sweetness: number) {
+  return `${description} --- Sweetness level: ${sweetness}`
 }
 
 export async function createCafe(name: string, description: string) {
@@ -195,15 +206,17 @@ export async function createDrink(cafeId: string, name: string, description: str
     }
   })
 
-  // Add to vector database
+  const metadata = {
+    drinkId: drink.id,
+    drinkName: drink.name,
+    drinkDescription: addSweetnessToDescription(drink.description, sweetness),
+    cafeId: drink.cafeId,
+  } as VectorMetadata;
+
   const res = await vectorIndex.upsert({
     id: drink.id,
     data: drink.description,
-    metadata: {
-      drinkName: drink.name,
-      drinkDescription: drink.description,
-      cafeId: drink.cafeId,
-    }
+    metadata
   })
 
   if (res !== "Success") {
@@ -219,4 +232,45 @@ export async function createDrink(cafeId: string, name: string, description: str
     ok: true,
     drink
   }
+}
+
+/**
+ * Get drink recommendations for a given profile in a given cafe
+ * @param profile The drink profile to get recommendations for
+ * @param cafeId  The cafe to get recommendations from
+ * @param k       The number of recommendations to return
+ */
+export async function getDrinkRecommendations(profile: DrinkProfile, cafeId: string, k: number) {
+  const recs = await vectorIndex.query<VectorMetadata>({
+    data: addSweetnessToDescription(profile.naturalLanguageInput, profile.sweetness),
+    includeMetadata: true,
+    filter: `cafeId = "${cafeId}"`,
+    topK: k,
+  })
+
+  // Fetch the actual drink objects from the database
+  const drinkIds = recs.map(rec => rec.metadata?.drinkId).filter(r => typeof r === 'string') as string[]
+
+  const drinks = await db.drink.findMany({
+    where: {
+      id: {
+        in: drinkIds
+      }
+    }
+  })
+
+  return {
+    ok: true,
+    drinks
+  }
+}
+
+/**
+ * Reason about why a drink was recommended to a user
+ * @param drinkProfile The drink profile that was used to make the recommendation
+ * @param chosenDrink  The drink that was recommended
+ */
+export async function getDrinkRecommendationReasoning(drinkProfile: DrinkProfile, chosenDrink: Drink) {
+  // TODO: I think we can use Reagent here and do something similar to the reasoning task for the planets
+  // in homework
 }
