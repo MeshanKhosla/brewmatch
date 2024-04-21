@@ -1,23 +1,6 @@
-import { Pencil } from "lucide-react";
 import { getServerSession } from "next-auth";
 import CreateDrinkProfile from "~/components/CreateDrinkProfile";
-import CreateDrinkProfileForm from "~/components/CreateDrinkProfileForm";
-import DeleteAlert from "~/components/DeleteAlert";
 import { DrinkProfileCard } from "~/components/DrinkProfileCard";
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "~/components/ui/dialog";
-import { ICE_TO_NAME, MILK_TO_NAME, removeEndString } from "~/lib/utils";
 import { getDrinkProfilesByCreator } from "~/queries";
 import { authOptions } from "~/server/auth";
 

@@ -3,7 +3,11 @@ import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import CafeCustomer from "~/components/CafeCustomer";
 import CafeOwner from "~/components/CafeOwner";
-import { getCafeByName, getDrinksByCafe } from "~/queries";
+import {
+  getCafeByName,
+  getDrinkProfilesByCreator,
+  getDrinksByCafe,
+} from "~/queries";
 import { authOptions } from "~/server/auth";
 
 const Page = async ({ params }: { params: { name: string } }) => {
@@ -23,6 +27,7 @@ const Page = async ({ params }: { params: { name: string } }) => {
   }
 
   const myDrinks = await getDrinksByCafe(cafe.id);
+  const drinkProfiles = await getDrinkProfilesByCreator(session.user.id);
 
   const isUserOwner = session.user.id === cafe.userId;
 
@@ -38,7 +43,7 @@ const Page = async ({ params }: { params: { name: string } }) => {
         </Suspense>
       ) : (
         <Suspense fallback={<div>Loading...</div>}>
-          <CafeCustomer cafe={cafe} session={session} />
+          <CafeCustomer cafe={cafe} drinkProfiles={drinkProfiles} />
         </Suspense>
       )}
     </div>

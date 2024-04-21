@@ -1,32 +1,58 @@
-import { type Cafe } from "@prisma/client";
-import { type Session } from "next-auth";
-import { getDrinkProfilesByCreator } from "~/queries";
+"use client";
+
+import { useState } from "react";
+import { type DrinkProfile, type Cafe } from "@prisma/client";
 import { DrinkProfileCard } from "~/components/DrinkProfileCard";
+import { SelectDrinkProfile } from "~/components/SelectDrinkProfile";
+import { Button } from "~/components/ui/button";
 
 type CafeCustomerProps = {
   cafe: Cafe;
-  session: Session;
+  drinkProfiles: DrinkProfile[];
 };
 
-const CafeCustomer = async (props: CafeCustomerProps) => {
-  const { cafe, session } = props;
+const STEPS = ["SELECT_DRINK_PROFILE", "SELECT_DRINK", "REVIEW_DRINK"] as const;
 
-  const drinkProfiles = await getDrinkProfilesByCreator(session.user.id);
+const CafeCustomer = (props: CafeCustomerProps) => {
+  const { cafe, drinkProfiles } = props;
+  const [stepIndex, setStepIndex] = useState<number>(0);
+  const [drinkProfileSelection, setDrinkProfileSelection] =
+    useState<DrinkProfile>();
+
+  const incrementStep = () => {
+    if (stepIndex < STEPS.length - 1) {
+      setStepIndex(stepIndex + 1);
+    }
+  };
+
+  const decrementStep = () => {
+    if (stepIndex > 0) {
+      setStepIndex(stepIndex - 1);
+    }
+  };
+
+  const handleProfileSelection = (profile: DrinkProfile) => {
+    setDrinkProfileSelection(profile);
+    incrementStep();
+  };
+
+  const STEPS_TO_COMPONENTS: Record<(typeof STEPS)[number], JSX.Element> = {
+    SELECT_DRINK_PROFILE: (
+      <SelectDrinkProfile
+        drinkProfiles={drinkProfiles}
+        handleProfileSelection={handleProfileSelection}
+      />
+    ),
+    SELECT_DRINK: <div>Select Drink</div>,
+    REVIEW_DRINK: <div>Review Drink</div>,
+  };
 
   return (
-    <div className="flex flex-col gap-2">
-      <h2 className="text-xl font-semibold">
-        Step 1: Choose your Drink Profile
-      </h2>
-      <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
-        {drinkProfiles.map((profile) => (
-          <DrinkProfileCard
-            key={profile.id}
-            profile={profile}
-            canEdit={false}
-          />
-        ))}
-      </div>
+    <div>
+      {STEPS_TO_COMPONENTS[STEPS[stepIndex]!]}
+      <Button disabled={stepIndex === 0} onClick={decrementStep}>
+        Previous
+      </Button>
     </div>
   );
 };

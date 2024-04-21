@@ -1,3 +1,5 @@
+"use client";
+
 import { type DrinkProfile } from "@prisma/client";
 import {
   Card,
@@ -17,16 +19,27 @@ import {
 import { ICE_TO_NAME, MILK_TO_NAME, removeEndString } from "~/lib/utils";
 import CreateDrinkProfileForm from "~/components/CreateDrinkProfileForm";
 
-type DrinkProfileProps = {
+type DrinkProfileCardProps = {
   canEdit: boolean;
   profile: DrinkProfile;
+  handleProfileSelection?: (profile: DrinkProfile) => void;
 };
 
-export function DrinkProfileCard(props: DrinkProfileProps) {
-  const { canEdit, profile } = props;
+export function DrinkProfileCard(props: DrinkProfileCardProps) {
+  const { canEdit, profile, handleProfileSelection } = props;
+
+  const onCardClick = () => {
+    if (handleProfileSelection) {
+      handleProfileSelection(profile);
+    }
+  };
 
   return (
-    <Card key={profile.id}>
+    <Card
+      key={profile.id}
+      onClick={onCardClick}
+      className={handleProfileSelection ? "hover:cursor-pointer" : ""}
+    >
       <CardHeader>
         {canEdit && (
           <div className="flex size-1 w-full items-center justify-between space-x-2">
