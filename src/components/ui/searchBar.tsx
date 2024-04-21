@@ -12,7 +12,8 @@ import {
 import { useState } from "react";
 import { useRouter } from 'next/navigation';
 import Select from 'react-select'
-import { getAllCafes } from "~/queries";
+import { Cafe } from "@prisma/client";
+
 
 
 export function SearchBar() {
@@ -34,22 +35,19 @@ export function SearchBar() {
             </CommandList>}
         </Command>);
     }
-
-export function SearchBarReact(cafes:Array<any>) {
+type SearchBarProps = {
+    cafes: Cafe[]
+};
+export function SearchBarReact(props: SearchBarProps) {
+    const {cafes} = props;
+    
     const router = useRouter();
-    const options = [
-        { value: 'SoDoI', label: 'SoDoI' },
-        { value: 'Blue Bottle', label: 'Blue Bottle' },
-      ]
-    //   {cafes.map((cafes) => (
-    //     options.push({value: cafes.name, label: cafes.name})
-    //   ))}
-
+    const options = cafes.map((cafes) => ({value: cafes.name, label: cafes.name}));
     return <Select theme={(theme) => ({
         ...theme,
         colors: {
           ...theme.colors,
           primary25: '#8fbc5c',
           primary: '#8fbc5c',
-        }})} options={options} onChange={(option) => router.push(`/cafe/${option.value}`)}/>
+        }})} options={options} onChange={(option) => router.push(`/cafe/${option!.value}`)}/>
 }

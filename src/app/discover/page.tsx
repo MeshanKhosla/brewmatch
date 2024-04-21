@@ -15,6 +15,7 @@ import { getAllCafes } from "~/queries";
 const Page = async () => {
 
   const allCafes = await getAllCafes();
+  console.log(allCafes);
   return (
     <div className="flex flex-col gap-5">
       <div className="flex items-center justify-center bg-[#F7F0DD] p-4 py-12 text-center text-black">
