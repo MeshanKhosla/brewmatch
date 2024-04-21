@@ -10,6 +10,7 @@ import {
   CardTitle,
 } from "~/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "~/components/ui/dialog";
+import { ICE_TO_NAME, MILK_TO_NAME, removeEndString } from "~/lib/utils";
 import { getDrinkProfilesByCreator } from "~/queries";
 import { authOptions } from "~/server/auth";
 
@@ -50,8 +51,11 @@ const Page = async () => {
                 </div>
                 <div className="grid grid-rows-3 justify-items-center w-full space-y-2">
                   <CardTitle>{profile.name}</CardTitle>
+                  <CardDescription>{profile.naturalLanguageInput}</CardDescription>
                   <CardDescription>
-                    {profile.naturalLanguageInput}
+                    Ice: {removeEndString(ICE_TO_NAME[profile.ice], " ice")} <span className="font-semibold">/</span>{" "}
+                    Sweetness: {profile.sweetness} <span className="font-semibold">/</span>{" "}
+                    Milk: {MILK_TO_NAME[profile.milk]}
                   </CardDescription>
                 </div>
               </CardHeader>

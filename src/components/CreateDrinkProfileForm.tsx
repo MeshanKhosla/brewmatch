@@ -21,24 +21,7 @@ import { DrinkProfile, IceLevel, MilkType } from "@prisma/client";
 import { Asterisk } from "lucide-react";
 import { createDrinkProfile } from "~/actions";
 import { toast } from "sonner";
-
-const MILK_TO_NAME = {
-  [MilkType.WHOLE]: "Whole",
-  [MilkType.TWO_PERCENT]: "2%",
-  [MilkType.ALMOND]: "Almond",
-  [MilkType.OAT]: "Oat",
-  [MilkType.SOY]: "Soy",
-  [MilkType.NONFAT]: "Nonfat",
-  [MilkType.COCONUT]: "Coconut",
-  [MilkType.NONE]: "None",
-};
-
-const ICE_TO_NAME = {
-  [IceLevel.NO_ICE]: "No ice",
-  [IceLevel.LESS_ICE]: "Less ice",
-  [IceLevel.REGULAR_ICE]: "Regular ice",
-  [IceLevel.MORE_ICE]: "More ice",
-};
+import { ICE_TO_NAME, MILK_TO_NAME } from "~/lib/utils";
 
 const formSchema = z.object({
   name: z.string().min(2).max(30),

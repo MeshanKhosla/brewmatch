@@ -53,7 +53,8 @@ const CafeOwner = (props: CafeOwnerProps) => {
               <div className="grid grid-rows-3 justify-items-center w-full space-y-2">
                 <CardTitle>{drink.name}</CardTitle>
                 <CardDescription>{drink.description}</CardDescription>
-                <CardDescription>Price: {drink.price} / Sweetness: {drink.sweetness}</CardDescription>
+                <CardDescription>Price: {drink.price} <span className="font-semibold">/</span>{" "}
+                  Sweetness: {drink.sweetness}</CardDescription>
               </div>
             </CardHeader>
           </Card>
