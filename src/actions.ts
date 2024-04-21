@@ -184,6 +184,9 @@ export async function createDrink(cafeId: string, name: string, description: str
       error: 'Cafe not found'
     }
   }
+  name = name.trim()
+    // Check if drink name already exists - if it does then update the record
+    const existingDrink = await db.drink.findFirst({ where: { name, cafeId: cafeId } })
   let drink
   if (existingId) {
     drink = await db.drink.update({
@@ -198,18 +201,20 @@ export async function createDrink(cafeId: string, name: string, description: str
         sweetness,
       }
     })
-  } else {
-    name = name.trim()
-    // Check if drink name already exists
-    const existingDrink = await db.drink.findFirst({ where: { name } })
-
-    if (existingDrink) {
-      return {
-        ok: false,
-        error: 'Drink with that name already exists'
+  } else if (existingDrink){
+    drink = await db.drink.update({
+      where: {
+        id: existingDrink.id
+      },
+      data: {
+        name,
+        description,
+        price,
+        cafeId,
+        sweetness,
       }
-    }
-
+    })
+  } else {
     drink = await db.drink.create({
       data: {
         name,
