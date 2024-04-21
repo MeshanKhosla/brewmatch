@@ -221,16 +221,17 @@ export async function createDrink(cafeId: string, name: string, description: str
     })
   }
 
+  const drinkDescription = addDataToDescription(drink.description, sweetness, drink.name)
   const metadata = {
     drinkId: drink.id,
     drinkName: drink.name,
-    drinkDescription: addDataToDescription(drink.description, sweetness),
+    drinkDescription,
     cafeId: drink.cafeId,
   } as VectorMetadata;
 
   const res = await vectorIndex.upsert({
     id: drink.id,
-    data: drink.description,
+    data: drinkDescription,
     metadata
   })
 
