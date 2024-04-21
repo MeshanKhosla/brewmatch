@@ -27,8 +27,8 @@ function isStringValid(str: string) {
   return str.length <= MAX_LENGTH
 }
 
-function addSweetnessToDescription(description: string, sweetness: number) {
-  return `${description} --- Sweetness level: ${sweetness}`
+function addDataToDescription(description: string, sweetness: number, name?: string) {
+  return `${description} --- Sweetness level: ${sweetness} ${name ? `--- Name: ${name}` : ''}`
 }
 
 export async function createCafe(name: string, description: string) {
@@ -224,7 +224,7 @@ export async function createDrink(cafeId: string, name: string, description: str
   const metadata = {
     drinkId: drink.id,
     drinkName: drink.name,
-    drinkDescription: addSweetnessToDescription(drink.description, sweetness),
+    drinkDescription: addDataToDescription(drink.description, sweetness),
     cafeId: drink.cafeId,
   } as VectorMetadata;
 
@@ -311,7 +311,7 @@ export async function deleteDrinkProfile(drinkProfile: DrinkProfile) {
  */
 export async function getDrinkRecommendations(profile: DrinkProfile, cafeId: string, k: number) {
   const recs = await vectorIndex.query<VectorMetadata>({
-    data: addSweetnessToDescription(profile.naturalLanguageInput, profile.sweetness),
+    data: addDataToDescription(profile.naturalLanguageInput, profile.sweetness),
     includeMetadata: true,
     filter: `cafeId = "${cafeId}"`,
     topK: k,
