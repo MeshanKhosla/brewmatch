@@ -1,15 +1,6 @@
 import Link from "next/link";
 import React from "react";
 import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandSeparator,
-} from "~/components/ui/command";
-import {
   Card,
   CardContent,
   CardDescription,
@@ -28,7 +19,7 @@ const Page = () => {
       </div>
       <h3 className="text-itim items-center text-2xl">Locate your cafe:</h3>
       <div className="grid grid-cols-1">
-      <SearchBar/>
+        <SearchBar />
       </div>
       <h3 className="pb-1 pt-5 text-2xl">Recent Drink Choices</h3>
       <Link href="/cafe/Blue%20Bottle">

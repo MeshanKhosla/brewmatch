@@ -12,6 +12,10 @@ export async function getCafeByName(name: string) {
   });
 }
 
+export async function getAllCafes() {
+  return db.cafe.findMany();
+}
+
 export async function getDrinkProfilesByCreator(userId: string) {
   return db.drinkProfile.findMany({
     where: { userId }
@@ -20,6 +24,6 @@ export async function getDrinkProfilesByCreator(userId: string) {
 
 export async function getDrinksByCafe(id: string) {
   return db.drink.findMany({
-    where: { cafeId : id }
+    where: { cafeId: id }
   });
 }
