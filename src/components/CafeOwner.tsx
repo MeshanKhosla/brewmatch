@@ -1,5 +1,8 @@
+"use client";
+
 import type { Cafe, Drink } from "@prisma/client";
 import CreateDrink from "~/components/CreateDrink";
+import CreateDrinkCSV from "~/components/CreateDrinkCSV";
 import {
   Card,
   CardDescription,
@@ -10,6 +13,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Pencil } from 'lucide-react';
 import DeleteAlert from "~/components/DeleteAlert";
 import CreateDrinkForm from "~/components/CreateDrinkForm";
+import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
+import { Label } from "~/components/ui/label";
+import { useState } from 'react';
 
 type CafeOwnerProps = {
   cafe: Cafe;
@@ -18,6 +24,8 @@ type CafeOwnerProps = {
 
 const CafeOwner = (props: CafeOwnerProps) => {
   const { cafe, myDrinks } = props;
+  
+  const [selectedOption, setSelectedOption] = useState('single');
 
   if (myDrinks.length === 0) {
     return (
@@ -30,7 +38,7 @@ const CafeOwner = (props: CafeOwnerProps) => {
   }
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 pb-10">
       <h1 className="text-2xl font-semibold">Menu</h1>
       <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
         {myDrinks.map((drink) => (
@@ -60,7 +68,25 @@ const CafeOwner = (props: CafeOwnerProps) => {
           </Card>
         ))}
       </div>
-      <CreateDrink cafeId={cafe.id} />
+      <RadioGroup className="grid grid-cols-2 pt-8" defaultValue="single"
+      value={selectedOption}
+      onValueChange={(value) => setSelectedOption(value)}>
+        <div className="flex items-center space-x-2">
+          <RadioGroupItem value="single" id="single" style={{ color: "#8fbc5c" }}/>
+          <Label htmlFor="single">
+            Single Form
+          </Label>
+        </div>   
+        <div className="flex items-center space-x-2">
+          <RadioGroupItem value="csv" id="csv" style={{ color: "#8fbc5c" }}/>
+          <Label htmlFor="csv">
+            CSV Import
+          </Label>
+        </div> 
+      </RadioGroup>
+      {selectedOption === 'single' && <CreateDrink cafeId={cafe.id} />}
+      {selectedOption === 'csv' && <CreateDrinkCSV cafeId={cafe.id} />}
+
     </div>
   )
 }

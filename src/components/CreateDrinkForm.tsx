@@ -222,7 +222,7 @@ const CreateDrinkForm = (props: CreateDrinkFormProps) => {
                           />
                           <div
                             style={{
-                              marginLeft: "5px",
+                              marginRight: "-15px",
                               top: "10px",
                               width: sweetness <= 9 ? "100%" : "",
                               height: "8px",
