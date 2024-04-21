@@ -87,6 +87,8 @@ model Cafe {
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
     userId      String
+    latitute    Float?
+    longitude   Float?
 
     @@index([id])
     @@index([name])

@@ -9,9 +9,13 @@ import {
 } from "~/components/ui/card";
 
 import { SearchBar } from "~/components/ui/searchBar";
+import { getAllCafes } from "~/queries";
 
 
-const Page = () => {
+const Page = async () => {
+
+  const allCafes = await getAllCafes();
+
   return (
     <div className="flex flex-col gap-5">
       <div className="flex items-center justify-center bg-[#F7F0DD] p-4 py-12 text-center text-black">
