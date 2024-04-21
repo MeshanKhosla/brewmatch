@@ -1,22 +1,25 @@
 import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation"
+import { redirect } from "next/navigation";
+import { Suspense } from "react";
 import CafeCustomer from "~/components/CafeCustomer";
 import CafeOwner from "~/components/CafeOwner";
-import { getCafeByName, getDrinksByCafe } from "~/queries"
+import { getCafeByName, getDrinksByCafe } from "~/queries";
 import { authOptions } from "~/server/auth";
 
 const Page = async ({ params }: { params: { name: string } }) => {
-  const { name } = params
-  const decodedName = decodeURIComponent(name)
+  const { name } = params;
+  const decodedName = decodeURIComponent(name);
 
-  const cafe = await getCafeByName(decodedName)
+  const cafe = await getCafeByName(decodedName);
   if (!cafe) {
-    redirect("/discover")
+    redirect("/discover");
   }
 
   const session = await getServerSession(authOptions);
   if (!session) {
-    return <h1 className='text-2xl font-semibold'>Sign in to view {cafe.name}</h1>
+    return (
+      <h1 className="text-2xl font-semibold">Sign in to view {cafe.name}</h1>
+    );
   }
 
   const myDrinks = await getDrinksByCafe(cafe.id);
@@ -24,18 +27,22 @@ const Page = async ({ params }: { params: { name: string } }) => {
   const isUserOwner = session.user.id === cafe.userId;
 
   return (
-    <div>
-      <div className="flex items-center justify-center bg-[#F7F0DD] text-black p-4 text-center py-12">
-        <h2 className="text-4xl text-center">{cafe.name}</h2>
+    <div className="flex flex-col gap-7">
+      <div className="flex flex-col items-center justify-center gap-3 bg-[#F7F0DD] p-4 py-8 text-center text-black">
+        <h2 className="text-center text-4xl">{cafe.name}</h2>
+        <h4 className="text-center text-xl">{cafe.description}</h4>
       </div>
-      <h1 className="text-2xl py-10">{cafe.description}</h1>
       {isUserOwner ? (
-        <CafeOwner cafe={cafe} myDrinks={myDrinks} />
+        <Suspense fallback={<div>Loading...</div>}>
+          <CafeOwner cafe={cafe} myDrinks={myDrinks} />
+        </Suspense>
       ) : (
-        <CafeCustomer />
+        <Suspense fallback={<div>Loading...</div>}>
+          <CafeCustomer cafe={cafe} session={session} />
+        </Suspense>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Page
+export default Page;
