@@ -42,9 +42,9 @@ export function SearchBarReact(cafes:Array<any>) {
         { value: 'SoDoI', label: 'SoDoI' },
         { value: 'Blue Bottle', label: 'Blue Bottle' },
       ]
-      {cafes.map((cafes) => (
-        options.push({value: cafes.name, label: cafes.name})
-      ))}
+    //   {cafes.map((cafes) => (
+    //     options.push({value: cafes.name, label: cafes.name})
+    //   ))}
 
     return <Select theme={(theme) => ({
         ...theme,
