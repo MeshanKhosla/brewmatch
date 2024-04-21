@@ -7,10 +7,9 @@ import {
     CommandItem,
     CommandList,
     CommandSeparator,
-  } from "~/components/ui/command";
+} from "~/components/ui/command";
 
 import { useState } from "react";
-import { redirect } from 'next/navigation'
 import { useRouter } from 'next/navigation';
 import Select from 'react-select'
 import { getAllCafes } from "~/queries";

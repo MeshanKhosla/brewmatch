@@ -1,4 +1,4 @@
-import { Cafe, Drink } from "@prisma/client";
+import type { Cafe, Drink } from "@prisma/client";
 import CreateDrink from "~/components/CreateDrink";
 import {
   Card,

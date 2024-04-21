@@ -99,7 +99,7 @@ model Drink {
     id          String   @id @default(cuid())
     name        String
     description String
-    price       Float?
+    price       Float
     cafe        Cafe     @relation(fields: [cafeId], references: [id])
     sweetness   Int // 1-10
     cafeId      String

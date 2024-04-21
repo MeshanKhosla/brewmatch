@@ -340,6 +340,8 @@ export async function getDrinkRecommendations(profile: DrinkProfile, cafeId: str
  * @param chosenDrink  The drink that was recommended
  */
 export async function getDrinkRecommendationReasoning(drinkProfile: DrinkProfile, chosenDrinks: Drink[]) {
+  console.log(drinkProfile)
+  console.log(chosenDrinks)
   // TODO: I think we can use Reagent here and do something similar to the reasoning task for the planets
   // in homework
 }

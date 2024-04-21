@@ -14,7 +14,7 @@ import {
 } from "~/components/ui/alert-dialog"
 import { deleteDrink, deleteDrinkProfile } from "~/actions";
 import { toast } from "sonner";
-import { DrinkProfile, Cafe, Drink } from "@prisma/client";
+import type { DrinkProfile, Cafe, Drink } from "@prisma/client";
 
 type DeleteAlertProps = {
    profile?: DrinkProfile;
@@ -62,7 +62,7 @@ const DeleteAlert = (props: DeleteAlertProps) => {
          <AlertDialogContent>
             <AlertDialogHeader>
                <AlertDialogTitle>
-                  Are you sure you want to delete the {drink ? 'drink' : profile ? 'profile' : 'cafe'} '{drink?.name || profile?.name || cafe?.name}'?
+                  Are you sure you want to delete the {drink ? 'drink' : profile ? 'profile' : 'cafe'} &lsquo;{drink?.name ?? profile?.name ?? cafe?.name}&lsquo;?
                </AlertDialogTitle>
                <AlertDialogDescription>
                   This action cannot be undone. This will remove the data for this drink from our servers.
