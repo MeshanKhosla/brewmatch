@@ -339,7 +339,7 @@ export async function getDrinkRecommendations(profile: DrinkProfile, cafeId: str
  * @param drinkProfile The drink profile that was used to make the recommendation
  * @param chosenDrink  The drink that was recommended
  */
-export async function getDrinkRecommendationReasoning(drinkProfile: DrinkProfile, chosenDrink: Drink) {
+export async function getDrinkRecommendationReasoning(drinkProfile: DrinkProfile, chosenDrinks: Drink[]) {
   // TODO: I think we can use Reagent here and do something similar to the reasoning task for the planets
   // in homework
 }
