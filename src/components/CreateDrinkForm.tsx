@@ -37,7 +37,7 @@ const formSchema = z.object({
     }),
   price: z.string()
     .refine(value => decimalRegExp.test(value.trim()), {
-      message: 'Input must be a number or a decimal with two decimal places'
+      message: 'Price must be a number or a decimal with two decimal places'
     }),
   sweetness: z.string(),
   cafeId: z.string(),
@@ -216,12 +216,13 @@ const CreateDrinkForm = (props: CreateDrinkFormProps) => {
                             style={{ color: "#8fbc5c" }}
                             className={
                               sweetness <= sweetChoice
-                                ? "bg-[#8fbc5c]"
-                                : "bg-[#D9D9D9]"
+                                ? "border border-[#8fbc5c] bg-[#8fbc5c]"
+                                : "border border-[#D9D9D9] bg-[#D9D9D9]"
                             }
                           />
                           <div
                             style={{
+                              marginLeft: "-1px",
                               marginRight: "-15px",
                               top: "10px",
                               width: sweetness <= 9 ? "100%" : "",
@@ -243,21 +244,9 @@ const CreateDrinkForm = (props: CreateDrinkFormProps) => {
                           }
                         >
                           {sweetness === 1
-                            ? (
-                              <>
-                                {sweetness}
-                                <br />
-                                espresso
-                              </>
-                            )
+                            ? sweetness + "\nespresso"
                             : sweetness === 10
-                              ? (
-                                <>
-                                  {sweetness}
-                                  <br />
-                                  frappuccino
-                                </>
-                              )
+                              ? sweetness + "\nfrap"
                               : sweetness}
                         </Label>
                       </div>

@@ -116,8 +116,8 @@ const CreateDrinkProfileForm = (props: CreateDrinkProfileFormProps) => {
                 <div className="flex">
                   Description <Asterisk className="size-3 text-red-500" />
                 </div>
-                <p className="text-sm text-muted-foreground">
-                  Be as descriptive. This is used to match you with your
+                <p className="text-sm text-muted-foreground py-1">
+                  Be descriptive. This is used to match users with their
                   perfect drink!
                 </p>
               </FormLabel>
@@ -157,7 +157,7 @@ const CreateDrinkProfileForm = (props: CreateDrinkProfileFormProps) => {
                     ).map((sweetness) => (
                       <div
                         key={sweetness.toString()}
-                        className="grid grid-rows-2 items-center space-y-3"
+                        className="grid grid-rows-2 space-y-3"
                       >
                         <div className="flex items-center">
                           <RadioGroupItem
@@ -166,13 +166,14 @@ const CreateDrinkProfileForm = (props: CreateDrinkProfileFormProps) => {
                             style={{ color: "#8fbc5c" }}
                             className={
                               sweetness <= sweetChoice
-                                ? "bg-[#8fbc5c]"
-                                : "bg-[#D9D9D9]"
+                                ? "border border-[#8fbc5c] bg-[#8fbc5c]"
+                                : "border border-[#D9D9D9] bg-[#D9D9D9]"
                             }
                           />
                           <div
                             style={{
-                              marginLeft: "5px",
+                              marginLeft: "-1px",
+                              marginRight: "-15px",
                               top: "10px",
                               width: sweetness <= 9 ? "100%" : "",
                               height: "8px",
@@ -233,13 +234,14 @@ const CreateDrinkProfileForm = (props: CreateDrinkProfileFormProps) => {
                             style={{ color: "#8fbc5c" }}
                             className={
                               index <= iceChoice
-                                ? "bg-[#8fbc5c]"
-                                : "bg-[#D9D9D9]"
+                                ? "border border-[#8fbc5c] bg-[#8fbc5c]"
+                                : "border border-[#D9D9D9] bg-[#D9D9D9]"
                             }
                           />
                           <div
                             style={{
-                              marginLeft: "5px",
+                              marginLeft: "-1px",
+                              marginRight: "-15px",
                               top: "10px",
                               width: index <= 2 ? "100%" : "",
                               height: "8px",
@@ -294,7 +296,13 @@ const CreateDrinkProfileForm = (props: CreateDrinkProfileFormProps) => {
                             : "bg-[#D9D9D9]"
                         }
                       />
-                      <Label htmlFor={milkType}>
+                      <Label
+                        htmlFor={milkType}
+                        className={
+                          index === milkChoice
+                            ? "font-bold"
+                            : ""
+                        }>
                         {MILK_TO_NAME[milkType as MilkType]}
                       </Label>
                     </div>
@@ -312,7 +320,7 @@ const CreateDrinkProfileForm = (props: CreateDrinkProfileFormProps) => {
           className="w-full bg-[#8fbc5c] hover:bg-[#719646]"
           type="submit"
         >
-          Create
+          {props.profile ? 'Update' : 'Create'}
         </Button>
       </form>
     </Form>

@@ -44,7 +44,7 @@ const CafeOwner = (props: CafeOwnerProps) => {
         {myDrinks.map((drink) => (
           <Card key={drink.id}>
             <CardHeader>
-              <div className="flex justify-between items-center w-full size-1 space-x-2">
+              <div className="flex justify-between items-center w-full size-1 space-x-2 pb-5">
                 <DeleteAlert drink={drink} />
                 <Dialog>
                   <DialogTrigger>
@@ -73,13 +73,25 @@ const CafeOwner = (props: CafeOwnerProps) => {
         onValueChange={(value) => setSelectedOption(value)}>
         <div className="flex items-center space-x-2">
           <RadioGroupItem value="single" id="single" style={{ color: "#8fbc5c" }} />
-          <Label htmlFor="single">
+          <Label
+            htmlFor="single"
+            className={
+              "single" === selectedOption
+                ? "font-bold"
+                : ""
+            }>
             Single Form
           </Label>
         </div>
         <div className="flex items-center space-x-2">
           <RadioGroupItem value="csv" id="csv" style={{ color: "#8fbc5c" }} />
-          <Label htmlFor="csv">
+          <Label
+            htmlFor="csv"
+            className={
+              "csv" === selectedOption
+                ? "font-bold"
+                : ""
+            }>
             CSV Import
           </Label>
         </div>

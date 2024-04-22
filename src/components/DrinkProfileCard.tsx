@@ -42,7 +42,7 @@ export function DrinkProfileCard(props: DrinkProfileCardProps) {
     >
       <CardHeader>
         {canEdit && (
-          <div className="flex size-1 w-full items-center justify-between space-x-2">
+          <div className="flex size-1 w-full items-center justify-between space-x-2 pb-5">
             <DeleteAlert profile={profile} />
             <Dialog>
               <DialogTrigger>
