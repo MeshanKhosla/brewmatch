@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { type DrinkProfile, type Cafe } from "@prisma/client";
-import { DrinkProfileCard } from "~/components/DrinkProfileCard";
 import { SelectDrinkProfile } from "~/components/SelectDrinkProfile";
 import { Button } from "~/components/ui/button";
 
@@ -19,6 +18,8 @@ const CafeCustomer = (props: CafeCustomerProps) => {
   const [drinkProfileSelection, setDrinkProfileSelection] =
     useState<DrinkProfile>();
 
+
+  console.log("Will remove this", cafe, drinkProfileSelection);
   const incrementStep = () => {
     if (stepIndex < STEPS.length - 1) {
       setStepIndex(stepIndex + 1);

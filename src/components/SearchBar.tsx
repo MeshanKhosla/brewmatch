@@ -1,8 +1,8 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import Select, { Theme } from 'react-select'
-import { Cafe } from "@prisma/client";
+import Select, { type Theme } from 'react-select'
+import type { Cafe } from "@prisma/client";
 
 type SearchBarProps = {
     cafes: Cafe[]

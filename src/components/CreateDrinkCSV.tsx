@@ -43,7 +43,6 @@ const CreateDrinkCSV = ({ cafeId }: { cafeId: string }) => {
         <Importer
           defaultNoHeader={false} // optional, keeps "data has headers" checkbox off by default
           restartable={true} // optional, lets user choose to upload another file when import is complete
-
           dataHandler={async (rows) => {
             setInvalidNames([]);
             setInvalidDescriptions([]);
@@ -80,17 +79,17 @@ const CreateDrinkCSV = ({ cafeId }: { cafeId: string }) => {
               }
               return error;
             });
-            for (const [key, value] of Object.entries(drinks)) {
+            for (const value of Object.values(drinks)) {
               // Call the createDrink function with the validated data
+              const drink = value as { name: string, description: string, price: string, sweetness: string };
               const res = await createDrink(
                 cafeId,
-                value.name,
-                value.description,
-                Number(value.price),
-                parseInt(value.sweetness),
+                drink.name,
+                drink.description,
+                Number(drink.price),
+                parseInt(drink.sweetness),
               ); // revalidate /cafe/:name
               if (res && !res.ok) {
-                // alert(res.error)
                 toast.error(res.error);
                 error += 1;
               }
@@ -99,11 +98,11 @@ const CreateDrinkCSV = ({ cafeId }: { cafeId: string }) => {
               (`Successfully added ${drinks.length - error} drinks out of ${rows.length - emptyLines}`);
           }}
 
-          onStart={({ file, preview, fields, columnFields }) => {
+          onStart={({ preview }) => {
             skipHeader = preview.skipHeaders;
           }}
 
-          onComplete={({ file, fields }) => {
+          onComplete={() => {
             if ([invalidNames, invalidDescriptions, invalidPrices, invalidSweetness].some(array => array.length > 0)) {
               setShowErrorAlert(true);
             }
@@ -116,7 +115,7 @@ const CreateDrinkCSV = ({ cafeId }: { cafeId: string }) => {
         </Importer>
         {showErrorAlert && (
           <div className="pt-2">
-            <Card className="border border-red-500 border-2">
+            <Card className="border-red-500 border-2">
               <CardHeader>
                 <CardTitle className="text-red-500">Errors</CardTitle>
                 <CardDescription className="text-red-500">
@@ -129,7 +128,7 @@ const CreateDrinkCSV = ({ cafeId }: { cafeId: string }) => {
                       <br />
                       {invalidNames.map(({ line, value }) => (
                         <div key={`invalidName-${line}`}>
-                          Line {line} - invalid name value '{value}'
+                          Line {line} - invalid name value &lsquo;{value}&lsquo;
                         </div>
                       ))}
                     </div>
@@ -143,7 +142,7 @@ const CreateDrinkCSV = ({ cafeId }: { cafeId: string }) => {
                       <br />
                       {invalidDescriptions.map(({ line, value }) => (
                         <div key={`invalidDesc-${line}`}>
-                          Line {line} - invalid description value '{value}'
+                          Line {line} - invalid description value &lsquo;{value}&lsquo;
                         </div>
                       ))}
                     </div>
@@ -157,7 +156,7 @@ const CreateDrinkCSV = ({ cafeId }: { cafeId: string }) => {
                       <br />
                       {invalidPrices.map(({ line, value }) => (
                         <div key={`invalidPrice-${line}`}>
-                          Line {line} - invalid price value '{value}'
+                          Line {line} - invalid price value &lsquo;{value}&lsquo;
                         </div>
                       ))}
                     </div>
@@ -171,7 +170,7 @@ const CreateDrinkCSV = ({ cafeId }: { cafeId: string }) => {
                       <br />
                       {invalidSweetness.map(({ line, value }) => (
                         <div key={`invalidSweet-${line}`}>
-                          Line {line} - invalid sweetness level value '{value}'
+                          Line {line} - invalid sweetness level value &lsquo;{value}&lsquo;
                         </div>
                       ))}
                     </div>

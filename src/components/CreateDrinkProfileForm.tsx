@@ -17,7 +17,7 @@ import { Input } from "~/components/ui/input";
 import { Textarea } from "~/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 import { Label } from "~/components/ui/label";
-import { DrinkProfile, IceLevel, MilkType } from "@prisma/client";
+import { type DrinkProfile, IceLevel, MilkType } from "@prisma/client";
 import { Asterisk } from "lucide-react";
 import { createDrinkProfile } from "~/actions";
 import { toast } from "sonner";
