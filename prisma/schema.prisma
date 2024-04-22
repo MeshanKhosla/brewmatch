@@ -100,7 +100,7 @@ model Drink {
     name        String
     description String
     price       Float
-    cafe        Cafe     @relation(fields: [cafeId], references: [id])
+    cafe        Cafe     @relation(fields: [cafeId], references: [id], onDelete: Cascade)
     sweetness   Int // 1-10
     cafeId      String
     createdAt   DateTime @default(now())

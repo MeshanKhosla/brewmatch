@@ -12,7 +12,7 @@ import {
    AlertDialogTitle,
    AlertDialogTrigger,
 } from "~/components/ui/alert-dialog"
-import { deleteDrink, deleteDrinkProfile } from "~/actions";
+import { deleteCafe, deleteDrink, deleteDrinkProfile } from "~/actions";
 import { toast } from "sonner";
 import type { DrinkProfile, Cafe, Drink } from "@prisma/client";
 
@@ -34,6 +34,11 @@ const DeleteAlert = (props: DeleteAlertProps) => {
 
       if (profile) {
          const res = await deleteDrinkProfile(profile);
+         results.push(res);
+      }
+
+      if (cafe) {
+         const res = await deleteCafe(cafe);
          results.push(res);
       }
 

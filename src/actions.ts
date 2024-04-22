@@ -1,6 +1,6 @@
 'use server'
 
-import type { Drink, DrinkProfile, IceLevel, MilkType } from '@prisma/client'
+import type { Cafe, Drink, DrinkProfile, IceLevel, MilkType } from '@prisma/client'
 import { db } from '~/server/db'
 import { authOptions } from '~/server/auth';
 import { getServerSession } from 'next-auth';
@@ -185,8 +185,8 @@ export async function createDrink(cafeId: string, name: string, description: str
     }
   }
   name = name.trim()
-    // Check if drink name already exists - if it does then update the record
-    const existingDrink = await db.drink.findFirst({ where: { name, cafeId: cafeId } })
+  // Check if drink name already exists - if it does then update the record
+  const existingDrink = await db.drink.findFirst({ where: { name, cafeId: cafeId } })
   let drink
   if (existingId) {
     drink = await db.drink.update({
@@ -201,7 +201,7 @@ export async function createDrink(cafeId: string, name: string, description: str
         sweetness,
       }
     })
-  } else if (existingDrink){
+  } else if (existingDrink) {
     drink = await db.drink.update({
       where: {
         id: existingDrink.id
@@ -283,6 +283,28 @@ export async function deleteDrink(drink: Drink) {
   return {
     ok: true,
     deletedDrink
+  }
+}
+
+export async function deleteCafe(cafe: Cafe) {
+  const deletedCafe = await db.cafe.delete({
+    where: {
+      id: cafe.id
+    }
+  })
+
+  if (!deletedCafe) {
+    return {
+      ok: false,
+      error: 'Error deleting cafe'
+    }
+  }
+
+  revalidatePath('/create-cafe')
+
+  return {
+    ok: true,
+    deletedCafe
   }
 }
 

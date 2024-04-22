@@ -24,7 +24,7 @@ type CafeOwnerProps = {
 
 const CafeOwner = (props: CafeOwnerProps) => {
   const { cafe, myDrinks } = props;
-  
+
   const [selectedOption, setSelectedOption] = useState('single');
 
   if (myDrinks.length === 0) {
@@ -69,20 +69,20 @@ const CafeOwner = (props: CafeOwnerProps) => {
         ))}
       </div>
       <RadioGroup className="grid grid-cols-2 pt-8" defaultValue="single"
-      value={selectedOption}
-      onValueChange={(value) => setSelectedOption(value)}>
+        value={selectedOption}
+        onValueChange={(value) => setSelectedOption(value)}>
         <div className="flex items-center space-x-2">
-          <RadioGroupItem value="single" id="single" style={{ color: "#8fbc5c" }}/>
+          <RadioGroupItem value="single" id="single" style={{ color: "#8fbc5c" }} />
           <Label htmlFor="single">
             Single Form
           </Label>
-        </div>   
+        </div>
         <div className="flex items-center space-x-2">
-          <RadioGroupItem value="csv" id="csv" style={{ color: "#8fbc5c" }}/>
+          <RadioGroupItem value="csv" id="csv" style={{ color: "#8fbc5c" }} />
           <Label htmlFor="csv">
             CSV Import
           </Label>
-        </div> 
+        </div>
       </RadioGroup>
       {selectedOption === 'single' && <CreateDrink cafeId={cafe.id} />}
       {selectedOption === 'csv' && <CreateDrinkCSV cafeId={cafe.id} />}
