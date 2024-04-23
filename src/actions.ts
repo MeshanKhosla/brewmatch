@@ -303,12 +303,7 @@ export async function deleteCafe(cafe: Cafe) {
     }
   }
 
-  revalidatePath('/create-cafe')
-
-  return {
-    ok: true,
-    deletedCafe
-  }
+  redirect('/create-cafe')
 }
 
 export async function deleteDrinkProfile(drinkProfile: DrinkProfile) {

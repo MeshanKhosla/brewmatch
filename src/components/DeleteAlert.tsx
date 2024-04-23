@@ -38,8 +38,7 @@ const DeleteAlert = (props: DeleteAlertProps) => {
       }
 
       if (cafe) {
-         const res = await deleteCafe(cafe);
-         results.push(res);
+         await deleteCafe(cafe); // redirect to create-cafe
       }
 
       for (const res of results) {
@@ -70,7 +69,7 @@ const DeleteAlert = (props: DeleteAlertProps) => {
                   Are you sure you want to delete the {drink ? 'drink' : profile ? 'profile' : 'cafe'} &lsquo;{drink?.name ?? profile?.name ?? cafe?.name}&lsquo;?
                </AlertDialogTitle>
                <AlertDialogDescription>
-                  This action cannot be undone. This will remove the data for this drink from our servers.
+                  This action cannot be undone. This will remove the data for this {drink ? 'drink' : profile ? 'profile' : 'cafe'} from our servers.
                </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
