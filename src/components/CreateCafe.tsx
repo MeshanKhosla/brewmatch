@@ -30,7 +30,6 @@ import { toast } from "sonner";
 const latitudeRegExp = /^-?([0-8]?[0-9]|90)(\.[0-9]{1,10})$/;
 const longitudeRegExp = /^-?([0-9]{1,2}|1[0-7][0-9]|180)(\.[0-9]{1,10})$/;
 
-
 const formSchema = z.object({
   name: z
     .string()
@@ -42,14 +41,12 @@ const formSchema = z.object({
     .refine((v) => v.trim().length >= 10 && v.trim().length <= 190, {
       message: "Description must be between 10 and 190 characters",
     }),
-  latitude: z.string()
-    .refine(value => latitudeRegExp.test(value.trim()), {
-      message: 'Input must be a valid latitude'
-    }),
-  longitude: z.string()
-    .refine(value => longitudeRegExp.test(value.trim()), {
-      message: 'Input must be a valid longitude'
-    }),
+  latitude: z.string().refine((value) => latitudeRegExp.test(value.trim()), {
+    message: "Input must be a valid latitude",
+  }),
+  longitude: z.string().refine((value) => longitudeRegExp.test(value.trim()), {
+    message: "Input must be a valid longitude",
+  }),
 });
 
 const CreateDrinkProfile = () => {
@@ -64,7 +61,12 @@ const CreateDrinkProfile = () => {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const res = await createCafe(values.name, values.description, Number(values.latitude), Number(values.longitude)); // redirects /cafe/:name
+    const res = await createCafe(
+      values.name,
+      values.description,
+      Number(values.latitude),
+      Number(values.longitude),
+    ); // redirects /cafe/:name
     if (res && !res.ok) {
       toast.error(res.error);
     } else {
@@ -74,21 +76,21 @@ const CreateDrinkProfile = () => {
 
   const nameLength = form.getValues("name").trim().length;
   const descriptionLength = form.getValues("description").trim().length;
-  const latitudeValue = form.getValues("latitude")
-  const containsDecimal = latitudeValue.includes('.');
-  let decimalPlaces = 0
+  const latitudeValue = form.getValues("latitude");
+  const containsDecimal = latitudeValue.includes(".");
+  let decimalPlaces = 0;
   if (containsDecimal) {
-    const split = latitudeValue.split('.')[1]
+    const split = latitudeValue.split(".")[1];
     if (split) {
-      decimalPlaces = split.length
+      decimalPlaces = split.length;
     }
   }
-  const longitudeValue = form.getValues("latitude")
-  const containsDecimalLong = longitudeValue.includes('.');
+  const longitudeValue = form.getValues("latitude");
+  const containsDecimalLong = longitudeValue.includes(".");
   if (containsDecimalLong) {
-    const split = longitudeValue.split('.')[1]
+    const split = longitudeValue.split(".")[1];
     if (split) {
-      decimalPlaces = split.length
+      decimalPlaces = split.length;
     }
   }
 
@@ -98,7 +100,7 @@ const CreateDrinkProfile = () => {
         <DialogTrigger className="h-full w-full rounded bg-[#8fbc5c] py-1 text-white hover:bg-[#719646]">
           +
         </DialogTrigger>
-        <DialogContent className="my-3 max-w-[85%] max-h-screen overflow-y-scroll md:max-w-[50%]">
+        <DialogContent className="my-3 max-h-screen max-w-[85%] overflow-y-scroll md:max-w-[50%]">
           <DialogHeader>
             <DialogTitle>Create a new cafe</DialogTitle>
           </DialogHeader>

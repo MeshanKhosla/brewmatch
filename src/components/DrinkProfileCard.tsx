@@ -48,7 +48,7 @@ export function DrinkProfileCard(props: DrinkProfileCardProps) {
               <DialogTrigger>
                 <Pencil />
               </DialogTrigger>
-              <DialogContent className="my-3 max-w-[85%] max-h-screen overflow-y-scroll md:max-w-[50%]">
+              <DialogContent className="my-3 max-h-screen max-w-[85%] overflow-y-scroll md:max-w-[50%]">
                 <DialogHeader>
                   <DialogTitle>Edit</DialogTitle>
                 </DialogHeader>
