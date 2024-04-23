@@ -169,7 +169,7 @@ const CreateDrinkProfile = () => {
                       </FormControl>
                       <FormDescription>
                           {!containsDecimal && " "}
-                          {containsDecimal && decimalPlaces != 2 && "Need 2 decimal places"}
+                          {containsDecimal && decimalPlaces != 1 && "(Need minimum 1 decimal place)"}
                       </FormDescription>
                       <FormMessage />
                   </FormItem>
@@ -195,7 +195,7 @@ const CreateDrinkProfile = () => {
                       </FormControl>
                       <FormDescription>
                           {!containsDecimal && " "}
-                          {containsDecimal && decimalPlaces != 2 && "Need 2 decimal places"}
+                          {containsDecimal && decimalPlaces != 1 && "(Need minimum 1 decimal place)"}
                       </FormDescription>
                       <FormMessage />
                   </FormItem>
