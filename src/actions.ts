@@ -31,7 +31,7 @@ function addDataToDescription(description: string, sweetness: number, name?: str
   return `${description} --- Sweetness level: ${sweetness} ${name ? `--- Name: ${name}` : ''}`
 }
 
-export async function createCafe(name: string, description: string) {
+export async function createCafe(name: string, description: string, latitude: number, longitude: number) {
   if (!isStringValid(name)) {
     return {
       ok: false,

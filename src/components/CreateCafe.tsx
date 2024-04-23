@@ -26,7 +26,7 @@ import { createCafe } from "~/actions";
 import { Asterisk } from "lucide-react";
 import { toast } from "sonner";
 
-const decimalRegExp = /^[0-9]+(\.[0-9]{2})?$/;
+const decimalRegExp = /^[0-9]+(\.[0-9]+)?$/;
 
 const formSchema = z.object({
   name: z
@@ -41,11 +41,11 @@ const formSchema = z.object({
     }),
   latitude: z.string()
   .refine(value => decimalRegExp.test(value.trim()), {
-      message: 'Input must be a number or a decimal with two decimal places'
+      message: 'Input must be a number or a decimal with at least one decimal place'
 }),
   longitude: z.string()
     .refine(value => decimalRegExp.test(value.trim()), {
-        message: 'Input must be a number or a decimal with two decimal places'
+        message: 'Input must be a number or a decimal with at least one decimal place'
   }),
 });
 
@@ -55,11 +55,13 @@ const CreateDrinkProfile = () => {
     defaultValues: {
       name: "",
       description: "",
+      latitude: "",
+      longitude: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const res = await createCafe(values.name, values.description); // redirects /cafe/:name
+    const res = await createCafe(values.name, values.description, Number(values.latitude), Number(values.longitude)); // redirects /cafe/:name
     if (res && !res.ok) {
       toast.error(res.error);
     } else {
@@ -161,7 +163,7 @@ const CreateDrinkProfile = () => {
                               step={0.01}
                               minLength={1}
                               maxLength={10}
-                              placeholder="3.50"
+                              placeholder="37.8674"
                               {...field}
                           />
                       </FormControl>
@@ -187,7 +189,7 @@ const CreateDrinkProfile = () => {
                               step={0.01}
                               minLength={1}
                               maxLength={10}
-                              placeholder="3.50"
+                              placeholder="122.2595"
                               {...field}
                           />
                       </FormControl>
