@@ -63,10 +63,13 @@ export async function createCafe(name: string, description: string, latitude: nu
     }
   }
 
+
   const cafe = await db.cafe.create({
     data: {
       name,
       description,
+      latitude,
+      longitude,
       createdBy: {
         connect: {
           id: session.user.id

@@ -80,7 +80,7 @@ model Cafe {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   userId      String
-  latitute    Float?
+  latitude    Float?
   longitude   Float?
   createdBy   User     @relation(fields: [userId], references: [id])
   drinks      Drink[]

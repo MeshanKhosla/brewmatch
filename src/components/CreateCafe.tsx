@@ -26,7 +26,10 @@ import { createCafe } from "~/actions";
 import { Asterisk } from "lucide-react";
 import { toast } from "sonner";
 
-const decimalRegExp = /^[0-9]+(\.[0-9]+)?$/;
+// const latitudeRegExp = /^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$/;
+const latitudeRegExp = /^-?([0-8]?[0-9]|90)(\.[0-9]{1,10})$/;
+const longitudeRegExp = /^-?([0-9]{1,2}|1[0-7][0-9]|180)(\.[0-9]{1,10})$/;
+
 
 const formSchema = z.object({
   name: z
@@ -40,13 +43,13 @@ const formSchema = z.object({
       message: "Description must be between 10 and 190 characters",
     }),
   latitude: z.string()
-  .refine(value => decimalRegExp.test(value.trim()), {
-      message: 'Input must be a number or a decimal with at least one decimal place'
-}),
+    .refine(value => latitudeRegExp.test(value.trim()), {
+      message: 'Input must be a valid latitude'
+    }),
   longitude: z.string()
-    .refine(value => decimalRegExp.test(value.trim()), {
-        message: 'Input must be a number or a decimal with at least one decimal place'
-  }),
+    .refine(value => longitudeRegExp.test(value.trim()), {
+      message: 'Input must be a valid longitude'
+    }),
 });
 
 const CreateDrinkProfile = () => {
@@ -154,24 +157,18 @@ const CreateDrinkProfile = () => {
                 name="latitude"
                 render={({ field }) => (
                   <FormItem>
-                      <FormLabel className="flex">
-                          Latitude <Asterisk className="size-3 text-red-500" />{" "}
-                      </FormLabel>
-                      <FormControl>
-                          <Input type="number"
-                              min={0}
-                              step={0.01}
-                              minLength={1}
-                              maxLength={10}
-                              placeholder="37.8674"
-                              {...field}
-                          />
-                      </FormControl>
-                      <FormDescription>
-                          {!containsDecimal && " "}
-                          {containsDecimal && decimalPlaces != 1 && "(Need minimum 1 decimal place)"}
-                      </FormDescription>
-                      <FormMessage />
+                    <FormLabel className="flex">
+                      Latitude <Asterisk className="size-3 text-red-500" />{" "}
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        minLength={1}
+                        maxLength={10}
+                        placeholder="37.8674"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -180,28 +177,22 @@ const CreateDrinkProfile = () => {
                 name="longitude"
                 render={({ field }) => (
                   <FormItem>
-                      <FormLabel className="flex">
-                          Longitude <Asterisk className="size-3 text-red-500" />{" "}
-                      </FormLabel>
-                      <FormControl>
-                          <Input type="number"
-                              min={0}
-                              step={0.01}
-                              minLength={1}
-                              maxLength={10}
-                              placeholder="122.2595"
-                              {...field}
-                          />
-                      </FormControl>
-                      <FormDescription>
-                          {!containsDecimal && " "}
-                          {containsDecimal && decimalPlaces != 1 && "(Need minimum 1 decimal place)"}
-                      </FormDescription>
-                      <FormMessage />
+                    <FormLabel className="flex">
+                      Longitude <Asterisk className="size-3 text-red-500" />{" "}
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        minLength={1}
+                        maxLength={11}
+                        placeholder="122.2595"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
-              
+
               <Button
                 disabled={
                   !form.formState.isValid || form.formState.isSubmitting
