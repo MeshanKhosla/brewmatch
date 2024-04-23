@@ -1,15 +1,10 @@
 import Link from "next/link";
 import React from "react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
+import { Skeleton } from "~/components/ui/skeleton"
 
 import { SearchBar } from "~/components/SearchBar";
 import { getAllCafes } from "~/queries";
+import { GetLocation } from "~/components/location";
 
 
 const Page = async () => {
@@ -21,23 +16,12 @@ const Page = async () => {
       <div className="flex items-center justify-center bg-[#F7F0DD] p-4 py-12 text-center text-black">
         <h2 className="text-center text-4xl">DISCOVER</h2>
       </div>
-      <h3 className="text-itim items-center text-2xl">Locate your cafe:</h3>
-      <div className="grid grid-cols-1">
+      <h3 className="text-itim items-center text-2xl">Locate Your Cafe</h3>
+      <div className="grid grid-cols-1 gap-3">
         <SearchBar cafes={allCafes} />
+        <h3 className="text-itim items-center text-2xl">Nearby Cafes</h3>
+        <GetLocation cafes={allCafes}/>
       </div>
-      <h3 className="pb-1 pt-5 text-2xl">Recent Drink Choices</h3>
-      <Link href="/cafe/Blue%20Bottle">
-        <Card>
-          <CardHeader>
-            <CardTitle>Blue Bottle</CardTitle>
-            <CardDescription>Card Description</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p>Drink Profile: MATCHA MADE IN HEAVEN</p>
-            <p>Order: Iced Matcha Latte</p>
-          </CardContent>
-        </Card>
-      </Link>
     </div>
   );
 };
