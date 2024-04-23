@@ -26,6 +26,8 @@ import { createCafe } from "~/actions";
 import { Asterisk } from "lucide-react";
 import { toast } from "sonner";
 
+const decimalRegExp = /^[0-9]+(\.[0-9]{2})?$/;
+
 const formSchema = z.object({
   name: z
     .string()
@@ -37,6 +39,14 @@ const formSchema = z.object({
     .refine((v) => v.trim().length >= 10 && v.trim().length <= 190, {
       message: "Description must be between 10 and 190 characters",
     }),
+  latitude: z.string()
+  .refine(value => decimalRegExp.test(value.trim()), {
+      message: 'Input must be a number or a decimal with two decimal places'
+}),
+  longitude: z.string()
+    .refine(value => decimalRegExp.test(value.trim()), {
+        message: 'Input must be a number or a decimal with two decimal places'
+  }),
 });
 
 const CreateDrinkProfile = () => {
@@ -59,6 +69,23 @@ const CreateDrinkProfile = () => {
 
   const nameLength = form.getValues("name").trim().length;
   const descriptionLength = form.getValues("description").trim().length;
+  const latitudeValue = form.getValues("latitude")
+  const containsDecimal = latitudeValue.includes('.');
+  let decimalPlaces = 0
+  if (containsDecimal) {
+    const split = latitudeValue.split('.')[1]
+    if (split) {
+      decimalPlaces = split.length
+    }
+  }
+  const longitudeValue = form.getValues("latitude")
+  const containsDecimalLong = longitudeValue.includes('.');
+  if (containsDecimalLong) {
+    const split = longitudeValue.split('.')[1]
+    if (split) {
+      decimalPlaces = split.length
+    }
+  }
 
   return (
     <div>
@@ -120,6 +147,59 @@ const CreateDrinkProfile = () => {
                   </FormItem>
                 )}
               />
+              <FormField
+                control={form.control}
+                name="latitude"
+                render={({ field }) => (
+                  <FormItem>
+                      <FormLabel className="flex">
+                          Latitude <Asterisk className="size-3 text-red-500" />{" "}
+                      </FormLabel>
+                      <FormControl>
+                          <Input type="number"
+                              min={0}
+                              step={0.01}
+                              minLength={1}
+                              maxLength={10}
+                              placeholder="3.50"
+                              {...field}
+                          />
+                      </FormControl>
+                      <FormDescription>
+                          {!containsDecimal && " "}
+                          {containsDecimal && decimalPlaces != 2 && "Need 2 decimal places"}
+                      </FormDescription>
+                      <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="longitude"
+                render={({ field }) => (
+                  <FormItem>
+                      <FormLabel className="flex">
+                          Longitude <Asterisk className="size-3 text-red-500" />{" "}
+                      </FormLabel>
+                      <FormControl>
+                          <Input type="number"
+                              min={0}
+                              step={0.01}
+                              minLength={1}
+                              maxLength={10}
+                              placeholder="3.50"
+                              {...field}
+                          />
+                      </FormControl>
+                      <FormDescription>
+                          {!containsDecimal && " "}
+                          {containsDecimal && decimalPlaces != 2 && "Need 2 decimal places"}
+                      </FormDescription>
+                      <FormMessage />
+                  </FormItem>
+                )}
+              />
+              
               <Button
                 disabled={
                   !form.formState.isValid || form.formState.isSubmitting

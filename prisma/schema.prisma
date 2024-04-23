@@ -1,147 +1,143 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "mysql"
-    // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
-    // Further reading:
-    // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
-    // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
-    url      = env("DATABASE_URL")
+  provider = "mysql"
+  url      = env("DATABASE_URL")
 }
 
-// Necessary for Next auth
 model Account {
-    id                String  @id @default(cuid())
-    userId            String
-    type              String
-    provider          String
-    providerAccountId String
-    refresh_token     String? @db.Text
-    access_token      String? @db.Text
-    expires_at        Int?
-    token_type        String?
-    scope             String?
-    id_token          String? @db.Text
-    session_state     String?
-    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    @@unique([provider, providerAccountId])
+  @@unique([provider, providerAccountId])
+  @@index([userId], map: "Account_userId_fkey")
 }
 
 model Session {
-    id           String   @id @default(cuid())
-    sessionToken String   @unique
-    userId       String
-    expires      DateTime
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], map: "Session_userId_fkey")
 }
 
 model User {
-    id            String         @id @default(cuid())
-    name          String?
-    email         String?        @unique
-    emailVerified DateTime?
-    image         String?
-    accounts      Account[]
-    sessions      Session[]
-    cafesCreated  Cafe[]
-    orders        Order[]
-    DrinkProfile  DrinkProfile[]
+  id            String         @id @default(cuid())
+  name          String?
+  email         String?        @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  cafesCreated  Cafe[]
+  DrinkProfile  DrinkProfile[]
+  orders        Order[]
+  sessions      Session[]
 
-    @@index([id])
-    @@index([name])
+  @@index([id])
+  @@index([name])
 }
 
 model VerificationToken {
-    identifier String
-    token      String   @id @unique
-    expires    DateTime
+  identifier String
+  token      String   @id @unique
+  expires    DateTime
 
-    @@unique([identifier, token])
+  @@unique([identifier, token])
 }
 
 model Order {
-    id        String   @id @default(cuid())
-    drink     Drink    @relation(fields: [drinkId], references: [id])
-    user      User     @relation(fields: [userId], references: [id])
-    createdAt DateTime @default(now())
-    drinkId   String
-    userId    String
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  drinkId   String
+  userId    String
+  drink     Drink    @relation(fields: [drinkId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 
-    @@index([id])
-    @@index([drinkId])
-    @@index([userId])
+  @@index([id])
+  @@index([drinkId])
+  @@index([userId])
 }
 
 model Cafe {
-    id          String   @id @default(cuid())
-    name        String   @unique
-    description String?
-    drinks      Drink[]
-    createdBy   User     @relation(fields: [userId], references: [id])
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
-    userId      String
-    latitute    Float?
-    longitude   Float?
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  userId      String
+  latitute    Float?
+  longitude   Float?
+  createdBy   User     @relation(fields: [userId], references: [id])
+  drinks      Drink[]
 
-    @@index([id])
-    @@index([name])
-    @@index([userId])
+  @@index([id])
+  @@index([name])
+  @@index([userId])
 }
 
 model Drink {
-    id          String   @id @default(cuid())
-    name        String
-    description String
-    price       Float
-    cafe        Cafe     @relation(fields: [cafeId], references: [id], onDelete: Cascade)
-    sweetness   Int // 1-10
-    cafeId      String
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
-    Order       Order[]
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  price       Float
+  cafeId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  sweetness   Int
+  cafe        Cafe     @relation(fields: [cafeId], references: [id], onDelete: Cascade)
+  Order       Order[]
 
-    @@index([id])
-    @@index([name])
-    @@index([cafeId])
-    @@index([description])
+  @@index([id])
+  @@index([name])
+  @@index([cafeId])
+  @@index([description])
 }
 
 model DrinkProfile {
-    id                   String   @id @default(cuid())
-    name                 String
-    naturalLanguageInput String
-    creator              User     @relation(fields: [userId], references: [id])
-    sweetness            Int // 1-10
-    ice                  IceLevel
-    milk                 MilkType
-    userId               String
+  id                   String   @id @default(cuid())
+  name                 String
+  naturalLanguageInput String
+  sweetness            Int
+  ice                  IceLevel
+  milk                 MilkType
+  userId               String
+  creator              User     @relation(fields: [userId], references: [id])
 
-    @@index([id])
-    @@index([name])
-    @@index([naturalLanguageInput])
+  @@index([id])
+  @@index([name])
+  @@index([naturalLanguageInput])
+  @@index([userId], map: "DrinkProfile_userId_fkey")
 }
 
 enum IceLevel {
-    NO_ICE
-    LESS_ICE
-    REGULAR_ICE
-    MORE_ICE
+  NO_ICE
+  LESS_ICE
+  REGULAR_ICE
+  MORE_ICE
 }
 
 enum MilkType {
-    WHOLE
-    TWO_PERCENT
-    ALMOND
-    OAT
-    SOY
-    NONFAT
-    COCONUT
-    NONE
+  WHOLE
+  TWO_PERCENT
+  ALMOND
+  OAT
+  SOY
+  NONFAT
+  COCONUT
+  NONE
 }
