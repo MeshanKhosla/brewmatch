@@ -117,7 +117,7 @@ const CreateDrinkProfileForm = (props: CreateDrinkProfileFormProps) => {
                   Description <Asterisk className="size-3 text-red-500" />
                 </div>
                 <p className="text-sm text-muted-foreground py-1">
-                  Be descriptive. This is used to match users with their
+                  Be descriptive. This is used to match you with your
                   perfect drink!
                 </p>
               </FormLabel>
