@@ -10,7 +10,7 @@ const CreateDrink = ({ cafeId }: { cafeId: string }) => {
       <DialogTrigger className='h-full w-full rounded py-1 bg-[#8fbc5c] hover:bg-[#719646] text-white'>
         +
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="my-3 max-w-[85%] max-h-screen overflow-y-scroll md:max-w-[50%]">
         <DialogHeader>
           <DialogTitle>Create a new drink</DialogTitle>
         </DialogHeader>

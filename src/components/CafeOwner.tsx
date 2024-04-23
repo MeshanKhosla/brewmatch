@@ -50,7 +50,7 @@ const CafeOwner = (props: CafeOwnerProps) => {
                   <DialogTrigger>
                     <Pencil />
                   </DialogTrigger>
-                  <DialogContent className="my-3 max-h-screen overflow-y-scroll">
+                  <DialogContent className="my-3 max-w-[85%] max-h-screen overflow-y-scroll md:max-w-[50%]">
                     <DialogHeader>
                       <DialogTitle>Edit</DialogTitle>
                     </DialogHeader>
