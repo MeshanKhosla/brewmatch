@@ -26,6 +26,7 @@ const CafeCustomer = (props: CafeCustomerProps) => {
   const [reccommendedDrinks, setReccommendedDrinks] = useState<
     DrinkRecommendation[]
   >([]);
+  const [selectedDrink, setSelectedDrink] = useState<Drink>();
 
   const incrementStep = () => {
     if (stepIndex < STEPS.length - 1) {
@@ -40,7 +41,6 @@ const CafeCustomer = (props: CafeCustomerProps) => {
   };
 
   const handleProfileSelection = async (profile: DrinkProfile) => {
-    // setDrinkProfileSelection(profile);
     incrementStep();
     const reccommendedDrinks = await getDrinkRecommendations(
       profile,
@@ -53,8 +53,11 @@ const CafeCustomer = (props: CafeCustomerProps) => {
     } else {
       toast.error("Error getting drink recommendations. Please try again");
     }
+  };
 
-    console.log(reccommendedDrinks);
+  const handleDrinkSelection = (drink: Drink) => {
+    incrementStep();
+    setSelectedDrink(drink);
   };
 
   const STEPS_TO_COMPONENTS: Record<(typeof STEPS)[number], JSX.Element> = {
@@ -67,16 +70,14 @@ const CafeCustomer = (props: CafeCustomerProps) => {
     SELECT_DRINK: (
       <SelectDrink
         drinkRecommendations={reccommendedDrinks}
-        handleDrinkSelection={(drink: Drink) => {
-          console.log(drink);
-        }}
+        handleDrinkSelection={handleDrinkSelection}
       />
     ),
     REVIEW_DRINK: <div>Review Drink</div>,
   };
 
   return (
-    <div>
+    <div className="transition-all duration-300">
       {STEPS_TO_COMPONENTS[STEPS[stepIndex]!]}
       <Button disabled={stepIndex === 0} onClick={decrementStep}>
         Previous
