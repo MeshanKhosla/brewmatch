@@ -31,7 +31,7 @@ function addDataToDescription(description: string, sweetness: number, name?: str
   return `${description} --- Sweetness level: ${sweetness} ${name ? `--- Name: ${name}` : ''}`
 }
 
-export async function createCafe(name: string, description: string, latitude: number, longitude: number) {
+export async function createCafe(name: string, description: string, latitude: number, longitude: number, existingId?: string) {
   if (!isStringValid(name)) {
     return {
       ok: false,
@@ -52,31 +52,48 @@ export async function createCafe(name: string, description: string, latitude: nu
     redirect('/discover')
   }
 
-  name = name.trim()
-  // Check if cafe name already exists
-  const existingCafe = await db.cafe.findFirst({ where: { name } })
-
-  if (existingCafe) {
-    return {
-      ok: false,
-      error: 'Cafe with that name already exists'
-    }
-  }
-
-
-  const cafe = await db.cafe.create({
-    data: {
-      name,
-      description,
-      latitude,
-      longitude,
-      createdBy: {
-        connect: {
-          id: session.user.id
+  let cafe
+  if (existingId) {
+    cafe = await db.cafe.update({
+      where: {
+        id: existingId
+      },
+      data: {
+        name,
+        description,
+        latitude,
+        longitude,
+        createdBy: {
+          connect: {
+            id: session.user.id
+          }
         }
       }
+    })
+  } else {
+    // Check if cafe already exists
+    const existingCafe = await db.cafe.findFirst({ where: { latitude, longitude } });
+    if (existingCafe) {
+      return {
+        ok: false,
+        error: 'Cafe with that location already exists'
+      }
     }
-  })
+
+    cafe = await db.cafe.create({
+      data: {
+        name,
+        description,
+        latitude,
+        longitude,
+        createdBy: {
+          connect: {
+            id: session.user.id
+          }
+        }
+      }
+    })
+  }
 
   redirect(`/cafe/${cafe.name}`)
 }

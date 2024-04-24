@@ -8,9 +8,17 @@ import {
   getDrinkProfilesByCreator,
   getDrinksByCafe,
 } from "~/queries";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "~/components/ui/dialog";
 import { authOptions } from "~/server/auth";
 import { Pencil } from "lucide-react";
 import DeleteAlert from "~/components/DeleteAlert";
+import CreateCafeForm from "~/components/CreateCafeForm";
 
 const Page = async ({ params }: { params: { name: string } }) => {
   const { name } = params;
@@ -39,7 +47,17 @@ const Page = async ({ params }: { params: { name: string } }) => {
         {isUserOwner ? (
           <div className="flex size-1 w-full items-center justify-between space-x-2 pb-5">
             <DeleteAlert cafe={cafe} />
-            <Pencil />
+            <Dialog>
+              <DialogTrigger>
+                <Pencil />
+              </DialogTrigger>
+              <DialogContent className="my-3 max-h-screen max-w-[85%] overflow-y-scroll md:max-w-[50%]">
+                <DialogHeader>
+                  <DialogTitle>Edit</DialogTitle>
+                </DialogHeader>
+                <CreateCafeForm cafe={cafe} />
+              </DialogContent>
+            </Dialog>
           </div>) : (
           <></>
         )}
