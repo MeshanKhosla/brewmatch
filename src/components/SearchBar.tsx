@@ -22,7 +22,9 @@ export function SearchBar(props: SearchBarProps) {
         }
     });
 
+    const instanceId = 'search-bar';
+
     return (
-        <Select theme={setTheme} options={options} onChange={(option) => router.push(`/cafe/${option!.value}`)} />
+        <Select theme={setTheme} options={options} onChange={(option) => router.push(`/cafe/${option!.value}`)} instanceId={instanceId} />
     )
 }

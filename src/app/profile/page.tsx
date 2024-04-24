@@ -16,12 +16,12 @@ const Page = async () => {
   const myDrinkProfiles = await getDrinkProfilesByCreator(session.user.id);
 
   return (
-    <div className="flex flex-col gap-3">
-      <h1 className="text-2xl font-semibold">Your Drink Profiles</h1>
+    <div className="flex flex-col gap-4 pt-4">
+      <h1 className="text-4xl font-semibold">Your Drink Profiles</h1>
       {myDrinkProfiles.length === 0 ? (
         <p>You don&apos;t have any drink profiles yet. Create one below!</p>
       ) : (
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+        <div className="grid grid-cols-1 pt-4 gap-3 md:grid-cols-2">
           {myDrinkProfiles.map((profile) => (
             <DrinkProfileCard
               key={profile.id}
