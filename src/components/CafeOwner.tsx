@@ -1,21 +1,5 @@
 import type { Cafe, Drink } from "@prisma/client";
 import CreateDrink from "~/components/CreateDrink";
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "~/components/ui/dialog";
-import { Pencil } from "lucide-react";
-import DeleteAlert from "~/components/DeleteAlert";
-import CreateDrinkForm from "~/components/CreateDrinkForm";
 import { DrinkCard } from "~/components/DrinkCard";
 
 type CafeOwnerProps = {
@@ -41,12 +25,7 @@ const CafeOwner = (props: CafeOwnerProps) => {
       <h1 className="text-2xl font-semibold">Menu</h1>
       <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
         {myDrinks.map((drink) => (
-          <DrinkCard
-          key={drink.id}
-          drink={drink}
-          cafe={cafe}
-          canEdit={true}
-        />
+          <DrinkCard key={drink.id} drink={drink} cafe={cafe} canEdit={true} />
         ))}
       </div>
       <CreateDrink cafeId={cafe.id} />

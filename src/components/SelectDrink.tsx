@@ -11,7 +11,7 @@ type SelectDrinkProps = {
 const SelectDrink = (props: SelectDrinkProps) => {
   const { drinkRecommendations, handleDrinkSelection } = props;
   if (drinkRecommendations.length === 0) {
-    return <LoadingCards />
+    return <LoadingCards />;
   }
 
   return (

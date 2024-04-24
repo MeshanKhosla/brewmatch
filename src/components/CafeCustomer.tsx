@@ -64,7 +64,14 @@ const CafeCustomer = (props: CafeCustomerProps) => {
         handleProfileSelection={handleProfileSelection}
       />
     ),
-    SELECT_DRINK: <SelectDrink drinkRecommendations={reccommendedDrinks} handleDrinkSelection={() => {}} />,
+    SELECT_DRINK: (
+      <SelectDrink
+        drinkRecommendations={reccommendedDrinks}
+        handleDrinkSelection={(drink: Drink) => {
+          console.log(drink);
+        }}
+      />
+    ),
     REVIEW_DRINK: <div>Review Drink</div>,
   };
 

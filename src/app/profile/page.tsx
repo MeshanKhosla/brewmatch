@@ -21,7 +21,7 @@ const Page = async () => {
       {myDrinkProfiles.length === 0 ? (
         <p>You don&apos;t have any drink profiles yet. Create one below!</p>
       ) : (
-        <div className="grid grid-cols-1 pt-4 gap-3 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-3 pt-4 md:grid-cols-2">
           {myDrinkProfiles.map((profile) => (
             <DrinkProfileCard
               key={profile.id}

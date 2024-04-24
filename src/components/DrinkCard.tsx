@@ -1,6 +1,6 @@
 "use client";
 
-import { type Drink, Cafe } from "@prisma/client";
+import { type Drink, type Cafe } from "@prisma/client";
 import {
   Card,
   CardContent,
@@ -17,7 +17,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog";
-import { ICE_TO_NAME, MILK_TO_NAME, removeEndString } from "~/lib/utils";
 import CreateDrinkForm from "~/components/CreateDrinkForm";
 
 type DrinkCardProps = {
@@ -52,26 +51,24 @@ export function DrinkCard(props: DrinkCardProps) {
                 <Pencil />
               </DialogTrigger>
               <DialogContent className="my-3 max-h-screen max-w-[85%] overflow-y-scroll md:max-w-[50%]">
-                    <DialogHeader>
-                      <DialogTitle>Edit</DialogTitle>
-                    </DialogHeader>
-                    {/* Cafe will be defined if canEdit is true */}
-                    <CreateDrinkForm cafe={cafe!.id} drink={drink} />
-                  </DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Edit</DialogTitle>
+                </DialogHeader>
+                {/* Cafe will be defined if canEdit is true */}
+                <CreateDrinkForm cafe={cafe!.id} drink={drink} />
+              </DialogContent>
             </Dialog>
           </div>
         )}
         <div className="grid w-full grid-rows-3 justify-items-center space-y-2">
-        <CardTitle>{drink.name}</CardTitle>
-                <CardDescription>{drink.description}</CardDescription>
-                <CardDescription>
-                  Price: {drink.price} <span className="font-semibold">/</span>{" "}
-                  Sweetness: {drink.sweetness}
-                </CardDescription>
+          <CardTitle>{drink.name}</CardTitle>
+          <CardDescription>{drink.description}</CardDescription>
+          <CardDescription>
+            Price: {drink.price} <span className="font-semibold">/</span>{" "}
+            Sweetness: {drink.sweetness}
+          </CardDescription>
         </div>
-        <CardContent>
-         
-        </CardContent>
+        <CardContent></CardContent>
       </CardHeader>
     </Card>
   );

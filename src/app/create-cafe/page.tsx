@@ -22,7 +22,7 @@ const Page = async () => {
 
   return (
     <div className="flex flex-col gap-4">
-      <h1 className="text-4xl font-semibold pt-4">Your Cafes</h1>
+      <h1 className="pt-4 text-4xl font-semibold">Your Cafes</h1>
       {myCafes.length === 0 ? (
         <p>
           You don&apos;t have any cafes yet. If you&apos;re a cafe owner, create
