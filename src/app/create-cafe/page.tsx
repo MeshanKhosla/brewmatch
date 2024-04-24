@@ -21,15 +21,15 @@ const Page = async () => {
   const myCafes = await getCafesByOwner(session.user.id);
 
   return (
-    <div className="flex flex-col gap-3">
-      <h1 className="text-2xl font-semibold">Your Cafes</h1>
+    <div className="flex flex-col gap-4">
+      <h1 className="text-4xl font-semibold pt-4">Your Cafes</h1>
       {myCafes.length === 0 ? (
         <p>
           You don&apos;t have any cafes yet. If you&apos;re a cafe owner, create
           one below!
         </p>
       ) : (
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-3 pt-4 md:grid-cols-2">
           {myCafes.map((cafe) => (
             <Link href={`/cafe/${cafe.name}`} key={cafe.id}>
               <Card key={cafe.id}>
