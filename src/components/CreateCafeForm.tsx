@@ -54,11 +54,8 @@ const CreateCafeForm = (props: CreateCafeFormProps) => {
     defaultValues: {
       name: cafe?.name ?? "",
       description: cafe?.description ?? "",
-      // uncomment when lat and long are required
-      //latitude: cafe?.latitude ?? "",
-      //longitude: cafe?.longitude ?? "",
-      latitude: "",
-      longitude: "",
+      latitude: cafe?.latitude?.toString() ?? "",
+      longitude: cafe?.longitude?.toString() ?? "",
     },
   });
 
