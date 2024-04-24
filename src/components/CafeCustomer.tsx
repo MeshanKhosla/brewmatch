@@ -1,13 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import { type DrinkProfile, type Cafe } from "@prisma/client";
+import { type DrinkProfile, type Cafe, type Drink } from "@prisma/client";
 import { SelectDrinkProfile } from "~/components/SelectDrinkProfile";
 import { Button } from "~/components/ui/button";
+import { getDrinkRecommendations } from "~/actions";
+import { toast } from "sonner";
+import SelectDrink from "~/components/SelectDrink";
 
 type CafeCustomerProps = {
   cafe: Cafe;
   drinkProfiles: DrinkProfile[];
+};
+
+export type DrinkRecommendation = {
+  drink: Drink;
+  score: number;
 };
 
 const STEPS = ["SELECT_DRINK_PROFILE", "SELECT_DRINK", "REVIEW_DRINK"] as const;
@@ -15,10 +23,12 @@ const STEPS = ["SELECT_DRINK_PROFILE", "SELECT_DRINK", "REVIEW_DRINK"] as const;
 const CafeCustomer = (props: CafeCustomerProps) => {
   const { cafe, drinkProfiles } = props;
   const [stepIndex, setStepIndex] = useState<number>(0);
-  const [drinkProfileSelection, setDrinkProfileSelection] =
-    useState<DrinkProfile>();
+  const [reccommendedDrinks, setReccommendedDrinks] = useState<
+    DrinkRecommendation[]
+  >([]);
+  // const [drinkProfileSelection, setDrinkProfileSelection] =
+  //   useState<DrinkProfile>();
 
-  console.log("Will remove this", cafe, drinkProfileSelection);
   const incrementStep = () => {
     if (stepIndex < STEPS.length - 1) {
       setStepIndex(stepIndex + 1);
@@ -31,9 +41,22 @@ const CafeCustomer = (props: CafeCustomerProps) => {
     }
   };
 
-  const handleProfileSelection = (profile: DrinkProfile) => {
-    setDrinkProfileSelection(profile);
+  const handleProfileSelection = async (profile: DrinkProfile) => {
+    // setDrinkProfileSelection(profile);
     incrementStep();
+    const reccommendedDrinks = await getDrinkRecommendations(
+      profile,
+      cafe.id,
+      3,
+    );
+
+    if (reccommendedDrinks.ok) {
+      setReccommendedDrinks(reccommendedDrinks.drinks as DrinkRecommendation[]);
+    } else {
+      toast.error("Error getting drink recommendations. Please try again");
+    }
+
+    console.log(reccommendedDrinks);
   };
 
   const STEPS_TO_COMPONENTS: Record<(typeof STEPS)[number], JSX.Element> = {
@@ -43,7 +66,7 @@ const CafeCustomer = (props: CafeCustomerProps) => {
         handleProfileSelection={handleProfileSelection}
       />
     ),
-    SELECT_DRINK: <div>Select Drink</div>,
+    SELECT_DRINK: <SelectDrink drinkRecommendations={reccommendedDrinks} />,
     REVIEW_DRINK: <div>Review Drink</div>,
   };
 

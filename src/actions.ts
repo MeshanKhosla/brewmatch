@@ -378,6 +378,7 @@ export async function getDrinkRecommendations(profile: DrinkProfile, cafeId: str
       score: rec.score
     }
   })
+	.filter(d => d.drink !== undefined)
 
   return {
     ok: true,
