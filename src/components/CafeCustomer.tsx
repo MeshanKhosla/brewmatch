@@ -26,8 +26,6 @@ const CafeCustomer = (props: CafeCustomerProps) => {
   const [reccommendedDrinks, setReccommendedDrinks] = useState<
     DrinkRecommendation[]
   >([]);
-  // const [drinkProfileSelection, setDrinkProfileSelection] =
-  //   useState<DrinkProfile>();
 
   const incrementStep = () => {
     if (stepIndex < STEPS.length - 1) {
@@ -66,7 +64,7 @@ const CafeCustomer = (props: CafeCustomerProps) => {
         handleProfileSelection={handleProfileSelection}
       />
     ),
-    SELECT_DRINK: <SelectDrink drinkRecommendations={reccommendedDrinks} />,
+    SELECT_DRINK: <SelectDrink drinkRecommendations={reccommendedDrinks} handleDrinkSelection={() => {}} />,
     REVIEW_DRINK: <div>Review Drink</div>,
   };
 

@@ -16,6 +16,7 @@ import {
 import { Pencil } from "lucide-react";
 import DeleteAlert from "~/components/DeleteAlert";
 import CreateDrinkForm from "~/components/CreateDrinkForm";
+import { DrinkCard } from "~/components/DrinkCard";
 
 type CafeOwnerProps = {
   cafe: Cafe;
@@ -40,32 +41,12 @@ const CafeOwner = (props: CafeOwnerProps) => {
       <h1 className="text-2xl font-semibold">Menu</h1>
       <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
         {myDrinks.map((drink) => (
-          <Card key={drink.id}>
-            <CardHeader>
-              <div className="flex size-1 w-full items-center justify-between space-x-2 pb-5">
-                <DeleteAlert drink={drink} />
-                <Dialog>
-                  <DialogTrigger>
-                    <Pencil />
-                  </DialogTrigger>
-                  <DialogContent className="my-3 max-h-screen max-w-[85%] overflow-y-scroll md:max-w-[50%]">
-                    <DialogHeader>
-                      <DialogTitle>Edit</DialogTitle>
-                    </DialogHeader>
-                    <CreateDrinkForm cafe={cafe.id} drink={drink} />
-                  </DialogContent>
-                </Dialog>
-              </div>
-              <div className="grid w-full grid-rows-3 justify-items-center space-y-2">
-                <CardTitle>{drink.name}</CardTitle>
-                <CardDescription>{drink.description}</CardDescription>
-                <CardDescription>
-                  Price: {drink.price} <span className="font-semibold">/</span>{" "}
-                  Sweetness: {drink.sweetness}
-                </CardDescription>
-              </div>
-            </CardHeader>
-          </Card>
+          <DrinkCard
+          key={drink.id}
+          drink={drink}
+          cafe={cafe}
+          canEdit={true}
+        />
         ))}
       </div>
       <CreateDrink cafeId={cafe.id} />

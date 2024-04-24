@@ -1,5 +1,6 @@
 import { Skeleton } from "~/components/ui/skeleton";
-export function LoadingCafes() {
+
+export function LoadingCards() {
   return (
     <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
       {" "}

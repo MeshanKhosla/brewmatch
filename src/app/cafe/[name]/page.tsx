@@ -70,7 +70,9 @@ const Page = async ({ params }: { params: { name: string } }) => {
         </Suspense>
       ) : (
         <Suspense fallback={<div>Loading...</div>}>
-          <CafeCustomer cafe={cafe} drinkProfiles={drinkProfiles} />
+          {myDrinks.length === 0 ? <p className="text-xl">{cafe.name} has no drinks yet!</p> : 
+            <CafeCustomer cafe={cafe} drinkProfiles={drinkProfiles} />
+          }
         </Suspense>
       )}
     </div>

@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "~/components/ui/card";
 import { useEffect, useState } from "react";
-import { LoadingCafes } from "~/components/LoadingCafes";
+import { LoadingCards } from "~/components/LoadingCards";
 import { toast } from "sonner";
 
 type LocationProps = {
@@ -31,7 +31,7 @@ export function ClosestCafes(props: LocationProps) {
   }, [cafes]);
 
   if (closeCafes.length === 0) {
-    return <LoadingCafes />;
+    return <LoadingCards />;
   }
 
   return (
