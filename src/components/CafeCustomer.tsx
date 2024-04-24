@@ -18,7 +18,6 @@ const CafeCustomer = (props: CafeCustomerProps) => {
   const [drinkProfileSelection, setDrinkProfileSelection] =
     useState<DrinkProfile>();
 
-
   console.log("Will remove this", cafe, drinkProfileSelection);
   const incrementStep = () => {
     if (stepIndex < STEPS.length - 1) {

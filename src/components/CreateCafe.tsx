@@ -26,7 +26,6 @@ import { createCafe } from "~/actions";
 import { Asterisk } from "lucide-react";
 import { toast } from "sonner";
 
-// const latitudeRegExp = /^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$/;
 const latitudeRegExp = /^-?([0-8]?[0-9]|90)(\.[0-9]{1,10})$/;
 const longitudeRegExp = /^-?([0-9]{1,2}|1[0-7][0-9]|180)(\.[0-9]{1,10})$/;
 
@@ -76,23 +75,6 @@ const CreateDrinkProfile = () => {
 
   const nameLength = form.getValues("name").trim().length;
   const descriptionLength = form.getValues("description").trim().length;
-  const latitudeValue = form.getValues("latitude");
-  const containsDecimal = latitudeValue.includes(".");
-  let decimalPlaces = 0;
-  if (containsDecimal) {
-    const split = latitudeValue.split(".")[1];
-    if (split) {
-      decimalPlaces = split.length;
-    }
-  }
-  const longitudeValue = form.getValues("latitude");
-  const containsDecimalLong = longitudeValue.includes(".");
-  if (containsDecimalLong) {
-    const split = longitudeValue.split(".")[1];
-    if (split) {
-      decimalPlaces = split.length;
-    }
-  }
 
   return (
     <div>

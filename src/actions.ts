@@ -343,8 +343,6 @@ export async function getDrinkRecommendations(profile: DrinkProfile, cafeId: str
     topK: k,
   })
 
-  console.log(recs)
-
   // Fetch the actual drink objects from the database
   const drinkIds = recs.map(rec => rec.metadata?.drinkId).filter(r => typeof r === 'string') as string[]
 

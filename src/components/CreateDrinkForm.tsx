@@ -35,10 +35,9 @@ const formSchema = z.object({
     .refine((v) => v.trim().length >= 10 && v.trim().length <= 190, {
       message: "Description must be between 10 and 190 characters",
     }),
-  price: z.string()
-    .refine(value => decimalRegExp.test(value.trim()), {
-      message: 'Price must be a number or a decimal with two decimal places'
-    }),
+  price: z.string().refine((value) => decimalRegExp.test(value.trim()), {
+    message: "Price must be a number or a decimal with two decimal places",
+  }),
   sweetness: z.string(),
   cafeId: z.string(),
 });
@@ -47,7 +46,7 @@ type CreateDrinkFormProps = {
   cafe: string;
   drink?: Drink;
   onFormSubmit?: () => void;
-}
+};
 
 const CreateDrinkForm = (props: CreateDrinkFormProps) => {
   const { cafe, drink, onFormSubmit } = props;
@@ -84,7 +83,7 @@ const CreateDrinkForm = (props: CreateDrinkFormProps) => {
         b.click();
       }
       form.reset();
-      toast.success(`Drink ${drink?.id ? 'updated' : 'created'}!`);
+      toast.success(`Drink ${drink?.id ? "updated" : "created"}!`);
       if (onFormSubmit) {
         onFormSubmit();
       }
@@ -93,13 +92,13 @@ const CreateDrinkForm = (props: CreateDrinkFormProps) => {
 
   const nameLength = form.getValues("name").trim().length;
   const descriptionLength = form.getValues("description").trim().length;
-  const priceValue = form.getValues("price")
-  const containsDecimal = priceValue.includes('.');
-  let decimalPlaces = 0
+  const priceValue = form.getValues("price");
+  const containsDecimal = priceValue.includes(".");
+  let decimalPlaces = 0;
   if (containsDecimal) {
-    const split = priceValue.split('.')[1]
+    const split = priceValue.split(".")[1];
     if (split) {
-      decimalPlaces = split.length
+      decimalPlaces = split.length;
     }
   }
   const sweetChoice = parseInt(form.getValues("sweetness"));
@@ -124,8 +123,7 @@ const CreateDrinkForm = (props: CreateDrinkFormProps) => {
                 />
               </FormControl>
               <FormDescription>
-                {nameLength} / 30{" "}
-                {nameLength < 2 && "(Minimum 2 characters)"}
+                {nameLength} / 30 {nameLength < 2 && "(Minimum 2 characters)"}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -140,9 +138,9 @@ const CreateDrinkForm = (props: CreateDrinkFormProps) => {
                 <div className="flex">
                   Description <Asterisk className="size-3 text-red-500" />
                 </div>
-                <p className="text-sm text-muted-foreground py-1">
-                  Be descriptive. This is used to match users with their
-                  perfect drink!
+                <p className="py-1 text-sm text-muted-foreground">
+                  Be descriptive. This is used to match users with their perfect
+                  drink!
                 </p>
               </FormLabel>
               <FormControl>
@@ -170,7 +168,8 @@ const CreateDrinkForm = (props: CreateDrinkFormProps) => {
                 Price <Asterisk className="size-3 text-red-500" />{" "}
               </FormLabel>
               <FormControl>
-                <Input type="number"
+                <Input
+                  type="number"
                   min={0}
                   step={0.01}
                   minLength={1}
@@ -181,7 +180,9 @@ const CreateDrinkForm = (props: CreateDrinkFormProps) => {
               </FormControl>
               <FormDescription>
                 {!containsDecimal && " "}
-                {containsDecimal && decimalPlaces != 2 && "Need 2 decimal places"}
+                {containsDecimal &&
+                  decimalPlaces != 2 &&
+                  "Need 2 decimal places"}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -201,56 +202,53 @@ const CreateDrinkForm = (props: CreateDrinkFormProps) => {
                     onValueChange={field.onChange}
                     className="grid grid-cols-10"
                   >
-                    {Array.from(
-                      { length: 10 },
-                      (_, index) => index + 1,
-                    ).map((sweetness) => (
-                      <div
-                        key={sweetness.toString()}
-                        className="grid grid-rows-2 space-y-3"
-                      >
-                        <div className="flex items-center">
-                          <RadioGroupItem
-                            value={sweetness.toString()}
-                            id={sweetness.toString()}
-                            style={{ color: "#8fbc5c" }}
-                            className={
-                              sweetness <= sweetChoice
-                                ? "border border-[#8fbc5c] bg-[#8fbc5c]"
-                                : "border border-[#D9D9D9] bg-[#D9D9D9]"
-                            }
-                          />
-                          <div
-                            style={{
-                              marginLeft: "-1px",
-                              marginRight: "-15px",
-                              top: "10px",
-                              width: sweetness <= 9 ? "100%" : "",
-                              height: "8px",
-                              background:
-                                sweetness < sweetChoice
-                                  ? "#8fbc5c"
-                                  : "#D9D9D9",
-                              zIndex: -1,
-                            }}
-                          ></div>
-                        </div>
-                        <Label
-                          htmlFor={sweetness.toString()}
-                          className={
-                            sweetness === sweetChoice
-                              ? "font-bold"
-                              : ""
-                          }
+                    {Array.from({ length: 10 }, (_, index) => index + 1).map(
+                      (sweetness) => (
+                        <div
+                          key={sweetness.toString()}
+                          className="grid grid-rows-2 space-y-3"
                         >
-                          {sweetness === 1
-                            ? sweetness + "\nespresso"
-                            : sweetness === 10
-                              ? sweetness + "\nfrap"
-                              : sweetness}
-                        </Label>
-                      </div>
-                    ))}
+                          <div className="flex items-center">
+                            <RadioGroupItem
+                              value={sweetness.toString()}
+                              id={sweetness.toString()}
+                              style={{ color: "#8fbc5c" }}
+                              className={
+                                sweetness <= sweetChoice
+                                  ? "border border-[#8fbc5c] bg-[#8fbc5c]"
+                                  : "border border-[#D9D9D9] bg-[#D9D9D9]"
+                              }
+                            />
+                            <div
+                              style={{
+                                marginLeft: "-1px",
+                                marginRight: "-15px",
+                                top: "10px",
+                                width: sweetness <= 9 ? "100%" : "",
+                                height: "8px",
+                                background:
+                                  sweetness < sweetChoice
+                                    ? "#8fbc5c"
+                                    : "#D9D9D9",
+                                zIndex: -1,
+                              }}
+                            ></div>
+                          </div>
+                          <Label
+                            htmlFor={sweetness.toString()}
+                            className={
+                              sweetness === sweetChoice ? "font-bold" : ""
+                            }
+                          >
+                            {sweetness === 1
+                              ? sweetness + "\nespresso"
+                              : sweetness === 10
+                                ? sweetness + "\nfrap"
+                                : sweetness}
+                          </Label>
+                        </div>
+                      ),
+                    )}
                   </RadioGroup>
                 </div>
               </FormControl>
@@ -259,13 +257,11 @@ const CreateDrinkForm = (props: CreateDrinkFormProps) => {
           )}
         />
         <Button
-          disabled={
-            !form.formState.isValid || form.formState.isSubmitting
-          }
+          disabled={!form.formState.isValid || form.formState.isSubmitting}
           className="w-full bg-[#8fbc5c] hover:bg-[#719646]"
           type="submit"
         >
-          {props.drink ? 'Update' : 'Create'}
+          {props.drink ? "Update" : "Create"}
         </Button>
       </form>
     </Form>
