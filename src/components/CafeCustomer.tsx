@@ -7,6 +7,8 @@ import { Button } from "~/components/ui/button";
 import { getDrinkRecommendations } from "~/actions";
 import { toast } from "sonner";
 import SelectDrink from "~/components/SelectDrink";
+import { ProgressBar } from "~/components/ProgressBar";
+import { CircleArrowLeftIcon } from "lucide-react";
 
 type CafeCustomerProps = {
   cafe: Cafe;
@@ -77,11 +79,12 @@ const CafeCustomer = (props: CafeCustomerProps) => {
   };
 
   return (
-    <div className="transition-all duration-300">
+    <div className="flex flex-col gap-4">
+      <div >
+      <CircleArrowLeftIcon className="mb-4 cursor-pointer" size={30} onClick={decrementStep} />
       {STEPS_TO_COMPONENTS[STEPS[stepIndex]!]}
-      <Button disabled={stepIndex === 0} onClick={decrementStep}>
-        Previous
-      </Button>
+      <ProgressBar currentStep={stepIndex} />
+      </div>
     </div>
   );
 };
