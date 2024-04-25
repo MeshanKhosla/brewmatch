@@ -33,10 +33,17 @@ const Page = async () => {
           {myCafes.map((cafe) => (
             <Link href={`/cafe/${cafe.name}`} key={cafe.id}>
               <Card key={cafe.id}>
+              <div
+                className="group relative cursor-pointer bg-white overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl mx-auto max-w rounded-lg">
+                <span className="absolute top-0 z-0 h-0.5 w-0.5 rounded-full bg-lime-600/50 transition-all duration-300 group-hover:scale-[800]"></span>
+                <div className="relative z-10 mx-auto max-w-md">
+                    <span className="grid h-full w-full rounded-lg transition-all duration-300 group-hover:bg-lime-500/50"></span>
                 <CardHeader>
                   <CardTitle>{cafe.name}</CardTitle>
                   <CardDescription>{cafe.description}</CardDescription>
                 </CardHeader>
+                </div>
+                </div>
               </Card>
             </Link>
           ))}
