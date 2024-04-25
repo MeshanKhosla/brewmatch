@@ -16,9 +16,9 @@ const SelectDrink = (props: SelectDrinkProps) => {
 
   return (
     <div className="flex flex-col gap-2">
-      <h2 className="text-xl font-semibold">
+      {/* <h2 className="text-xl font-semibold">
         Step 2: Choose a Recommended Drink
-      </h2>
+      </h2> */}
       <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
         {drinkRecommendations.map((drink) => (
           <DrinkCard
