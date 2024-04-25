@@ -79,11 +79,11 @@ const CafeCustomer = (props: CafeCustomerProps) => {
   };
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-3">
       <div >
       <CircleArrowLeftIcon className="mb-4 cursor-pointer" size={30} onClick={decrementStep} />
-      {STEPS_TO_COMPONENTS[STEPS[stepIndex]!]}
       <ProgressBar currentStep={stepIndex} />
+      {STEPS_TO_COMPONENTS[STEPS[stepIndex]!]}
       </div>
     </div>
   );
