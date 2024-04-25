@@ -40,6 +40,7 @@ export function DrinkProfileCard(props: DrinkProfileCardProps) {
       onClick={onCardClick}
       className={handleProfileSelection ? "hover:cursor-pointer" : ""}
     >
+      <div className="flex size-1 w-full items-center justify-between"></div>
       <div
       className="group relative cursor-pointer bg-white overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl mx-auto max-w rounded-lg">
       <span className="absolute top-0 z-0 h-0.5 w-0.5 rounded-full bg-lime-600/50 transition-all duration-300 group-hover:scale-[800]"></span>
