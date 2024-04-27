@@ -20,8 +20,8 @@ import type { Cafe } from "@prisma/client";
 import { Asterisk } from "lucide-react";
 import { toast } from "sonner";
 
-const latitudeRegExp = /^-?([0-8]?[0-9]|90)(\.[0-9]{1,10})$/;
-const longitudeRegExp = /^-?([0-9]{1,2}|1[0-7][0-9]|180)(\.[0-9]{1,10})$/;
+const latitudeRegExp = /^-?([0-8]?[0-9]|90)(\.[0-9]{1,20})$/;
+const longitudeRegExp = /^-?([0-9]{1,2}|1[0-7][0-9]|180)(\.[0-9]{1,20})$/;
 
 const formSchema = z.object({
   name: z
@@ -146,7 +146,7 @@ const CreateCafeForm = (props: CreateCafeFormProps) => {
               <FormControl>
                 <Input
                   minLength={1}
-                  maxLength={10}
+                  maxLength={20}
                   placeholder="37.8674"
                   {...field}
                 />
@@ -166,7 +166,7 @@ const CreateCafeForm = (props: CreateCafeFormProps) => {
               <FormControl>
                 <Input
                   minLength={1}
-                  maxLength={11}
+                  maxLength={20}
                   placeholder="122.2595"
                   {...field}
                 />
