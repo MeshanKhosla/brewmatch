@@ -3,11 +3,12 @@
 import { useState } from "react";
 import { type DrinkProfile, type Cafe, type Drink } from "@prisma/client";
 import { SelectDrinkProfile } from "~/components/SelectDrinkProfile";
-import { getDrinkRecommendations } from "~/actions";
+import { createOrder, getDrinkRecommendations } from "~/actions";
 import { toast } from "sonner";
 import SelectDrink from "~/components/SelectDrink";
 import { ProgressBar } from "~/components/ProgressBar";
 import { CircleArrowLeftIcon } from "lucide-react";
+import ReviewDrink from "~/components/ReviewDrink";
 
 type CafeCustomerProps = {
   cafe: Cafe;
@@ -58,9 +59,13 @@ const CafeCustomer = (props: CafeCustomerProps) => {
     }
   };
 
-  const handleDrinkSelection = (drink: Drink) => {
+  const handleDrinkSelection = async (drink: Drink) => {
     incrementStep();
     setSelectedDrink(drink);
+    const res = await createOrder(drink.id);
+    if (!res.ok) {
+      toast.error("Error creating order. Please try again");
+    }
   };
 
   const STEPS_TO_COMPONENTS: Record<(typeof STEPS)[number], JSX.Element> = {
@@ -81,7 +86,7 @@ const CafeCustomer = (props: CafeCustomerProps) => {
         )}
       </>
     ),
-    REVIEW_DRINK: <div>Review Drink</div>,
+    REVIEW_DRINK: <>{selectedDrink && <ReviewDrink drink={selectedDrink} />}</>,
   };
 
   return (

@@ -275,6 +275,34 @@ export async function createDrink(cafeId: string, name: string, description: str
   }
 }
 
+export async function createOrder(drinkId: string) {
+	const session = await getServerSession(authOptions);
+
+	if (!session?.user) {
+		redirect('/discover')
+	}
+
+	const order = await db.order.create({
+		data: {
+			user: {
+				connect: {
+					id: session.user.id
+				}
+			},
+			drink: {
+				connect: {
+					id: drinkId
+				}
+			}
+		}
+	})
+
+	return {
+		ok: true,
+		order
+	}
+}
+
 export async function deleteDrink(drink: Drink) {
   const deletedDrink = await db.drink.delete({
     where: {

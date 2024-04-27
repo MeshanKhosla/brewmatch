@@ -15,12 +15,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog";
-import Link from "next/link"
-import {
-  UserRound,
-  ChevronLeft, 
-  Pencil
-} from "lucide-react"
+import Link from "next/link";
+import { UserRound, ChevronLeft, Pencil } from "lucide-react";
 import { authOptions } from "~/server/auth";
 import DeleteAlert from "~/components/DeleteAlert";
 import CreateCafeForm from "~/components/CreateCafeForm";
@@ -63,20 +59,12 @@ const Page = async ({ params }: { params: { name: string } }) => {
                 <CreateCafeForm cafe={cafe} />
               </DialogContent>
             </Dialog>
-          </div>) : (
+          </div>
+        ) : (
           <></>
         )}
-        <div className="flex flex-row w-full h-full items-center">
-          {isUserOwner ? (
-            <Link href={`/create-cafe`}>
-              <ChevronLeft className="w-6 h-6" />
-            </Link>
-          ) : (
-            <Link href="/discover">
-              <ChevronLeft className="w-6 h-6" />
-            </Link>
-          )}
-          <div className="flex flex-col w-full items-center">
+        <div className="flex h-full w-full flex-row items-center">
+          <div className="flex w-full flex-col items-center">
             <h2 className="text-center text-4xl">{cafe.name}</h2>
             <h4 className="text-center text-xl">{cafe.description}</h4>
           </div>
@@ -88,8 +76,10 @@ const Page = async ({ params }: { params: { name: string } }) => {
         </Suspense>
       ) : (
         <Suspense fallback={<div>Loading...</div>}>
-          {myDrinks.length === 0 ? <p className="text-xl">{cafe.name} has no drinks yet!</p>
-            : drinkProfiles.length === 0 ? <div className="flex text-xl items-center">
+          {myDrinks.length === 0 ? (
+            <p className="text-xl">{cafe.name} has no drinks yet!</p>
+          ) : drinkProfiles.length === 0 ? (
+            <div className="flex items-center text-xl">
               <span>You have no drink profiles yet! Create some in </span>
               <Link
                 href="/profile"
@@ -97,9 +87,11 @@ const Page = async ({ params }: { params: { name: string } }) => {
               >
                 <UserRound className="h-4 w-4" />
                 Profile
-              </Link> </div>
-              : <CafeCustomer cafe={cafe} drinkProfiles={drinkProfiles} />
-          }
+              </Link>{" "}
+            </div>
+          ) : (
+            <CafeCustomer cafe={cafe} drinkProfiles={drinkProfiles} />
+          )}
         </Suspense>
       )}
     </div>
