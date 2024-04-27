@@ -276,31 +276,65 @@ export async function createDrink(cafeId: string, name: string, description: str
 }
 
 export async function createOrder(drinkId: string) {
-	const session = await getServerSession(authOptions);
+  const session = await getServerSession(authOptions);
 
-	if (!session?.user) {
-		redirect('/discover')
-	}
+  if (!session?.user) {
+    redirect('/discover')
+  }
 
-	const order = await db.order.create({
-		data: {
-			user: {
-				connect: {
-					id: session.user.id
-				}
-			},
-			drink: {
-				connect: {
-					id: drinkId
-				}
-			}
-		}
-	})
+  const order = await db.order.create({
+    data: {
+      user: {
+        connect: {
+          id: session.user.id
+        }
+      },
+      drink: {
+        connect: {
+          id: drinkId
+        }
+      }
+    }
+  })
 
-	return {
-		ok: true,
-		order
-	}
+  return {
+    ok: true,
+    order
+  }
+}
+
+export async function createReview(drinkId: string, rating: number, review: string) {
+  const session = await getServerSession(authOptions);
+
+  if (!session?.user) {
+    redirect('/discover')
+  }
+
+  const res = await db.review.create({
+    data: {
+      rating,
+      comment: review,
+      drink: {
+        connect: {
+          id: drinkId
+        }
+      },
+      user: {
+        connect: {
+          id: session.user.id
+        }
+      }
+    }
+  })
+
+  if (!res) {
+    return {
+      ok: false,
+      error: 'Error creating review'
+    }
+  }
+
+  redirect('/discover')
 }
 
 export async function deleteDrink(drink: Drink) {
@@ -406,7 +440,7 @@ export async function getDrinkRecommendations(profile: DrinkProfile, cafeId: str
       score: rec.score
     }
   })
-	.filter(d => d.drink !== undefined)
+  .filter(d => d.drink !== undefined)
 
   return {
     ok: true,

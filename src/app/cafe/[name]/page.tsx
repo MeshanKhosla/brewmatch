@@ -16,7 +16,7 @@ import {
   DialogTrigger,
 } from "~/components/ui/dialog";
 import Link from "next/link";
-import { UserRound, ChevronLeft, Pencil } from "lucide-react";
+import { UserRound, Pencil } from "lucide-react";
 import { authOptions } from "~/server/auth";
 import DeleteAlert from "~/components/DeleteAlert";
 import CreateCafeForm from "~/components/CreateCafeForm";
@@ -65,8 +65,8 @@ const Page = async ({ params }: { params: { name: string } }) => {
         )}
         <div className="flex h-full w-full flex-row items-center">
           <div className="flex w-full flex-col items-center">
-            <h2 className="text-center text-4xl">{cafe.name}</h2>
-            <h4 className="text-center text-xl">{cafe.description}</h4>
+            <h2 className="text-center text-3xl font-semibold">{cafe.name}</h2>
+            <h4 className="text-center text-lg">{cafe.description}</h4>
           </div>
         </div>
       </div>

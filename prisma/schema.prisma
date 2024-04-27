@@ -47,6 +47,7 @@ model User {
   DrinkProfile  DrinkProfile[]
   orders        Order[]
   sessions      Session[]
+  Review        Review[]
 
   @@index([id])
   @@index([name])
@@ -71,6 +72,20 @@ model Order {
   @@index([id])
   @@index([drinkId])
   @@index([userId])
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  rating    Int
+  comment   String?
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  drink     Drink    @relation(fields: [drinkId], references: [id])
+  userId    String
+  drinkId   String
+
+  @@index([id])
+  @@index([rating])
 }
 
 model Cafe {
@@ -101,6 +116,7 @@ model Drink {
   sweetness   Int
   cafe        Cafe     @relation(fields: [cafeId], references: [id], onDelete: Cascade)
   Order       Order[]
+  Review      Review[]
 
   @@index([id])
   @@index([name])
