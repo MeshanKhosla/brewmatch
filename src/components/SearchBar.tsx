@@ -17,8 +17,8 @@ export function SearchBar(props: SearchBarProps) {
         ...theme,
         colors: {
             ...theme.colors,
-            primary25: '#8fbc5c',
-            primary: '#8fbc5c',
+            primary25: '#b5d07f',
+            primary: '#b5d07f',
         }
     });
 

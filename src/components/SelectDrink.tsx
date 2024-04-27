@@ -27,7 +27,7 @@ const SelectDrink = (props: SelectDrinkProps) => {
         Step 2: Choose a Recommended Drink
       </h2> */}
       <div>
-        <Card className="-p-1 mb-5 bg-[#D5E7B8] text-center">
+        {/* <Card className="-p-1 mb-5 bg-[#D5E7B8] text-center">
           <CardHeader>
             <CardTitle>{drinkProfile.name}</CardTitle>
             <div className="rounded-md bg-white p-3">
@@ -36,9 +36,9 @@ const SelectDrink = (props: SelectDrinkProps) => {
               </CardDescription>
             </div>
           </CardHeader>
-        </Card>
+        </Card> */}
       </div>
-      <div className="mb-3 text-center text-3xl font-bold">
+      <div className="mb-4 text-3xl font-bold">
         Top 3 Recommendations
       </div>
       <div className="cols-1 md:rows-3 mb-5">
