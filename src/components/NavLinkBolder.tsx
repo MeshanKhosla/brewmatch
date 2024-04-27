@@ -8,22 +8,42 @@ const NavLinkBolder = () => {
   const pathname = usePathname();
 
   useEffect(() => {
-    const discoverLink = document.getElementById("discover-link");
-    const profileLink = document.getElementById("profile-link");
-    const createCafeLink = document.getElementById("create-cafe-link");
+    const discoverLinks = document.querySelectorAll(".discover-link");
+    const profileLinks = document.querySelectorAll(".profile-link");
+    const createCafeLinks = document.querySelectorAll(".create-cafe-link");
 
     if (pathname === "/discover") {
-      discoverLink?.classList.add("text-primary");
-      profileLink?.classList.remove("text-primary");
-      createCafeLink?.classList.remove("text-primary");
+      discoverLinks.forEach((link) => {
+        link.classList.add("text-primary");
+        link.classList.remove("text-muted-foreground");
+      });
+
+      [...profileLinks, ...createCafeLinks].forEach((link) => {
+        link.classList.remove("text-primary");
+        link.classList.add("text-muted-foreground");
+      });
     } else if (pathname === "/profile") {
-      discoverLink?.classList.remove("text-primary");
-      profileLink?.classList.add("text-primary");
-      createCafeLink?.classList.remove("text-primary");
+      console.log("profile");
+      console.log(profileLinks);
+      profileLinks.forEach((link) => {
+        link.classList.add("text-primary");
+        link.classList.remove("text-muted-foreground");
+      });
+
+      [...discoverLinks, ...createCafeLinks].forEach((link) => {
+        link.classList.remove("text-primary");
+        link.classList.add("text-muted-foreground");
+      });
     } else if (pathname === "/create-cafe") {
-      discoverLink?.classList.remove("text-primary");
-      profileLink?.classList.remove("text-primary");
-      createCafeLink?.classList.add("text-primary");
+      createCafeLinks.forEach((link) => {
+        link.classList.add("text-primary");
+        link.classList.remove("text-muted-foreground");
+      });
+
+      [...discoverLinks, ...profileLinks].forEach((link) => {
+        link.classList.remove("text-primary");
+        link.classList.add("text-muted-foreground");
+      });
     }
   }, [pathname]);
 

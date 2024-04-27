@@ -38,24 +38,21 @@ export function Main(props: Props) {
             <nav className="grid items-start px-2 text-sm font-medium md:fixed lg:px-4">
               <Link
                 href="/discover"
-                id="discover-link"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary" // bg-muted text-primary
+                className="discover-link flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary" // bg-muted text-primary
               >
                 <Home className="h-4 w-4" />
                 Discover
               </Link>
               <Link
                 href="/profile"
-                id="profile-link"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                className="profile-link flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
               >
                 <UserRound className="h-4 w-4" />
                 Profile
               </Link>
               <Link
                 href="/create-cafe"
-                id="create-cafe-link"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                className="create-cafe-link flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
               >
                 <CirclePlus className="h-4 w-4" />
                 Create Cafe{" "}
@@ -91,7 +88,7 @@ export function Main(props: Props) {
                 <SheetClose asChild>
                   <Link
                     href="/discover"
-                    className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
+                    className="discover-link mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
                   >
                     <Home className="h-5 w-5" />
                     Discover
@@ -100,7 +97,7 @@ export function Main(props: Props) {
                 <SheetClose asChild>
                   <Link
                     href="/profile"
-                    className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
+                    className="profile-link mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
                   >
                     <UserRound className="h-5 w-5" />
                     Profile
@@ -109,7 +106,7 @@ export function Main(props: Props) {
                 <SheetClose asChild>
                   <Link
                     href="/create-cafe"
-                    className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
+                    className="create-cafe-link mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
                   >
                     <CirclePlus className="h-5 w-5" />
                     Create Cafe
