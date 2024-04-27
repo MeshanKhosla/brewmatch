@@ -31,7 +31,7 @@ import {
   CollapsibleTrigger,
   CollapsibleContent,
 } from "@radix-ui/react-collapsible";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import CardHover from "~/components/CardHover";
 
 type DrinkCardProps = {
@@ -45,14 +45,18 @@ type DrinkCardProps = {
 export function DrinkCard(props: DrinkCardProps) {
   const { canEdit, drink, cafe, score, handleDrinkSelection } = props;
   const [isOpen, setIsOpen] = useState(false);
-  const icons = [
-    <CupSoda key="cup-soda" className="h-10 w-10" />,
-    <GlassWater key="glass-water" className="h-10 w-10" />,
-    <Milk key="milk" className="h-10 w-10" />,
-    <Beaker key="beaker" className="h-10 w-10" />,
-  ];
 
-  const selectedIcon = icons[Math.floor(Math.random() * icons.length)];
+  const selectedIcon = useMemo(() => {
+    const icons = [
+      <CupSoda key="cup-soda" className="h-10 w-10" />,
+      <GlassWater key="glass-water" className="h-10 w-10" />,
+      <Milk key="milk" className="h-10 w-10" />,
+      <Beaker key="beaker" className="h-10 w-10" />,
+    ];
+
+    const selectedIcon = icons[Math.floor(Math.random() * icons.length)];
+    return selectedIcon;
+  }, []);
 
   const onCardClick = () => {
     if (handleDrinkSelection) {
