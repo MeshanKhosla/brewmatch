@@ -9,7 +9,6 @@ import {
 } from "~/components/ui/sheet";
 import { type Session } from "next-auth";
 import Login from "~/components/login";
-import { ModeToggle } from "~/components/mode-toggle";
 import NavLinkBolder from "~/components/NavLinkBolder";
 
 type Props = {
@@ -117,7 +116,6 @@ export function Main(props: Props) {
           </Sheet>
 
           <div className="flex w-full justify-end gap-2">
-            <ModeToggle />
             <Login session={session} />
           </div>
         </header>

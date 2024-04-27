@@ -1,5 +1,4 @@
 import "~/styles/globals.css";
-import { ThemeProvider } from "~/components/theme-provider";
 import { Itim } from "next/font/google";
 import { cn } from "~/lib/utils";
 import { Main } from "~/components/Main";
@@ -37,15 +36,8 @@ export default async function RootLayout({
           itim.variable,
         )}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Main session={session}>{children}</Main>
-          <Toaster position="top-right" richColors />
-        </ThemeProvider>
+        <Main session={session}>{children}</Main>
+        <Toaster position="top-right" richColors />
       </body>
     </html>
   );
