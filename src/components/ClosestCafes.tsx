@@ -2,15 +2,10 @@
 
 import { type Cafe } from "@prisma/client";
 import Link from "next/link";
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
 import { useEffect, useState } from "react";
 import { LoadingCards } from "~/components/LoadingCards";
 import { toast } from "sonner";
+import { CafeCard } from "~/components/CafeCard";
 
 type LocationProps = {
   cafes: Cafe[];
@@ -38,12 +33,7 @@ export function ClosestCafes(props: LocationProps) {
     <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
       {closeCafes.map((cafe) => (
         <Link href={`/cafe/${cafe.name}`} key={cafe.id}>
-          <Card key={cafe.id}>
-            <CardHeader>
-              <CardTitle>{cafe.name}</CardTitle>
-              <CardDescription>{cafe.description}</CardDescription>
-            </CardHeader>
-          </Card>
+          <CafeCard cafe={cafe} />
         </Link>
       ))}
     </div>

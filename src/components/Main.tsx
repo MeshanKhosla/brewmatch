@@ -7,7 +7,7 @@ import {
   CirclePlus
 } from "lucide-react"
 import { Button } from "~/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "~/components/ui/sheet"
+import { Sheet, SheetContent, SheetTrigger, SheetClose } from "~/components/ui/sheet"
 import { type Session } from "next-auth"
 import Login from "~/components/login"
 import { ModeToggle } from "~/components/mode-toggle"
@@ -73,34 +73,42 @@ export function Main(props: Props) {
             </SheetTrigger>
             <SheetContent side="left" className="flex flex-col">
               <nav className="grid gap-2 text-lg font-medium">
-                <Link
-                  href="/discover"
-                  className="flex items-center gap-2 text-lg font-semibold mt-[-0.9rem] pb-3"
-                >
-                  <Coffee className="h-8 w-8" />
-                  <span className="sr-only">BrewMatch</span>
-                </Link>
-                <Link
-                  href="/discover"
-                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-                >
-                  <Home className="h-5 w-5" />
-                  Discover
-                </Link>
-                <Link
-                  href="/profile"
-                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-                >
-                  <UserRound className="h-5 w-5" />
-                  Profile
-                </Link>
-                <Link
-                  href="/create-cafe"
-                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-                >
-                  <CirclePlus className="h-5 w-5" />
-                  Create Cafe
-                </Link>
+                <SheetClose asChild>
+                  <Link
+                    href="/discover"
+                    className="flex items-center gap-2 text-lg font-semibold mt-[-0.9rem] pb-3"
+                  >
+                    <Coffee className="h-8 w-8" />
+                    <span className="sr-only">BrewMatch</span>
+                  </Link>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Link
+                    href="/discover"
+                    className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
+                  >
+                    <Home className="h-5 w-5" />
+                    Discover
+                  </Link>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Link
+                    href="/profile"
+                    className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
+                  >
+                    <UserRound className="h-5 w-5" />
+                    Profile
+                  </Link>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Link
+                    href="/create-cafe"
+                    className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
+                  >
+                    <CirclePlus className="h-5 w-5" />
+                    Create Cafe
+                  </Link>
+                </SheetClose>
               </nav>
             </SheetContent>
           </Sheet>

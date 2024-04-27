@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { type DrinkProfile, type Cafe, type Drink } from "@prisma/client";
 import { SelectDrinkProfile } from "~/components/SelectDrinkProfile";
-import { Button } from "~/components/ui/button";
 import { getDrinkRecommendations } from "~/actions";
 import { toast } from "sonner";
 import SelectDrink from "~/components/SelectDrink";
@@ -25,6 +24,7 @@ const STEPS = ["SELECT_DRINK_PROFILE", "SELECT_DRINK", "REVIEW_DRINK"] as const;
 const CafeCustomer = (props: CafeCustomerProps) => {
   const { cafe, drinkProfiles } = props;
   const [stepIndex, setStepIndex] = useState<number>(0);
+  const [selectedProfile, setSelectedProfile] = useState<DrinkProfile>();
   const [reccommendedDrinks, setReccommendedDrinks] = useState<
     DrinkRecommendation[]
   >([]);
@@ -44,6 +44,7 @@ const CafeCustomer = (props: CafeCustomerProps) => {
 
   const handleProfileSelection = async (profile: DrinkProfile) => {
     incrementStep();
+    setSelectedProfile(profile);
     const reccommendedDrinks = await getDrinkRecommendations(
       profile,
       cafe.id,
@@ -70,20 +71,26 @@ const CafeCustomer = (props: CafeCustomerProps) => {
       />
     ),
     SELECT_DRINK: (
-      <SelectDrink
-        drinkRecommendations={reccommendedDrinks}
-        handleDrinkSelection={handleDrinkSelection}
-      />
+      <>
+        {selectedProfile && (<SelectDrink
+          drinkProfile={selectedProfile}
+          drinkRecommendations={reccommendedDrinks}
+          handleDrinkSelection={handleDrinkSelection}
+        />
+        )}
+      </>
     ),
     REVIEW_DRINK: <div>Review Drink</div>,
   };
 
   return (
     <div className="flex flex-col gap-3">
-      <div >
-      <CircleArrowLeftIcon className="mb-4 cursor-pointer" size={30} onClick={decrementStep} />
-      <ProgressBar currentStep={stepIndex} />
-      {STEPS_TO_COMPONENTS[STEPS[stepIndex]!]}
+      <div>
+        {stepIndex !== 0 && (
+          <CircleArrowLeftIcon className="mb-4 cursor-pointer" size={30} onClick={decrementStep} />
+        )}
+        <ProgressBar currentStep={stepIndex} />
+        {STEPS_TO_COMPONENTS[STEPS[stepIndex]!]}
       </div>
     </div>
   );

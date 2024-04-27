@@ -56,7 +56,7 @@ const CreateDrinkForm = (props: CreateDrinkFormProps) => {
     defaultValues: {
       name: drink?.name ?? "",
       description: drink?.description ?? "",
-      price: drink?.price.toString() ?? "",
+      price: drink?.price.toFixed(2) ?? "",
       sweetness: drink?.sweetness.toString() ?? "-1",
       cafeId: cafe,
     },

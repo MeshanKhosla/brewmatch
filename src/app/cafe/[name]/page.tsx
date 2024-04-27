@@ -15,8 +15,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog";
+import Link from "next/link"
+import {
+  UserRound,
+  ChevronLeft, 
+  Pencil
+} from "lucide-react"
 import { authOptions } from "~/server/auth";
-import { Pencil } from "lucide-react";
 import DeleteAlert from "~/components/DeleteAlert";
 import CreateCafeForm from "~/components/CreateCafeForm";
 
@@ -61,8 +66,21 @@ const Page = async ({ params }: { params: { name: string } }) => {
           </div>) : (
           <></>
         )}
-        <h2 className="text-center text-4xl">{cafe.name}</h2>
-        <h4 className="text-center text-xl">{cafe.description}</h4>
+        <div className="flex flex-row w-full h-full items-center">
+          {isUserOwner ? (
+            <Link href={`/create-cafe`}>
+              <ChevronLeft className="w-6 h-6" />
+            </Link>
+          ) : (
+            <Link href="/discover">
+              <ChevronLeft className="w-6 h-6" />
+            </Link>
+          )}
+          <div className="flex flex-col w-full items-center">
+            <h2 className="text-center text-4xl">{cafe.name}</h2>
+            <h4 className="text-center text-xl">{cafe.description}</h4>
+          </div>
+        </div>
       </div>
       {isUserOwner ? (
         <Suspense fallback={<div>Loading...</div>}>
@@ -70,8 +88,17 @@ const Page = async ({ params }: { params: { name: string } }) => {
         </Suspense>
       ) : (
         <Suspense fallback={<div>Loading...</div>}>
-          {myDrinks.length === 0 ? <p className="text-xl">{cafe.name} has no drinks yet!</p> : 
-            <CafeCustomer cafe={cafe} drinkProfiles={drinkProfiles} />
+          {myDrinks.length === 0 ? <p className="text-xl">{cafe.name} has no drinks yet!</p>
+            : drinkProfiles.length === 0 ? <div className="flex text-xl items-center">
+              <span>You have no drink profiles yet! Create some in </span>
+              <Link
+                href="/profile"
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground hover:text-primary"
+              >
+                <UserRound className="h-4 w-4" />
+                Profile
+              </Link> </div>
+              : <CafeCustomer cafe={cafe} drinkProfiles={drinkProfiles} />
           }
         </Suspense>
       )}
