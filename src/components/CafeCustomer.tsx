@@ -72,11 +72,12 @@ const CafeCustomer = (props: CafeCustomerProps) => {
     ),
     SELECT_DRINK: (
       <>
-        {selectedProfile && (<SelectDrink
-          drinkProfile={selectedProfile}
-          drinkRecommendations={reccommendedDrinks}
-          handleDrinkSelection={handleDrinkSelection}
-        />
+        {selectedProfile && (
+          <SelectDrink
+            drinkProfile={selectedProfile}
+            drinkRecommendations={reccommendedDrinks}
+            handleDrinkSelection={handleDrinkSelection}
+          />
         )}
       </>
     ),
@@ -87,7 +88,11 @@ const CafeCustomer = (props: CafeCustomerProps) => {
     <div className="flex flex-col gap-3">
       <div>
         {stepIndex !== 0 && (
-          <CircleArrowLeftIcon className="mb-4 cursor-pointer" size={30} onClick={decrementStep} />
+          <CircleArrowLeftIcon
+            className="mb-4 cursor-pointer"
+            size={30}
+            onClick={decrementStep}
+          />
         )}
         <ProgressBar currentStep={stepIndex} />
         {STEPS_TO_COMPONENTS[STEPS[stepIndex]!]}

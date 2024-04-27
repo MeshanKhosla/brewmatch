@@ -27,12 +27,10 @@ const SelectDrink = (props: SelectDrinkProps) => {
         Step 2: Choose a Recommended Drink
       </h2> */}
       <div>
-        <Card className="bg-[#D5E7B8] mb-5 text-center -p-1">
+        <Card className="-p-1 mb-5 bg-[#D5E7B8] text-center">
           <CardHeader>
-            <CardTitle>
-              {drinkProfile.name}
-            </CardTitle>
-            <div className="bg-white p-3 rounded-md">
+            <CardTitle>{drinkProfile.name}</CardTitle>
+            <div className="rounded-md bg-white p-3">
               <CardDescription>
                 {drinkProfile.naturalLanguageInput}
               </CardDescription>
@@ -40,7 +38,9 @@ const SelectDrink = (props: SelectDrinkProps) => {
           </CardHeader>
         </Card>
       </div>
-      <div className="text-3xl font-bold mb-3 text-center">Top 3 Recommendations</div>
+      <div className="mb-3 text-center text-3xl font-bold">
+        Top 3 Recommendations
+      </div>
       <div className="cols-1 md:rows-3 mb-5">
         {drinkRecommendations.map((drink) => (
           <DrinkCard
