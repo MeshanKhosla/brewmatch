@@ -23,8 +23,6 @@ const NavLinkBolder = () => {
         link.classList.add("text-muted-foreground");
       });
     } else if (pathname === "/profile") {
-      console.log("profile");
-      console.log(profileLinks);
       profileLinks.forEach((link) => {
         link.classList.add("text-primary");
         link.classList.remove("text-muted-foreground");
