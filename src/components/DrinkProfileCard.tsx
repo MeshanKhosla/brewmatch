@@ -18,6 +18,7 @@ import {
 } from "~/components/ui/dialog";
 import { ICE_TO_NAME, MILK_TO_NAME, removeEndString } from "~/lib/utils";
 import CreateDrinkProfileForm from "~/components/CreateDrinkProfileForm";
+import CardHover from "~/components/CardHover";
 
 type DrinkProfileCardProps = {
   canEdit: boolean;
@@ -42,21 +43,19 @@ export function DrinkProfileCard(props: DrinkProfileCardProps) {
           onClick={onCardClick}
           className={`${handleProfileSelection ? "hover:cursor-pointer" : ""} h-full`}
         >
-          <div
-            className="h-full group relative cursor-pointer bg-white overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl mx-auto max-w rounded-lg">
-            <span className="absolute top-0 z-0 h-0.5 w-0.5 rounded-full bg-lime-600/50 transition-all duration-300 group-hover:scale-[800]"></span>
-            <div className="relative z-10 mx-auto max-w-md">
-              <span className="grid h-full w-full rounded-lg transition-all duration-300 group-hover:bg-lime-500/50"></span>
-            </div>
+          <div className="max-w group relative mx-auto h-full cursor-pointer overflow-hidden rounded-lg bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
+            <CardHover />
             <CardHeader className="h-full">
-              <div className="grid w-full h-full grid-rows-3 justify-items-center space-y-2 text-center">
+              <div className="grid h-full w-full grid-rows-3 justify-items-center space-y-2 text-center">
                 <CardTitle>{profile.name}</CardTitle>
-                <CardDescription>{profile.naturalLanguageInput}</CardDescription>
+                <CardDescription>
+                  {profile.naturalLanguageInput}
+                </CardDescription>
                 <CardDescription>
                   Ice: {removeEndString(ICE_TO_NAME[profile.ice], " ice")}{" "}
                   <span className="font-semibold">/</span> Sweetness:{" "}
-                  {profile.sweetness} <span className="font-semibold">/</span> Milk:{" "}
-                  {MILK_TO_NAME[profile.milk]}
+                  {profile.sweetness} <span className="font-semibold">/</span>{" "}
+                  Milk: {MILK_TO_NAME[profile.milk]}
                 </CardDescription>
               </div>
             </CardHeader>
@@ -80,14 +79,14 @@ export function DrinkProfileCard(props: DrinkProfileCardProps) {
                 </DialogContent>
               </Dialog>
             </div>
-            <div className="grid w-full h-full grid-rows-3 justify-items-center space-y-2 text-center">
+            <div className="grid h-full w-full grid-rows-3 justify-items-center space-y-2 text-center">
               <CardTitle>{profile.name}</CardTitle>
               <CardDescription>{profile.naturalLanguageInput}</CardDescription>
               <CardDescription>
                 Ice: {removeEndString(ICE_TO_NAME[profile.ice], " ice")}{" "}
                 <span className="font-semibold">/</span> Sweetness:{" "}
-                {profile.sweetness} <span className="font-semibold">/</span> Milk:{" "}
-                {MILK_TO_NAME[profile.milk]}
+                {profile.sweetness} <span className="font-semibold">/</span>{" "}
+                Milk: {MILK_TO_NAME[profile.milk]}
               </CardDescription>
             </div>
           </CardHeader>

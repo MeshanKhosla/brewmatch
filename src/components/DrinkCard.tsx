@@ -31,7 +31,8 @@ import {
   CollapsibleTrigger,
   CollapsibleContent,
 } from "@radix-ui/react-collapsible";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import CardHover from "~/components/CardHover";
 
 type DrinkCardProps = {
   canEdit: boolean;
@@ -99,10 +100,7 @@ export function DrinkCard(props: DrinkCardProps) {
             className={`${handleDrinkSelection ? "hover:cursor-pointer" : ""} h-full`}
           >
             <div className="max-w group relative mx-auto h-full cursor-pointer overflow-hidden rounded-lg bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
-              <span className="absolute top-0 z-0 h-0.5 w-0.5 rounded-full bg-lime-600/50 transition-all duration-300 group-hover:scale-[800]"></span>
-              <div className="relative z-10 mx-auto max-w-md">
-                <span className="grid h-full w-full rounded-lg transition-all duration-300 group-hover:bg-lime-500/50"></span>
-              </div>
+              <CardHover />
               <CardHeader>
                 <div className="grid w-full grid-cols-2 space-x-10">
                   <div className="grid w-full grid-cols-2 items-center justify-items-start space-y-2">
