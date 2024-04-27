@@ -54,8 +54,7 @@ export function DrinkCard(props: DrinkCardProps) {
       <Beaker key="beaker" className="h-10 w-10" />,
     ];
 
-    const selectedIcon = icons[Math.floor(Math.random() * icons.length)];
-    return selectedIcon;
+    return icons[Math.floor(Math.random() * icons.length)];
   }, []);
 
   const onCardClick = () => {
