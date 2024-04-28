@@ -6,7 +6,7 @@ import { CommentRatings } from "~/components/ui/rating";
 import { Textarea } from "~/components/ui/textarea";
 import { Button } from "./ui/button";
 import { toast } from "sonner";
-import { Asterisk } from "lucide-react";
+import { Asterisk, Loader } from "lucide-react";
 import { Card, CardHeader, CardTitle } from "~/components/ui/card";
 import { createReview } from "~/actions";
 
@@ -18,11 +18,15 @@ const ReviewDrink = (props: ReviewDrinkProps) => {
   const { drink } = props;
   const [rating, setRating] = useState<number>(0);
   const [review, setReview] = useState<string>("");
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const handleSubmit = async () => {
+    if (isSubmitting) return;
     if (rating === 0) {
       toast.error("Please rate the drink!");
     }
+
+    setIsSubmitting(true);
 
     const res = await createReview(drink.id, rating, review);
     if (res && !res.ok) {
@@ -32,6 +36,8 @@ const ReviewDrink = (props: ReviewDrinkProps) => {
       setRating(0);
       setReview("");
     }
+
+    setIsSubmitting(false);
   };
 
   return (
@@ -60,11 +66,11 @@ const ReviewDrink = (props: ReviewDrinkProps) => {
           value={review}
         />
         <Button
-          disabled={rating === 0}
+          disabled={rating === 0 || isSubmitting}
           className="w-full bg-[#8fbc5c] hover:bg-[#719646]"
           onClick={handleSubmit}
         >
-          Submit
+          {isSubmitting ? <Loader /> : "Submit"}
         </Button>
       </div>
     </div>
