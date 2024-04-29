@@ -27,3 +27,17 @@ export async function getDrinksByCafe(id: string) {
     where: { cafeId: id }
   });
 }
+
+export async function getOrdersByCreator(userId: string) {
+  // get the order, the drinks, and the cafe for each order
+  return await db.order.findMany({
+    where: { userId },
+    include: {
+      drink: {
+        include: {
+          cafe: true
+        }
+      }
+    }
+  });
+}

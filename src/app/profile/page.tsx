@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import CreateDrinkProfile from "~/components/CreateDrinkProfile";
 import { DrinkProfileCard } from "~/components/DrinkProfileCard";
-import { getDrinkProfilesByCreator } from "~/queries";
+import { getDrinkProfilesByCreator, getOrdersByCreator } from "~/queries";
 import { authOptions } from "~/server/auth";
 
 const Page = async () => {
@@ -14,6 +14,15 @@ const Page = async () => {
   }
 
   const myDrinkProfiles = await getDrinkProfilesByCreator(session.user.id);
+  const myDrinkOrders = await getOrdersByCreator(session.user.id);
+  const firstOrder = myDrinkOrders[0];
+  const firstOrderDrink = firstOrder?.drink;
+  const firstOrderCafe = firstOrderDrink?.cafe;
+  console.log({
+    firstOrder,
+    firstOrderDrink,
+    firstOrderCafe,
+  });
 
   return (
     <div className="flex flex-col gap-4 pt-4">

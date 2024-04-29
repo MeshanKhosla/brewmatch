@@ -42,10 +42,8 @@ export const CommentRatings = ({
 }: RatingsProps) => {
   const [hoverRating, setHoverRating] = useState<number | null>(null);
   const [currentRating, setCurrentRating] = useState(initialRating);
-  const [isHovering, setIsHovering] = useState(false);
 
   const handleMouseEnter = (event: React.MouseEvent<HTMLDivElement>) => {
-    setIsHovering(true);
     const starIndex = parseInt(
       (event.currentTarget as HTMLDivElement).dataset.starIndex ?? "0",
     );
@@ -53,7 +51,6 @@ export const CommentRatings = ({
   };
 
   const handleMouseLeave = () => {
-    setIsHovering(false);
     setHoverRating(null);
   };
 
