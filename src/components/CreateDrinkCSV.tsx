@@ -34,11 +34,19 @@ const CreateDrinkCSV = ({ cafeId }: { cafeId: string }) => {
   let error = 0;
   let emptyLines = 0;
 
+  const refreshErrors = () => {
+    setInvalidNames([]);
+    setInvalidDescriptions([]);
+    setInvalidPrices([]);
+    setInvalidSweetness([]);
+    setShowErrorAlert(false);
+  };
+
   return (
     <div>
       <h1>
         The CSV should have 4 columns for the details of each Drink. The columns
-        are name, description, price (numbers only), and sweetness (whole number
+        are name (between 2 and 30 characters), description (between 10 and 190 characters), price (numbers only), and sweetness (whole number
         in the 1-10 range).
       </h1>
       <div>
@@ -51,13 +59,8 @@ const CreateDrinkCSV = ({ cafeId }: { cafeId: string }) => {
         </style>
         <Importer
           defaultNoHeader={false} // optional, keeps "data has headers" checkbox off by default
-          restartable={true} // optional, lets user choose to upload another file when import is complete
+          restartable={showErrorAlert ? false : true} // optional, lets user choose to upload another file when import is complete
           dataHandler={async (rows) => {
-            setInvalidNames([]);
-            setInvalidDescriptions([]);
-            setInvalidPrices([]);
-            setInvalidSweetness([]);
-            setShowErrorAlert(false);
             const drinks = rows.filter((drink, index) => {
               if (Object.values(drink).some((value) => value === undefined)) {
                 emptyLines += 1;
@@ -68,14 +71,14 @@ const CreateDrinkCSV = ({ cafeId }: { cafeId: string }) => {
               const drinkPrice = drink.price as string;
               const drinkSweetness = drink.sweetness as string;
               const line = skipHeader ? index + 1 : index + 2;
-              let error = true;
+              let noError = true;
 
               if (drinkName.length < 2 || drinkName.length > 30) {
                 setInvalidNames((prev) => [
                   ...prev,
                   { line, value: drinkName },
                 ]);
-                error = false;
+                noError = false;
               }
               if (
                 drinkDescription.length < 10 ||
@@ -85,23 +88,23 @@ const CreateDrinkCSV = ({ cafeId }: { cafeId: string }) => {
                   ...prev,
                   { line, value: drinkDescription },
                 ]);
-                error = false;
+                noError = false;
               }
               if (!decimalRegExp.test(drinkPrice)) {
                 setInvalidPrices((prev) => [
                   ...prev,
                   { line, value: drinkPrice },
                 ]);
-                error = false;
+                noError = false;
               }
               if (!sweetScaleRegex.test(drinkSweetness)) {
                 setInvalidSweetness((prev) => [
                   ...prev,
                   { line, value: drinkSweetness },
                 ]);
-                error = false;
+                noError = false;
               }
-              return error;
+              return noError;
             });
             for (const value of Object.values(drinks)) {
               // Call the createDrink function with the validated data
@@ -158,6 +161,7 @@ const CreateDrinkCSV = ({ cafeId }: { cafeId: string }) => {
               <CardHeader>
                 <CardTitle className="text-red-500">Errors</CardTitle>
                 <CardDescription className="text-red-500">
+                  <span className="font-semibold">Please dismiss errors before uploading more files!</span>
                   {invalidNames.length > 0 && (
                     <div key="invalidNames">
                       <br />
@@ -223,7 +227,7 @@ const CreateDrinkCSV = ({ cafeId }: { cafeId: string }) => {
                 <Button
                   className="w-full border border-[#FE8B83] bg-[#F9F7F2] text-black hover:bg-[#FE8B83]"
                   type="button"
-                  onClick={() => setShowErrorAlert(false)}
+                  onClick={refreshErrors}
                 >
                   Dismiss
                 </Button>
