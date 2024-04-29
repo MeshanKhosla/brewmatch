@@ -26,7 +26,7 @@ export function ClosestCafes(props: LocationProps) {
   }, [cafes]);
 
   if (closeCafes.length === 0) {
-    return <LoadingCards />;
+    return <LoadingCards cafe={true} />;
   }
 
   return (

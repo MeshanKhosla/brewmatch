@@ -21,9 +21,9 @@ export function CafeCard(props: CafeCardProps) {
       <div className="max-w group relative mx-auto h-full cursor-pointer overflow-hidden rounded-lg bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
         <CardHover />
         <CardHeader className="h-full">
-          <div className="grid h-full grid-rows-2">
+          <div className="grid h-full grid-rows-[max-content_1fr]">
             <CardTitle>{cafe.name}</CardTitle>
-            <CardDescription className="self-start pt-2">
+            <CardDescription className="self-center pt-3">
               {cafe.description}
             </CardDescription>
           </div>
