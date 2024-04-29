@@ -12,12 +12,17 @@ type SelectDrinkProps = {
 const SelectDrink = (props: SelectDrinkProps) => {
   const { drinkRecommendations, handleDrinkSelection } = props;
   if (drinkRecommendations.length === 0) {
-    return <LoadingCards />;
+    return (
+      <div>
+        <div className="mb-4 text-3xl font-bold">Top 3 Recommendations</div>
+        <LoadingCards cafe={false} />
+      </div>
+    );
   }
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="mb-4 text-3xl font-bold">Top 3 Recommendations</div>
+      <h1 className="text-2xl font-semibold mb-4">Top 3 Recommendations</h1>
       <div className="cols-1 md:rows-3 mb-5">
         {drinkRecommendations.map((drink) => (
           <DrinkCard

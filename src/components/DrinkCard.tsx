@@ -83,7 +83,7 @@ export function DrinkCard(props: DrinkCardProps) {
                 </DialogContent>
               </Dialog>
             </div>
-            <div className="grid h-full w-full grid-rows-3 justify-items-center space-y-2 text-center">
+            <div className="grid h-full w-full grid-rows-[max-content_1fr] justify-items-center items-center space-y-4 text-center">
               <CardTitle>{drink.name}</CardTitle>
               <CardDescription>{drink.description}</CardDescription>
               <CardDescription>

@@ -46,7 +46,7 @@ export function DrinkProfileCard(props: DrinkProfileCardProps) {
           <div className="max-w group relative mx-auto h-full cursor-pointer overflow-hidden rounded-lg bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
             <CardHover />
             <CardHeader className="h-full">
-              <div className="grid h-full w-full grid-rows-3 justify-items-center space-y-2 text-center">
+              <div className="grid h-full w-full grid-rows-[max-content_1fr] justify-items-center items-center space-y-4 text-center">
                 <CardTitle>{profile.name}</CardTitle>
                 <CardDescription>
                   {profile.naturalLanguageInput}
@@ -79,7 +79,7 @@ export function DrinkProfileCard(props: DrinkProfileCardProps) {
                 </DialogContent>
               </Dialog>
             </div>
-            <div className="grid h-full w-full grid-rows-3 justify-items-center space-y-2 text-center">
+            <div className="grid h-full w-full grid-rows-[max-content_1fr] justify-items-center items-center space-y-4 text-center">
               <CardTitle>{profile.name}</CardTitle>
               <CardDescription>{profile.naturalLanguageInput}</CardDescription>
               <CardDescription>

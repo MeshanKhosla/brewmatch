@@ -11,9 +11,7 @@ export function SelectDrinkProfile(props: DrinkProfileProps) {
 
   return (
     <div className="flex flex-col gap-2">
-      {/* <h2 className="text-xl font-semibold">
-        Step 1: Choose your Drink Profile
-      </h2> */}
+      <h1 className="text-2xl font-semibold mb-4">Select Drink Profile</h1>
       <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
         {drinkProfiles.map((profile) => (
           <DrinkProfileCard
