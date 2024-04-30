@@ -434,7 +434,7 @@ export async function getDrinkRecommendations(profile: DrinkProfile, cafeId: str
   })
 
   const drinksWithScores = recs.map(rec => {
-    const drink = drinks.find(d => d.id === rec.metadata?.drinkId)
+    const drink = drinks.find(d => d.id === rec.metadata?.drinkId)!
     return {
       drink,
       score: rec.score
@@ -454,15 +454,13 @@ export async function getDrinkRecommendations(profile: DrinkProfile, cafeId: str
  * @param chosenDrink  The drink that was recommended
  */
 export async function getDrinkRecommendationReasoning(drinkProfile: DrinkProfile, chosenDrinks: Drink[]) {
-  // TODO: I think we can use Reagent here and do something similar to the reasoning task for the planets
-  // in homework
   let drinkRecString = "";
 
-  for (let i = 0; i < chosenDrinks.length; i++) {
-    drinkRecString += "Drink Name: " + chosenDrinks[i]?.name
-      + ", Description: " + chosenDrinks[i]?.description
-      + ", Sweetness: " + chosenDrinks[i]?.sweetness + "\n";
-  }
+	for (const chosenDrink of chosenDrinks) {
+		drinkRecString += "Drink Name: " + chosenDrink?.name
+			+ ", Description: " + chosenDrink?.description
+			+ ", Sweetness: " + chosenDrink?.sweetness + "\n";
+	}
   if (drinkRecString.length === 0) {
     return {
       ok: false,
@@ -470,25 +468,24 @@ export async function getDrinkRecommendationReasoning(drinkProfile: DrinkProfile
     }
   }
 
-  const response = await fetch(
-    'https://noggin.rea.gent/modest-gayal-8115',
+  const recommendations = await fetch(
+    env.REAGENT_URL,
     {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer rg_v1_hwn1zhy86a3ghapej0cu04q3igjkoindvyay_ngk',
+        Authorization: `Bearer ${env.REAGENT_TOKEN}`,
       },
       body: JSON.stringify({
-        // fill variables here.
         "drinks": drinkRecString,
         "profile_sweetness": drinkProfile.sweetness,
         "profile_description": drinkProfile.naturalLanguageInput,
       }),
     }
-  ).then(response => response.text());
-  const responseArray = JSON.parse(response);
+  ).then(response => response.json()) as string[]
+
   return {
     ok: true,
-    recommendations: responseArray
+    recommendations
   }
 }

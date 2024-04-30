@@ -3,7 +3,11 @@
 import { useState } from "react";
 import { type DrinkProfile, type Cafe, type Drink } from "@prisma/client";
 import { SelectDrinkProfile } from "~/components/SelectDrinkProfile";
-import { createOrder, getDrinkRecommendations, getDrinkRecommendationReasoning } from "~/actions";
+import {
+  createOrder,
+  getDrinkRecommendations,
+  getDrinkRecommendationReasoning,
+} from "~/actions";
 import { toast } from "sonner";
 import SelectDrink from "~/components/SelectDrink";
 import { ProgressBar } from "~/components/ProgressBar";
@@ -29,7 +33,9 @@ const CafeCustomer = (props: CafeCustomerProps) => {
   const [reccommendedDrinks, setReccommendedDrinks] = useState<
     DrinkRecommendation[]
   >([]);
-  const [recommendationReasons, setRecommendationReasons] = useState<string[]>([]);
+  const [recommendationReasons, setRecommendationReasons] = useState<string[]>(
+    [],
+  );
   const [selectedDrink, setSelectedDrink] = useState<Drink>();
 
   const incrementStep = () => {
@@ -55,8 +61,10 @@ const CafeCustomer = (props: CafeCustomerProps) => {
 
     if (reccommendedDrinks.ok) {
       setReccommendedDrinks(reccommendedDrinks.drinks as DrinkRecommendation[]);
-      const drinkRecList = reccommendedDrinks.drinks.map(drink => drink.drink);
-      reasonGeneration(profile, drinkRecList);
+      const drinkRecList = reccommendedDrinks.drinks.map(
+        (drink) => drink.drink,
+      );
+      await reasonGeneration(profile, drinkRecList);
     } else {
       toast.error("Error getting drink recommendations. Please try again");
     }
@@ -65,10 +73,10 @@ const CafeCustomer = (props: CafeCustomerProps) => {
   const reasonGeneration = async (profile: DrinkProfile, drinks: Drink[]) => {
     const recommendationReasons = await getDrinkRecommendationReasoning(
       profile,
-      drinks
+      drinks,
     );
 
-    if (recommendationReasons.ok) {
+    if (recommendationReasons.ok && recommendationReasons.recommendations) {
       setRecommendationReasons(recommendationReasons.recommendations);
     } else {
       toast.error("Error getting recommendation reasons. Please try again");
