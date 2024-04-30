@@ -454,8 +454,41 @@ export async function getDrinkRecommendations(profile: DrinkProfile, cafeId: str
  * @param chosenDrink  The drink that was recommended
  */
 export async function getDrinkRecommendationReasoning(drinkProfile: DrinkProfile, chosenDrinks: Drink[]) {
-  console.log(drinkProfile)
-  console.log(chosenDrinks)
   // TODO: I think we can use Reagent here and do something similar to the reasoning task for the planets
   // in homework
+  let drinkRecString = "";
+
+  for (let i = 0; i < chosenDrinks.length; i++) {
+    drinkRecString += "Drink Name: " + chosenDrinks[i]?.name
+      + ", Description: " + chosenDrinks[i]?.description
+      + ", Sweetness: " + chosenDrinks[i]?.sweetness + "\n";
+  }
+  if (drinkRecString.length === 0) {
+    return {
+      ok: false,
+      error: 'No recommended drinks received'
+    }
+  }
+
+  const response = await fetch(
+    'https://noggin.rea.gent/modest-gayal-8115',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer rg_v1_hwn1zhy86a3ghapej0cu04q3igjkoindvyay_ngk',
+      },
+      body: JSON.stringify({
+        // fill variables here.
+        "drinks": drinkRecString,
+        "profile_sweetness": drinkProfile.sweetness,
+        "profile_description": drinkProfile.naturalLanguageInput,
+      }),
+    }
+  ).then(response => response.text());
+  const responseArray = JSON.parse(response);
+  return {
+    ok: true,
+    recommendations: responseArray
+  }
 }

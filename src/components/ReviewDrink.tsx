@@ -61,7 +61,7 @@ const ReviewDrink = (props: ReviewDrinkProps) => {
         </div>
         <Textarea
           onChange={(e) => setReview(e.target.value)}
-          maxLength={50}
+          maxLength={190}
           placeholder="Write a review (optional)"
           value={review}
         />

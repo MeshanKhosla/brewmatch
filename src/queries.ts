@@ -38,6 +38,9 @@ export async function getOrdersByCreator(userId: string) {
           cafe: true
         }
       }
+    },
+    orderBy: {
+      createdAt: 'desc'
     }
   });
 }

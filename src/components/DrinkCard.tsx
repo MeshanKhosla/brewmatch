@@ -39,11 +39,12 @@ type DrinkCardProps = {
   drink: Drink;
   cafe?: Cafe;
   score?: number;
+  reason?: string;
   handleDrinkSelection?: (drink: Drink) => void;
 };
 
 export function DrinkCard(props: DrinkCardProps) {
-  const { canEdit, drink, cafe, score, handleDrinkSelection } = props;
+  const { canEdit, drink, cafe, score, reason, handleDrinkSelection } = props;
   const [isOpen, setIsOpen] = useState(false);
 
   const selectedIcon = useMemo(() => {
@@ -132,9 +133,8 @@ export function DrinkCard(props: DrinkCardProps) {
             <CollapsibleContent>
               <CardDescription>
                 <span className="font-semibold">Recommendation Reason: </span>
-                TBD
+                {reason ? reason : ""}
               </CardDescription>{" "}
-              {/* to be reagent'd */}
               <CardDescription>
                 <span className="font-semibold">Drink Description: </span>
                 {drink.description}
