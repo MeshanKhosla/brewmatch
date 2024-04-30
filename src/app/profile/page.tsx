@@ -45,8 +45,8 @@ const Page = async () => {
                       <CardHover />
                       <CardHeader className="h-full">
                         <div className="grid h-full grid-rows-[max-content_1fr]">
-                          <CardTitle>{order.drink.name}</CardTitle>
-                          <CardTitle className="text-lg">{order.drink.cafe.name}</CardTitle> 
+                          <CardTitle className="font-semibold">{order.drink.name}</CardTitle>
+                          <CardTitle className="text-lg font-normal">{order.drink.cafe.name}</CardTitle> 
                           <CardDescription>{`ordered on: ${
                             new Date(order.createdAt).toLocaleDateString()
                           }`}</CardDescription>
