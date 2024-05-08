@@ -1,10 +1,13 @@
 # BrewMatch
 
-Project for CS160 - User Interfaces
+Project for CS160 - User Interfaces. Brewmatch is a webapp that lets you make a drink profile and get reccomendations for drinks at nearby cafes.
 
 Winner of "Best Class Project - Most Polished"
 
 <img src="https://github.com/MeshanKhosla/brewmatch/assets/24885081/1a87131c-3b60-4a87-8de8-16e716a4a545" width="250" alt="Award Picture" />
+
+## Video Demo
+TODO
 
 ## Local Development
 1. Clone this repo
