@@ -7,7 +7,7 @@ Winner of "Best Class Project - Most Polished"
 <img src="https://github.com/MeshanKhosla/brewmatch/assets/24885081/1a87131c-3b60-4a87-8de8-16e716a4a545" width="250" alt="Award Picture" />
 
 ## Video Demo
-TODO
+https://www.youtube.com/watch?v=hIzAa94ZWUM
 
 ## Local Development
 1. Clone this repo
